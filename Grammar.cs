@@ -10,8 +10,11 @@ namespace VoiceModel
         public string source { get; set; }
         public string type { get; set; }
         public string inline { get; set; }
+        bool _isBuiltin = false;
+        public bool isBuiltin { get { return _isBuiltin; } }
         public Grammar(string type)
         {
+            _isBuiltin = true;
             this.type = type;
         }
         public Grammar(string type, ResourceLocation loc, string source)

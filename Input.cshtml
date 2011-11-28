@@ -8,10 +8,16 @@
 <var name="vm_result" expr="" />
 
 <form id="@Model.id">
-  <field name="F_1">
+  <field name="F_1" @if(@Model.grammar.isBuiltin)
+                    { 
+                        @:type="@Model.grammar.type" 
+                    }>
     @{Html.RenderPartial("Prompt", Model.initialPrompt);}
   
+     @if(!@Model.grammar.isBuiltin)
+     {
     <grammar src="@Model.grammar.source" type="@Model.grammar.type" />
+     }
   </field>
   <filled>
     <assign name="vm_result" expr="F_1" />
