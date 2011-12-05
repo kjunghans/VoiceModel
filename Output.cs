@@ -15,6 +15,21 @@ namespace VoiceModel
             this.viewName = "Output";
             this.prompts = new List<Prompt>();
         }
+        public Output(VxmlDocument doc)
+           : base(doc)
+        {
+            
+            this.viewName = "Output";
+            this.prompts = new List<Prompt>();
+        }
+        public Output(VxmlDocument doc, string id, string altText)
+            : base(doc)
+        {
+            this.viewName = "Output";
+            this.id = id;
+            this.prompts = new List<Prompt>();
+            this.prompts.Add(new Prompt(altText));
+        }
         public Output(string id, string altText)
         {
             this.viewName = "Output";
@@ -22,38 +37,20 @@ namespace VoiceModel
             this.prompts = new List<Prompt>();
             this.prompts.Add(new Prompt(altText));
         }
-        public Output(string id, string altText, string appName)
-        {
-            this.viewName = "Output";
-            this.id = id;
-            this.prompts = new List<Prompt>();
-            this.prompts.Add(new Prompt(altText));
-            base.AppName = appName;
-        }
-        public Output(string id, string altText, string appName, List<VxmlProperty> properties)
-        {
-            this.viewName = "Output";
-            this.id = id;
-            this.prompts = new List<Prompt>();
-            this.prompts.Add(new Prompt(altText));
-            base.AppName = appName;
-            base.properties = properties;
-        }
-        public Output(string id, Prompt prompt, string appName, List<VxmlProperty> properties)
+         public Output(string id, Prompt prompt )
         {
             this.viewName = "Output";
             this.id = id;
             this.prompts = new List<Prompt>();
             this.prompts.Add(prompt);
-            base.AppName = appName;
-            base.properties = properties;
-        }
-        public Output(string id, Prompt prompt )
-        {
-            this.viewName = "Output";
-            this.id = id;
-            this.prompts = new List<Prompt>();
-            this.prompts.Add(prompt);
+         }
+         public Output(VxmlDocument doc, string id, Prompt prompt)
+             : base(doc)
+         {
+             this.viewName = "Output";
+             this.id = id;
+             this.prompts = new List<Prompt>();
+             this.prompts.Add(prompt);
          }
 
     }
