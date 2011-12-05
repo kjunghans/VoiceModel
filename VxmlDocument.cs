@@ -10,41 +10,39 @@ namespace VoiceModel
         public string id { get; set; }
         public string AppName { get; set; }
         public List<VxmlProperty> properties { get; set; }
-        public Transtions transitions { get; set; }
         protected string viewName { get; set; }
         public string json { get; set; }
+        public string controllerName { get; set; }
 
         public VxmlDocument()
         {
             this.AppName = null;
             this.properties = new List<VxmlProperty>();
-            this.transitions = new Transtions();
+        }
+
+        public VxmlDocument(VxmlDocument doc)
+        {
+            this.id = doc.id;
+            this.AppName = doc.AppName;
+            this.properties = doc.properties;
+            this.viewName = doc.viewName;
+            this.json = doc.json;
+            this.controllerName = doc.controllerName;
         }
 
         public VxmlDocument(string appName)
         {
             this.AppName = appName;
             this.properties = new List<VxmlProperty>();
-            this.transitions = new Transtions();
         }
 
         public VxmlDocument(string appName, string next)
         {
             this.AppName = appName;
             this.properties = new List<VxmlProperty>();
-            this.transitions = new Transtions();
-            this.transitions.Add(next);
         }
 
-        public void addTransition(string nextState)
-        {
-            transitions.Add(nextState);
-        }
-
-        public string getNextState()
-        {
-            return transitions.getNextState(Transition.EventType.continueApp);
-        }
+ 
 
         public string ViewName
         {
