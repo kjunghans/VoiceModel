@@ -4,12 +4,12 @@
     Layout = "~/tmp/Views/_Layout.cshtml";
 }
 
-<var name="vm_id" expr="'@Model.id'" />
-<var name="vm_event" expr="'continue'" />
+<var name="vm_id" expr="@Model.id" />
+<var name="vm_event" expr="continue" />
 
 <form id="@Model.id">
   <block>
     @{Html.RenderPartial("Prompt", Model.prompts);}
-    <submit next="Home/Index" namelist="vm_id vm_event" />
+    <submit next="@Model.controllerName" namelist="vm_id vm_event" />
   </block>
 </form>
