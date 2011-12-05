@@ -20,6 +20,15 @@ namespace VoiceModel
             nomatchPrompts = new List<Prompt>();
         }
 
+        public Input(VxmlDocument doc)
+            : base(doc)
+        {
+            this.viewName = "Input";
+            initialPrompt = new List<Prompt>();
+            noinputPrompts = new List<Prompt>();
+            nomatchPrompts = new List<Prompt>();
+        }
+
         public Input(string id)
         {
             this.viewName = "Input";
@@ -29,36 +38,37 @@ namespace VoiceModel
             this.id = id;
         }
 
-        public Input(string id, string appName)
+ 
+        public Input(string id, string textPrompt, Grammar grammar)
         {
             this.viewName = "Input";
             initialPrompt = new List<Prompt>();
             noinputPrompts = new List<Prompt>();
             nomatchPrompts = new List<Prompt>();
             this.id = id;
-            this.AppName = appName;
-        }
-
-        public Input(string id, string appName, string textPrompt, Grammar grammar)
-        {
-            this.viewName = "Input";
-            initialPrompt = new List<Prompt>();
-            noinputPrompts = new List<Prompt>();
-            nomatchPrompts = new List<Prompt>();
-            this.id = id;
-            this.AppName = appName;
             this.initialPrompt.Add(new Prompt(textPrompt));
             this.grammar = grammar;
         }
 
-        public Input(string id, string appName, Prompt prompt, Grammar grammar)
+        public Input(VxmlDocument doc, string id, string textPrompt, Grammar grammar)
+            : base(doc) 
         {
             this.viewName = "Input";
             initialPrompt = new List<Prompt>();
             noinputPrompts = new List<Prompt>();
             nomatchPrompts = new List<Prompt>();
             this.id = id;
-            this.AppName = appName;
+            this.initialPrompt.Add(new Prompt(textPrompt));
+            this.grammar = grammar;
+        }
+
+        public Input(string id, Prompt prompt, Grammar grammar)
+        {
+            this.viewName = "Input";
+            initialPrompt = new List<Prompt>();
+            noinputPrompts = new List<Prompt>();
+            nomatchPrompts = new List<Prompt>();
+            this.id = id;
             this.initialPrompt.Add(prompt);
             this.grammar = grammar;
         }
