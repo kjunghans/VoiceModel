@@ -10,28 +10,19 @@ namespace VoiceModel
 {
     public class VoiceController : Controller
     {
-        IVoiceModels _voiceModels;
-        ICallFlow _callFlow;
+        protected IVoiceModels voiceModels {get; set;}
+        protected ICallFlow callFlow {get; set;}
 
-        public ActionResult VoiceView(string id, string vEvent, string json, IVoiceModelBuilder vmBuilder, ICallFlowBuilder cfBuilder)
+        public ActionResult VoiceView(string id, string vEvent, string json)
         {
-            BuildVoiceModels(vmBuilder);
-            BuildCallFlows(cfBuilder);
 
-            _callFlow.FireEvent(id, vEvent, json);
+            string nextStateID;
+            string nextStateArgs;
+            callFlow.FireEvent(id, vEvent, json, out nextStateID, out nextStateArgs);
 
-            VxmlDocument doc = _voiceModels.Get(_callFlow.CurrStateId, _callFlow.CurrStateArgs);
+            VxmlDocument doc = voiceModels.Get(nextStateID, nextStateArgs);
             return View(doc.ViewName, doc);
         }
 
-        private void BuildVoiceModels(IVoiceModelBuilder vmBuilder)
-        {
-            _voiceModels = vmBuilder.Build();
-        }
-
-        private void BuildCallFlows(ICallFlowBuilder cfBuilder)
-        {
-            _callFlow = cfBuilder.Build();
-        }
-    }
+     }
 }

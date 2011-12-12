@@ -10,7 +10,7 @@ namespace VoiceModel.CallFlow
         public string Id { get; set; }
         public CallFlow Flows { get; set; }
         private List<Transition> Transitions = new List<Transition>();
-        public string results { get; set; }
+        public string jsonArgs { get; set; }
         public State(string Id)
         {
             this.Id = Id;

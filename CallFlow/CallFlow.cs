@@ -27,15 +27,19 @@ namespace VoiceModel.CallFlow
 
         }
         
-        public void FireEvent(string stateId, string sEvent, string result)
+        public void FireEvent(string stateId, string sEvent, string data, out string nextStateId, out string nextStateArgs)
         {
             State currState;
+            nextStateArgs = string.Empty;
+            nextStateId = string.Empty;
 
             if (stateId == null || stateId == string.Empty)
             {
                 if (_states.TryGetValue(_startStateId, out _nextState))
                 {
                     _nextState.OnEntry();
+                    nextStateId = this.CurrStateId;
+                    nextStateArgs = this.CurrStateArgs;
                 }
 
             }
@@ -44,11 +48,13 @@ namespace VoiceModel.CallFlow
                 if (_states.TryGetValue(stateId, out currState))
                 {
                     currState.OnExit();
-                    string targetId = currState.getTarget(sEvent, result);
+                    string targetId = currState.getTarget(sEvent, data);
                     if (_states.TryGetValue(targetId, out _nextState))
                     {
-                        _nextState.results = result;
+                        _nextState.jsonArgs = data;
                         _nextState.OnEntry();
+                        nextStateId = this.CurrStateId;
+                        nextStateArgs = this.CurrStateArgs;
                     }
                 }
             }
@@ -61,7 +67,7 @@ namespace VoiceModel.CallFlow
 
         public string CurrStateArgs
         {
-            get { return _nextState.results; }
+            get { return _nextState.jsonArgs; }
         }
     }
 }
