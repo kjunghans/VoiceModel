@@ -18,6 +18,7 @@ namespace VoiceModel
         {
             this.AppName = null;
             this.properties = new List<VxmlProperty>();
+            this.controllerName = "StateMachine";
         }
 
         public VxmlDocument(VxmlDocument doc)
@@ -34,12 +35,14 @@ namespace VoiceModel
         {
             this.AppName = appName;
             this.properties = new List<VxmlProperty>();
+            this.controllerName = "StateMachine";
         }
 
         public VxmlDocument(string appName, string next)
         {
             this.AppName = appName;
             this.properties = new List<VxmlProperty>();
+            this.controllerName = "StateMachine";
         }
 
  
