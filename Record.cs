@@ -32,7 +32,9 @@ namespace VoiceModel
             this.viewName = "Record";
             this.id = id;
             this.prompts = new List<Prompt>();
-            this.prompts.Add(new Prompt(altText));
+            Prompt p = new Prompt(altText);
+            p.bargein = false;
+            this.prompts.Add(p);
             this.recordingUrl = "SaveRecording";
         }
 
@@ -41,7 +43,9 @@ namespace VoiceModel
             this.viewName = "Record";
             this.id = id;
             this.prompts = new List<Prompt>();
-            this.prompts.Add(new Prompt(altText));
+            Prompt p = new Prompt(altText);
+            p.bargein = false;
+            this.prompts.Add(p);
             this.recordingUrl = "SaveRecording";
         }
 
