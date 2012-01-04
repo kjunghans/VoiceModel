@@ -18,7 +18,7 @@
 
       <filled>
         <if cond="confirmMessage">
-          <submit expr="'@Model.recordingUrl?vm_id=' + vm_id + '&vm_event=' + vm_event"  method="post" namelist="CallersMessage" enctype="multipart/form-data"/>
+          <submit expr="'@Model.recordingUrl?vm_id=' + vm_id + '&amp;vm_event=' + vm_event"  method="post" namelist="CallersMessage" enctype="multipart/form-data"/>
         <else/>
           <goto next="#@Model.id"/>
         </if>
