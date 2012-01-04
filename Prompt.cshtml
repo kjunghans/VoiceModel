@@ -2,10 +2,5 @@
 
   @foreach (var prompt in @Model)
   {
-      <prompt>
-        @foreach (var audio in prompt.audios)
-        {
-            @Html.Raw(audio.Render());
-        }
-      </prompt>
+      @Html.Raw(prompt.Render());
   }
