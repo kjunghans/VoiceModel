@@ -8,14 +8,13 @@
 <var name="vm_event" expr="'continue'" />
 
 <form id="@Model.id">
-    <record name="CallersMessage" beep="true" maxtime="60s" finalsilence="2500ms" type="audio/wav">
+    <record name="CallersMessage" beep="true" maxtime="@Model.maxtimeStr" finalsilence="2500ms" type="audio/wav">
         @{Html.RenderPartial("Prompt", Model.prompts);}
     </record>
+    @if (Model.confirm)
+    { 
     <field name="confirmMessage" type="boolean">
-      <prompt>
-        I heard you say <value expr="CallersMessage"/>. To save this message say yes. To discard it say no.
-      </prompt>
-
+       @{Html.RenderPartial("Prompt", Model.confirmationPrompts);}
       <filled>
         <if cond="confirmMessage">
           <submit expr="'@Model.recordingUrl?vm_id=' + vm_id + '&amp;vm_event=' + vm_event"  method="post" namelist="CallersMessage" enctype="multipart/form-data"/>
@@ -23,8 +22,14 @@
           <goto next="#@Model.id"/>
         </if>
       </filled>
-
     </field>
-
+    }
+    else
+    { 
+      <filled>
+        <submit expr="'@Model.recordingUrl?vm_id=' + vm_id + '&amp;vm_event=' + vm_event"  method="post" namelist="CallersMessage" enctype="multipart/form-data"/>
+      </filled>
+        
+    }
     
 </form>
