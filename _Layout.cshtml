@@ -13,7 +13,7 @@ xsi:schemaLocation="http://www.w3.org/2001/vxml http://www.w3.org/TR/voicexml20/
         <property name="@property.name" value="@property.value"/>
     }
 
-    @if (@Model.json != null)
+    @if (@Model.json != null && @Model.json != "")
     { 
        <script>
         <![CDATA[
