@@ -13,6 +13,7 @@ namespace VoiceModel
     {
         protected IVoiceModels voiceModels {get; set;}
         protected ICallFlow callFlow {get; set;}
+        protected string recordingPath { get; set; }
 
         protected ActionResult VoiceView(string id, string vEvent, string json)
         {
@@ -39,7 +40,7 @@ namespace VoiceModel
                 // extract only the fielname
                 var fileName = Path.GetFileName(CallersMessage.FileName);
                 // store the file inside ~/App_Data/uploads folder
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                var path = Path.Combine(Server.MapPath(recordingPath), fileName);
                 CallersMessage.SaveAs(path);
             }
             

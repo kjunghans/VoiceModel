@@ -23,6 +23,7 @@ namespace VoiceModel
             this.confirm = true;
             this.confirmationPrompts = new List<Prompt>();
             Prompt cprompt = new Prompt("I heard you say ");
+            cprompt.bargein = false;
             cprompt.audios.Add(new TtsVariable("CallersMessage"));
             cprompt.audios.Add(new Silence(1000));
             cprompt.audios.Add(new TtsMessage("To save this message say yes. To discard it say no."));
@@ -40,6 +41,7 @@ namespace VoiceModel
             this.confirm = true;
             this.confirmationPrompts = new List<Prompt>();
             Prompt cprompt = new Prompt("I heard you say ");
+            cprompt.bargein = false;
             cprompt.audios.Add(new TtsVariable("CallersMessage"));
             cprompt.audios.Add(new Silence(1000));
             cprompt.audios.Add(new TtsMessage("To save this message say yes. To discard it say no."));
@@ -56,6 +58,7 @@ namespace VoiceModel
             this.confirm = true;
             this.confirmationPrompts = new List<Prompt>();
             Prompt cprompt = new Prompt("I heard you say ");
+            cprompt.bargein = false;
             cprompt.audios.Add(new TtsVariable("CallersMessage"));
             cprompt.audios.Add(new Silence(1000));
             cprompt.audios.Add(new TtsMessage("To save this message say yes. To discard it say no."));
@@ -75,6 +78,7 @@ namespace VoiceModel
             this.confirm = true;
             this.confirmationPrompts = new List<Prompt>();
             Prompt cprompt = new Prompt("I heard you say ");
+            cprompt.bargein = false;
             cprompt.audios.Add(new TtsVariable("CallersMessage"));
             cprompt.audios.Add(new Silence(1000));
             cprompt.audios.Add(new TtsMessage("To save this message say yes. To discard it say no."));
