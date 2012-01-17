@@ -56,7 +56,6 @@
     <Compile Include="IAudio.cs" />
     <Compile Include="CallFlow\ICallFlow.cs" />
     <Compile Include="Input.cs" />
-    <Compile Include="IVoiceModelsBuilder.cs" />
     <Compile Include="IVoiceModels.cs" />
     <Compile Include="Output.cs" />
     <Compile Include="Prompt.cs" />
@@ -89,6 +88,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Record.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
