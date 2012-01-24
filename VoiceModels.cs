@@ -19,7 +19,7 @@ namespace VoiceModel
             VxmlDocument doc;
             if (!_views.TryGetValue(id, out doc))
             {
-                doc = new Output("error", "Error finding document with id of " + id);
+                doc = new Say("error", "Error finding document with id of " + id);
             }
             doc.json = json;
             //return View(doc.ViewName, doc);

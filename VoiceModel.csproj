@@ -55,9 +55,9 @@
     <Compile Include="Grammar.cs" />
     <Compile Include="IAudio.cs" />
     <Compile Include="CallFlow\ICallFlow.cs" />
-    <Compile Include="Input.cs" />
+    <Compile Include="Ask.cs" />
     <Compile Include="IVoiceModels.cs" />
-    <Compile Include="Output.cs" />
+    <Compile Include="Say.cs" />
     <Compile Include="Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />

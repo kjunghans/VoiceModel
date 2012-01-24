@@ -5,14 +5,14 @@ using System.Text;
 
 namespace VoiceModel
 {
-    public class Input : VxmlDocument
+    public class Ask : VxmlDocument
     {
         public List<Prompt> initialPrompt { get; set; }
         public List<Prompt> nomatchPrompts { get; set; }
         public List<Prompt> noinputPrompts { get; set; }
         public Grammar grammar { get; set; }
 
-        public Input()
+        public Ask()
         {
             this.viewName = "Input";
             initialPrompt = new List<Prompt>();
@@ -20,7 +20,7 @@ namespace VoiceModel
             nomatchPrompts = new List<Prompt>();
         }
 
-        public Input(VxmlDocument doc)
+        public Ask(VxmlDocument doc)
             : base(doc)
         {
             this.viewName = "Input";
@@ -29,7 +29,7 @@ namespace VoiceModel
             nomatchPrompts = new List<Prompt>();
         }
 
-        public Input(string id)
+        public Ask(string id)
         {
             this.viewName = "Input";
             initialPrompt = new List<Prompt>();
@@ -39,7 +39,7 @@ namespace VoiceModel
         }
 
  
-        public Input(string id, string textPrompt, Grammar grammar)
+        public Ask(string id, string textPrompt, Grammar grammar)
         {
             this.viewName = "Input";
             initialPrompt = new List<Prompt>();
@@ -50,7 +50,7 @@ namespace VoiceModel
             this.grammar = grammar;
         }
 
-        public Input(VxmlDocument doc, string id, string textPrompt, Grammar grammar)
+        public Ask(VxmlDocument doc, string id, string textPrompt, Grammar grammar)
             : base(doc) 
         {
             this.viewName = "Input";
@@ -62,7 +62,7 @@ namespace VoiceModel
             this.grammar = grammar;
         }
 
-        public Input(string id, Prompt prompt, Grammar grammar)
+        public Ask(string id, Prompt prompt, Grammar grammar)
         {
             this.viewName = "Input";
             initialPrompt = new List<Prompt>();
