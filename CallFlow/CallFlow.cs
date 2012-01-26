@@ -60,6 +60,13 @@ namespace VoiceModel.CallFlow
             }
         }
 
+        public void FireEvent(string stateId, string sEvent, string data)
+        {
+            string nextStateId;
+            string nextStateArgs;
+            FireEvent(stateId,sEvent,data,out nextStateId,out nextStateArgs);
+        }
+
         public string CurrStateId
         {
             get { return _nextState.Id; }

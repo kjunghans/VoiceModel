@@ -12,10 +12,11 @@ namespace VoiceModel
 {
     public abstract class VoiceController : Controller
     {
-        protected IVoiceModels voiceModels {get; set;}
-        protected ICallFlow callFlow {get; set;}
-        protected string recordingPath { get; set; }
-        const string vmCacheId = "record.vm";
+        IVoiceModels voiceModels {get; set;}
+        ICallFlow callFlow {get; set;}
+        string recordingPath { get; set; }
+        string vmCacheId;
+        string CfCacheId;
 
 
         private IVoiceModels GetVoiceModel()
@@ -32,15 +33,14 @@ namespace VoiceModel
 
         public abstract VoiceModels BuildVoiceModels();
 
-        const string cacheId = "record.cf";
 
         private  ICallFlow GetCallFlow()
         {
-            CallFlow.CallFlow flow = (CallFlow.CallFlow)HttpRuntime.Cache.Get(cacheId);
+            CallFlow.CallFlow flow = (CallFlow.CallFlow)HttpRuntime.Cache.Get(CfCacheId);
             if (flow == null)
             {
                 flow = BuildCallFlow();
-                System.Web.HttpContext.Current.Cache.Insert(cacheId, flow);
+                System.Web.HttpContext.Current.Cache.Insert(CfCacheId, flow);
             }
             return flow;
 
@@ -49,17 +49,21 @@ namespace VoiceModel
 
         public abstract CallFlow.CallFlow BuildCallFlow();
 
-        public  virtual string GetRecordingPath()
+        public  virtual string RecordingPath
         {
-            return "~/App_Data/recordings";
+            get { return "~/App_Data/recordings"; }
         }
+
+        public abstract string ControllerName { get; }
 
         protected override void Initialize(RequestContext rc)
         {
             base.Initialize(rc);
+            recordingPath = RecordingPath;
+            vmCacheId = ControllerName + ".vmid";
+            CfCacheId = ControllerName + ".cfid";
             voiceModels = GetVoiceModel();
             callFlow = GetCallFlow();
-            recordingPath = GetRecordingPath();
         }
 
 
