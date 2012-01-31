@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Audio.cs" />
     <Compile Include="CallFlow\CallFlow.cs" />
+    <Compile Include="CallFlow\StartComponentState.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="ComponentInput.cs" />
     <Compile Include="ComponentOutput.cs" />
@@ -61,19 +62,21 @@
     <Compile Include="CallFlow\ICallFlow.cs" />
     <Compile Include="Ask.cs" />
     <Compile Include="IVoiceModels.cs" />
+    <Compile Include="Return.cs" />
     <Compile Include="Say.cs" />
     <Compile Include="Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs" />
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="SayAs.cs" />
+    <Compile Include="SessionData.cs" />
     <Compile Include="Silence.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="TtsMessage.cs" />
     <Compile Include="TtsVariable.cs" />
     <Compile Include="VoiceController.cs" />
     <Compile Include="VoiceViewEngine.cs" />
-    <Compile Include="VxmlDocument.cs" />
+    <Compile Include="VoiceModel.cs" />
     <Compile Include="VxmlProperty.cs" />
     <Compile Include="VoiceModels.cs" />
   </ItemGroup>
@@ -91,9 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Record.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Component.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

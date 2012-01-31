@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VoiceModel
 {
-    public class Record : VxmlDocument
+    public class Record : VoiceModel
     {
         public List<Prompt> prompts { get; set; }
         public string recordingUrl { get; set; }
@@ -34,7 +34,7 @@ namespace VoiceModel
             this.maxtime = 60;
         }
 
-        public Record(VxmlDocument doc)
+        public Record(VoiceModel doc)
            : base(doc)
         {
 
@@ -52,7 +52,7 @@ namespace VoiceModel
             this.maxtime = 60;
         }
 
-        public Record(VxmlDocument doc, string id, string altText)
+        public Record(VoiceModel doc, string id, string altText)
             : base(doc)
         {
             this.confirm = true;
@@ -91,6 +91,12 @@ namespace VoiceModel
             this.prompts.Add(p);
             this.recordingUrl = "SaveRecording";
             this.maxtime = 60;
+        }
+
+        public override VoiceModel BuildModel(string jsonArgs)
+        {
+            this.json = jsonArgs;
+            return this;
         }
 
     }

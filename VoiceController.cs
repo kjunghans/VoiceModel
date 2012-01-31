@@ -54,27 +54,60 @@ namespace VoiceModel
             get { return "~/App_Data/recordings"; }
         }
 
-        public abstract string ControllerName { get; }
-
-        protected override void Initialize(RequestContext rc)
+        public virtual string ControllerName
         {
-            base.Initialize(rc);
+            get { return GetControllerName(this); }
+        }
+
+        public string GetControllerName(VoiceController vc)
+        {
+            string controllerFullName = vc.GetType().Name;
+            return controllerFullName.Replace("Controller", "");
+        }
+
+        public string GetActionName(VoiceController vc)
+        {
+            return GetControllerName(vc) + "/StateMachine";
+        }
+
+        public void InitVoiceController()
+        {
             recordingPath = RecordingPath;
             vmCacheId = ControllerName + ".vmid";
             CfCacheId = ControllerName + ".cfid";
             voiceModels = GetVoiceModel();
             callFlow = GetCallFlow();
+
         }
 
+        protected override void Initialize(RequestContext rc)
+        {
+            base.Initialize(rc);
+            InitVoiceController();
+        }
+
+        public State GetStartState()
+        {
+            State state = null;
+            callFlow.GetStartState(out state);
+            return state;
+        }
+
+        public VoiceModel GetVoiceModel(string id, string args)
+        {
+            return voiceModels.Get(id, args);
+        }
 
         protected ActionResult VoiceView(string id, string vEvent, string json)
         {
 
-            string nextStateID;
+            string viewId;
             string nextStateArgs;
-            callFlow.FireEvent(id, vEvent, json, out nextStateID, out nextStateArgs);
+            callFlow.FireEvent(id, vEvent, json, out viewId, out nextStateArgs);
 
-            VxmlDocument doc = voiceModels.Get(nextStateID, nextStateArgs);
+            VoiceModel doc = GetVoiceModel(viewId, nextStateArgs);
+            if (doc.AllowSettingControllerName)
+                doc.ControllerName = GetActionName(this);
             return View(doc.ViewName, doc);
         }
 

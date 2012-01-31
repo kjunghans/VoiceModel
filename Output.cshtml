@@ -10,6 +10,6 @@
 <form id="@Model.id">
   <block>
     @{Html.RenderPartial("Prompt", Model.prompts);}
-    <submit next="@Model.controllerName" namelist="vm_id vm_event" />
+    <submit next="@Model.ControllerName" namelist="vm_id vm_event" />
   </block>
 </form>

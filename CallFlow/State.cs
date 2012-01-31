@@ -11,6 +11,11 @@ namespace VoiceModel.CallFlow
         public CallFlow Flows { get; set; }
         private List<Transition> Transitions = new List<Transition>();
         public string jsonArgs { get; set; }
+        public virtual string CurrentId
+        {
+            get { return Id; }
+        }
+
         public State(string Id)
         {
             this.Id = Id;
@@ -28,6 +33,7 @@ namespace VoiceModel.CallFlow
 
         public virtual void OnEntry() { }
         public virtual void OnExit() { }
+
         public void AddTransition(string sEvent, string target, guardCond gCond)
         {
             Transitions.Add(new Transition(sEvent, target, gCond ));

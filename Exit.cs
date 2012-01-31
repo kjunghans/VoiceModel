@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VoiceModel
 {
-    public class Exit : VxmlDocument
+    public class Exit : VoiceModel
     {
         public List<Prompt> ExitPrompt { get; set; }
         public Exit()
@@ -33,5 +33,12 @@ namespace VoiceModel
             this.id = Id;
             this.ExitPrompt.Add(exitPrompt);
         }
+
+        public override VoiceModel BuildModel(string jsonArgs)
+        {
+            this.json = jsonArgs;
+            return this;
+        }
+
     }
 }

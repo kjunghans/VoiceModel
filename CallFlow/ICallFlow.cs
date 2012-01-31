@@ -9,6 +9,7 @@ namespace VoiceModel.CallFlow
     {
         void AddState(State state);
         void AddStartState(State state);
+        bool GetStartState(out State state);
         void FireEvent(string stateId, string sEvent, string data, out string nextStateId, out string nextStateArgs);
     }
 }

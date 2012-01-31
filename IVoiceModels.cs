@@ -7,7 +7,7 @@ namespace VoiceModel
 {
     public interface IVoiceModels
     {
-        void Add(VxmlDocument doc);
-        VxmlDocument Get(string id, string json);
+        void Add(VoiceModel doc);
+        VoiceModel Get(string id, string json);
     }
 }

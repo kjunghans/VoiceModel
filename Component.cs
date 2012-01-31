@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Web;
 
 namespace VoiceModel
 {
-    public class Component : VxmlDocument
+    public class Component : VoiceModel
     {
-        private string jsonInput;
-
-        public Component(string id, string name, ComponentInput input)
+        private VoiceModel componentView;
+        public Component(string id, VoiceController componentController, ComponentInput input)
         {
-            this.viewName = "Component";
             this.id = id;
-            this.controllerName = name;
+            componentController.InitVoiceController();
+            string viewId = componentController.GetStartState().Id;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
-
-            this.jsonInput = serializer.Serialize(input);
+            string jsonInput = serializer.Serialize(input);
+            componentView = componentController.GetVoiceModel(viewId, jsonInput);
+            componentView.ControllerName = componentController.GetActionName(componentController);
+            componentView.AllowSettingControllerName = false;
         }
- 
+
+        public override VoiceModel BuildModel(string jsonArgs)
+        {
+            return componentView;
+        }
+
     }
 }

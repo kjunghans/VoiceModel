@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VoiceModel
 {
-    public class Ask : VxmlDocument
+    public class Ask : VoiceModel
     {
         public List<Prompt> initialPrompt { get; set; }
         public List<Prompt> nomatchPrompts { get; set; }
@@ -20,7 +20,7 @@ namespace VoiceModel
             nomatchPrompts = new List<Prompt>();
         }
 
-        public Ask(VxmlDocument doc)
+        public Ask(VoiceModel doc)
             : base(doc)
         {
             this.viewName = "Input";
@@ -50,7 +50,7 @@ namespace VoiceModel
             this.grammar = grammar;
         }
 
-        public Ask(VxmlDocument doc, string id, string textPrompt, Grammar grammar)
+        public Ask(VoiceModel doc, string id, string textPrompt, Grammar grammar)
             : base(doc) 
         {
             this.viewName = "Input";
@@ -73,5 +73,11 @@ namespace VoiceModel
             this.grammar = grammar;
         }
 
+        
+        public override VoiceModel BuildModel(string jsonArgs)
+        {
+            this.json = jsonArgs;
+            return this;
+        }
     }
 }
