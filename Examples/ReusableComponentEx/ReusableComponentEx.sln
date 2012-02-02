@@ -6,6 +6,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDateDtmf", "GetDateDtmf\GetDateDtmf.csproj", "{241FA375-E93F-4EAA-B326-F66A8AAC0B85}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ReusableComponentEx\\ReusableComponentEx.csproj
+		SccProjectName1 = ReusableComponentEx
+		SccLocalPath1 = ReusableComponentEx
+		SccProjectUniqueName2 = GetDateDtmf\\GetDateDtmf.csproj
+		SccProjectName2 = GetDateDtmf
+		SccLocalPath2 = GetDateDtmf
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
