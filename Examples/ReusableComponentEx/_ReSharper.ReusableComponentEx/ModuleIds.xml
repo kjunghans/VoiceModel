@@ -1,0 +1,5 @@
+<Modules>
+  <Module PersistentId="241FA375-E93F-4EAA-B326-F66A8AAC0B85" ModuleId="GetDateDtmf" />
+  <Module PersistentId="791CADD7-A698-4DDB-80DE-DF803C9C5D7A" ModuleId="ReusableComponentEx" />
+  <Module PersistentId="VoiceModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" ModuleId="VoiceModel" />
+</Modules>
