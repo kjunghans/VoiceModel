@@ -10,15 +10,17 @@ namespace VoiceModel
     public class Component : VoiceModel
     {
         private VoiceModel componentView;
-        public Component(string id, VoiceController componentController, ComponentInput input)
+        public Component(string id, VoiceController componentController)
         {
             this.id = id;
             componentController.InitVoiceController();
             string viewId = componentController.GetStartState().Id;
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string jsonInput = serializer.Serialize(input);
-            componentView = componentController.GetVoiceModel(viewId, jsonInput);
-            componentView.ControllerName = componentController.GetActionName(componentController);
+            //input.ReturnId = id;
+            //componentController.SessionMgr.SetComponentInput(input);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //string jsonInput = serializer.Serialize(input);
+            componentView = componentController.GetVoiceModel(viewId, "");
+            componentView.ControllerName = componentController.ActionFullPath;
             componentView.AllowSettingControllerName = false;
         }
 

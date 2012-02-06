@@ -10,25 +10,31 @@ namespace VoiceModel
     {
         private const string _componentInputPrefix = "vmc.input.";
         private const string _componentOutputPrefix = "vmc.output.";
+        private string _componentName;
 
-        public static void SetComponentInput(string componentName, ComponentInput input)
+        public SessionData(string componentName)
         {
-            HttpContext.Current.Session.Add(_componentInputPrefix + componentName, input);
+            _componentName = componentName;
         }
 
-        public static ComponentInput GetComponentInput(string componentName)
+        public void SetComponentInput(ComponentInput input)
         {
-            return (ComponentInput)HttpContext.Current.Session[_componentInputPrefix + componentName];
+            HttpContext.Current.Session.Add(_componentInputPrefix + _componentName, input);
         }
 
-        public static void SetComponentOutput(string componentName, ComponentOutput output)
+        public ComponentInput GetComponentInput()
         {
-            HttpContext.Current.Session.Add(_componentOutputPrefix + componentName, output);
+            return (ComponentInput)HttpContext.Current.Session[_componentInputPrefix + _componentName];
         }
 
-        public static ComponentInput GetComponentOutput(string componentName)
+        public void SetComponentOutput(ComponentOutput output)
         {
-            return (ComponentInput)HttpContext.Current.Session[_componentOutputPrefix + componentName];
+            HttpContext.Current.Session.Add(_componentOutputPrefix + _componentName, output);
+        }
+
+        public ComponentInput GetComponentOutput()
+        {
+            return (ComponentInput)HttpContext.Current.Session[_componentOutputPrefix + _componentName];
         }
     }
 }
