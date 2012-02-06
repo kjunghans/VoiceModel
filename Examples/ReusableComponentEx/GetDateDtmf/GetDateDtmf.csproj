@@ -51,19 +51,23 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="VoiceModel">
-      <HintPath>..\..\VoiceModel\bin\Debug\VoiceModel.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetDateDtmfController.cs" />
     <Compile Include="GetDateDtmfInput.cs" />
     <Compile Include="GetDateDtmfRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartGetDateState.cs" />
     <Compile Include="ValidateDate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\VoiceModel\VoiceModel.csproj">
+      <Project>{C1918322-CF2F-4A20-92B2-47A938DFD8B0}</Project>
+      <Name>VoiceModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

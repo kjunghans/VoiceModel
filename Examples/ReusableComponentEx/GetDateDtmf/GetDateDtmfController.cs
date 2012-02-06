@@ -30,7 +30,7 @@ namespace GetDateDtmf
         public override CallFlow BuildCallFlow()
         {
             CallFlow flow = new CallFlow();
-            flow.AddStartState(new State("getDate","validateDate"));
+            flow.AddStartState(new StartGetDateState("getDate","validateDate",this));
             flow.AddState(new ValidateDate("validateDate","confirmDate","invalidDate"));
             flow.AddState(new State("confirmDate"));
             flow.AddState(new State("invalidDate"));

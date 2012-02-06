@@ -8,5 +8,6 @@ namespace GetDateDtmf
 {
     public class GetDateDtmfInput : ComponentInput
     {
+        public Prompt AskDatePrompt { get; set; }
     }
 }

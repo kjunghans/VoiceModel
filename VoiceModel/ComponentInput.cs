@@ -7,6 +7,7 @@ namespace VoiceModel
 {
     public abstract class ComponentInput
     {
-        public string returnController { get; set; }
+        public string ReturnAction { get; set; }
+        public string ReturnId { get; set; }
     }
 }

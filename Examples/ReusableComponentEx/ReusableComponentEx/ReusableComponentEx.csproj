@@ -71,9 +71,6 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="VoiceModel">
-      <HintPath>..\..\VoiceModel\bin\Debug\VoiceModel.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MainController.cs" />
@@ -124,6 +121,10 @@
     <Content Include="Area\Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\VoiceModel\VoiceModel.csproj">
+      <Project>{C1918322-CF2F-4A20-92B2-47A938DFD8B0}</Project>
+      <Name>VoiceModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GetDateDtmf\GetDateDtmf.csproj">
       <Project>{241FA375-E93F-4EAA-B326-F66A8AAC0B85}</Project>
       <Name>GetDateDtmf</Name>

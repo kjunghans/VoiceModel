@@ -17,6 +17,7 @@ namespace VoiceModel
         string recordingPath { get; set; }
         string vmCacheId;
         string CfCacheId;
+        public SessionData SessionMgr { get; set; }
 
 
         private IVoiceModels GetVoiceModel()
@@ -56,18 +57,32 @@ namespace VoiceModel
 
         public virtual string ControllerName
         {
-            get { return GetControllerName(this); }
+            get { string controllerFullName = this.GetType().Name; return controllerFullName.Replace("Controller", ""); }
         }
 
-        public string GetControllerName(VoiceController vc)
+        //public string GetControllerName(VoiceController vc)
+        //{
+        //    string controllerFullName = vc.GetType().Name;
+        //    return controllerFullName.Replace("Controller", "");
+        //}
+
+        public string ActionName
         {
-            string controllerFullName = vc.GetType().Name;
-            return controllerFullName.Replace("Controller", "");
+            get { return ControllerName + "/StateMachine"; }
         }
 
-        public string GetActionName(VoiceController vc)
+        public string GetApplicationUri()
         {
-            return GetControllerName(vc) + "/StateMachine";
+            string fpath = string.Empty;
+            if (Request != null)
+                fpath = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath;
+            return fpath;
+
+        }
+
+        public string ActionFullPath
+        {
+            get { return GetApplicationUri() + ActionName; }
         }
 
         public void InitVoiceController()
@@ -77,6 +92,7 @@ namespace VoiceModel
             CfCacheId = ControllerName + ".cfid";
             voiceModels = GetVoiceModel();
             callFlow = GetCallFlow();
+            SessionMgr = new SessionData(ControllerName);
 
         }
 
@@ -107,7 +123,15 @@ namespace VoiceModel
 
             VoiceModel doc = GetVoiceModel(viewId, nextStateArgs);
             if (doc.AllowSettingControllerName)
-                doc.ControllerName = GetActionName(this);
+            {
+                doc.ControllerName = ActionFullPath;
+            }
+            else
+            {
+                if (!doc.ControllerNameHasFullPath)
+                    doc.ControllerName = GetApplicationUri() + doc.ControllerName;
+
+            }
             return View(doc.ViewName, doc);
         }
 

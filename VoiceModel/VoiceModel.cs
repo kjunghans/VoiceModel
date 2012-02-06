@@ -15,6 +15,12 @@ namespace VoiceModel
         public bool AllowSettingControllerName { get; set; }
         public string ControllerName { get; set; }
 
+        public  bool ControllerNameHasFullPath
+        {
+            get { return ControllerName.Contains("http"); }
+        }
+
+
         public VoiceModel()
         {
             this.AppName = null;
