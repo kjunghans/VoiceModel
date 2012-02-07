@@ -19,7 +19,7 @@ namespace GetDateDtmf
         public override void OnEntry()
         {
             Ask getDate = (Ask) _controller.GetVoiceModel(base.Id,"");
-            GetDateDtmfInput input = (GetDateDtmfInput) _controller.SessionMgr.GetComponentInput();
+            var input = (GetDateDtmfInput) Flows.SessionMgr.GetComponentInput();
             getDate.initialPrompt.Clear();
             getDate.initialPrompt.Add(input.AskDatePrompt);
         }

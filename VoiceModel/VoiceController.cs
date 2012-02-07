@@ -17,8 +17,11 @@ namespace VoiceModel
         string recordingPath { get; set; }
         string vmCacheId;
         string CfCacheId;
-        public SessionData SessionMgr { get; set; }
 
+        public SessionData SessionMgr
+        {
+            get { return callFlow.SessionMgr; }
+        }
 
         private IVoiceModels GetVoiceModel()
         {
@@ -92,7 +95,7 @@ namespace VoiceModel
             CfCacheId = ControllerName + ".cfid";
             voiceModels = GetVoiceModel();
             callFlow = GetCallFlow();
-            SessionMgr = new SessionData(ControllerName);
+            callFlow.SessionMgr = new SessionData(ControllerName);
 
         }
 

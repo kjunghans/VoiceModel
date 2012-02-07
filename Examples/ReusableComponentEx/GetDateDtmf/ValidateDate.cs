@@ -63,9 +63,10 @@ namespace GetDateDtmf
             }
         }
 
-        private  bool isValidDate(string date)
+        private  bool isValidDate(string date, out DateTime dateTime)
         {
             bool isValid = true;
+            dateTime = DateTime.MinValue;
             try
             {
                 int month = Int32.Parse(date.Substring(0, 2));
@@ -87,13 +88,21 @@ namespace GetDateDtmf
 
         public override void OnEntry()
         {
-           if (isValidDate(this.jsonArgs))
+            DateTime date;
+           if (isValidDate(this.jsonArgs, out  date))
            {
-               string jsonStr = VoiceDate.ConvertToJson(this.jsonArgs);
-                this.Flows.FireEvent(this.Id, "continue", jsonStr);
+               GetDateDtmfOutput output = new GetDateDtmfOutput();
+               output.Date = date;
+               output.IsValidDate = true;
+               Flows.SessionMgr.SetComponentOutput(output);
+                this.Flows.FireEvent(this.Id, "continue", null);
             }
             else
             {
+                GetDateDtmfOutput output = new GetDateDtmfOutput();
+                output.Date = date;
+                output.IsValidDate = false;
+                Flows.SessionMgr.SetComponentOutput(output);
                 this.Flows.FireEvent(this.Id, "error", null);
            
             }

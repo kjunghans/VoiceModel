@@ -7,6 +7,8 @@ namespace VoiceModel.CallFlow
 {
     public interface ICallFlow
     {
+        SessionData SessionMgr { get; set; }
+
         void AddState(State state);
         void AddStartState(State state);
         bool GetStartState(out State state);

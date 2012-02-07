@@ -32,9 +32,9 @@ namespace VoiceModel
             HttpContext.Current.Session.Add(_componentOutputPrefix + _componentName, output);
         }
 
-        public ComponentInput GetComponentOutput()
+        public ComponentOutput GetComponentOutput()
         {
-            return (ComponentInput)HttpContext.Current.Session[_componentOutputPrefix + _componentName];
+            return (ComponentOutput)HttpContext.Current.Session[_componentOutputPrefix + _componentName];
         }
     }
 }
