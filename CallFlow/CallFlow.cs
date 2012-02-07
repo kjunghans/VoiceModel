@@ -13,6 +13,8 @@ namespace VoiceModel.CallFlow
         private State _nextState = null;
         private string _startStateId;
 
+        public SessionData SessionMgr { get; set; }
+
         public void AddState(State state)
         {
             state.Flows = this;
@@ -33,11 +35,10 @@ namespace VoiceModel.CallFlow
         
         public void FireEvent(string stateId, string sEvent, string data, out string nextStateId, out string nextStateArgs)
         {
-            State currState;
             nextStateArgs = string.Empty;
             nextStateId = string.Empty;
 
-            if (stateId == null || stateId == string.Empty)
+            if (string.IsNullOrEmpty(stateId))
             {
                 if (GetStartState(out _nextState))
                 {
@@ -49,6 +50,7 @@ namespace VoiceModel.CallFlow
             }
             else
             {
+                State currState;
                 if (_states.TryGetValue(stateId, out currState))
                 {
                     currState.OnExit();

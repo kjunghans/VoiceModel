@@ -17,7 +17,7 @@ namespace VoiceModel.CallFlow
 
         public override void OnEntry()
         {
-            ComponentInput input = _controller.SessionMgr.GetComponentInput();
+            ComponentInput input = Flows.SessionMgr.GetComponentInput();
             VoiceModel vm = _controller.GetVoiceModel(this.Id, "");
             vm.ControllerName = input.ReturnAction;
             vm.AllowSettingControllerName = false;
