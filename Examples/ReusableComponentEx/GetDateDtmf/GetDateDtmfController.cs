@@ -32,8 +32,8 @@ namespace GetDateDtmf
             CallFlow flow = new CallFlow();
             flow.AddStartState(new StartGetDateState("getDate","validateDate",this));
             flow.AddState(new ValidateDate("validateDate","confirmDate","invalidDate"));
-            flow.AddState(new State("confirmDate"));
-            flow.AddState(new State("invalidDate"));
+            flow.AddState(new ReturnState("confirmDate", this));
+            flow.AddState(new ReturnState("invalidDate", this));
             return flow;
         }
 

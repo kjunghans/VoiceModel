@@ -6,15 +6,22 @@ using VoiceModel.CallFlow;
 
 namespace VoiceModel.CallFlow
 {
-    class ReturnState : State
+    public class ReturnState : State
     {
-        public ReturnState(string Id, string target) : base(Id, target)
+        VoiceController _controller;
+
+        public ReturnState(string Id, VoiceController controller) : base(Id)
         {
+            _controller = controller;
         }
 
         public override void OnEntry()
         {
-            base.OnEntry();
+            ComponentInput input = _controller.SessionMgr.GetComponentInput();
+            VoiceModel vm = _controller.GetVoiceModel(this.Id, "");
+            vm.ControllerName = input.ReturnAction;
+            vm.AllowSettingControllerName = false;
+            vm.id = input.ReturnId;
         }
     }
 }
