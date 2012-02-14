@@ -15,13 +15,8 @@ namespace WeatherVoice.Controllers
         public override VoiceModels BuildVoiceModels()
         {
             VoiceModels views = new VoiceModels();
-            //Create a base document that will be used by all of the objects
-            //That specifies what action to use in the Controller.  This action
-            //will be used for every object to run our state machine.
-            VxmlDocument doc = new VxmlDocument();
-            doc.controllerName = "StateMachine";
-            views.Add(new Say(doc, "greeting", "Welcome to Weather Voice."));
-            views.Add(new Ask(doc, "getZip", "Enter the five digit zip code for the area where you would like the weather report on.",
+            views.Add(new Say("greeting", "Welcome to Weather Voice."));
+            views.Add(new Ask("getZip", "Enter the five digit zip code for the area where you would like the weather report on.",
                 new Grammar("digits?minlength=5")));
             Prompt weatherPrompt = new Prompt();
             weatherPrompt.audios.Add(new TtsMessage("The temperature today is "));
@@ -29,7 +24,7 @@ namespace WeatherVoice.Controllers
             weatherPrompt.audios.Add(new Silence(1000));
             weatherPrompt.audios.Add(new TtsMessage("The conditions are "));
             weatherPrompt.audios.Add(new TtsVariable("d.conditions"));
-            views.Add(new Say(doc, "voiceWeather", weatherPrompt));
+            views.Add(new Say("voiceWeather", weatherPrompt));
             views.Add(new Exit("goodbye", "Thank you for using Weather Voice. Goodbye."));
 
             return views;
@@ -51,9 +46,5 @@ namespace WeatherVoice.Controllers
 
         }
 
-        public override string ControllerName
-        {
-            get { return "Weather"; }
-        }
-    }
+     }
 }
