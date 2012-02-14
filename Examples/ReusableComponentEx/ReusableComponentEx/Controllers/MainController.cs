@@ -18,9 +18,15 @@ namespace ReusableComponentEx.Controllers
         {
             VoiceModels views = new VoiceModels();
             views.Add(new Say("greeting","Welcome to the Reusable Dialog Component Example."));
+            //This tells ViewModel to get the views from the reusable component.
             views.Add(new Component("getStartDate", getDate));
-            views.Add(new Component("getEndDate", getDate));
-            views.Add(new Exit("goodbye", "Your message has been saved. Goodbye."));
+            views.Add(new Component("getFinishDate", getDate));
+            Prompt sayDiff = new Prompt();
+            sayDiff.audios.Add(new TtsMessage("The difference between the start and finish dates is "));
+            sayDiff.audios.Add(new TtsVariable("d.daysDiff"));
+            sayDiff.audios.Add(new TtsMessage(" days."));
+            views.Add(new Say("differenceInDays",sayDiff));
+            views.Add(new Exit("goodbye", "Goodbye."));
             return views;
 
         }
@@ -29,15 +35,19 @@ namespace ReusableComponentEx.Controllers
         {
             CallFlow flow = new CallFlow();
             flow.AddStartState(new State("greeting", "getStartDate"));
+            //This tells the state machine to use the state machine in the reusable component.
             flow.AddState(new StartComponentState("getStartDate", "saveStartDate", getDate, 
                 new GetDateDtmfInput()
                 {ReturnAction = this.ActionFullPath, AskDatePrompt = new Prompt("Enter the start date as a six digit number.")}));
+            //When we return from the reusable component we need to do something with the information returned (i.e. the date entered).
             flow.AddState(new SaveStartDate("saveStartDate", "getFinishDate"));
-
+            //Call the reusable component again to get the finish date.
             flow.AddState(new StartComponentState("getFinishDate", "saveFinishDate", getDate, 
                 new GetDateDtmfInput() 
                 { ReturnAction = this.ActionFullPath, AskDatePrompt = new Prompt("Enter the finish date as a six digit number.") }));
-            flow.AddState(new SaveFinishDate("saveFinishDate","goodbye"));
+            //Get the finish date and calculate the difference between the start and finish in days.
+            flow.AddState(new SaveFinishDate("saveFinishDate", "differenceInDays"));
+            flow.AddState(new State("differenceInDays", "goodbye"));
             flow.AddState(new State("goodbye"));
             return flow;
 

@@ -5,6 +5,7 @@ using System.Web;
 using VoiceModel.CallFlow;
 using GetDateDtmf;
 using ReusableComponentEx.Models;
+using System.Web.Script.Serialization;
 
 namespace ReusableComponentEx.States
 {
@@ -21,9 +22,11 @@ namespace ReusableComponentEx.States
             getDateComponent.InitVoiceController();
             GetDateDtmfOutput output = (GetDateDtmfOutput)getDateComponent.SessionMgr.GetComponentOutput();
             Models.DomainModel model = (DomainModel)Flows.SessionMgr.GetComponentInput();
-            model.finishDate = output.Date;
-            Flows.SessionMgr.SetComponentInput(model);
-            this.Flows.FireEvent(this.Id, "continue", null);
+            string daysDiff = output.Date.Subtract(model.startDate).Days.ToString();
+            var d = new { daysDiff = daysDiff };
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(d);
+            this.Flows.FireEvent(this.Id, "continue", json);
         }
 
     }

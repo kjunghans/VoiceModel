@@ -76,6 +76,7 @@ namespace GetDateDtmf
                     isValid = false;
                 if (day < 1 || day > 31)
                     isValid = false;
+                dateTime = new DateTime(year, month, day);
             }
             catch (Exception)
             {
@@ -95,7 +96,8 @@ namespace GetDateDtmf
                output.Date = date;
                output.IsValidDate = true;
                Flows.SessionMgr.SetComponentOutput(output);
-                this.Flows.FireEvent(this.Id, "continue", null);
+               string json = VoiceDate.ConvertToJson(this.jsonArgs);
+               this.Flows.FireEvent(this.Id, "continue", json);
             }
             else
             {
