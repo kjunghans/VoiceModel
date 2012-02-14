@@ -19,7 +19,7 @@ namespace VoiceModel.CallFlow
         {
             ComponentInput input = Flows.SessionMgr.GetComponentInput();
             VoiceModel vm = _controller.GetVoiceModel(this.Id, "");
-            vm.ControllerName = input.ReturnAction;
+            vm.ControllerName = _controller.GetApplicationUri() + input.ReturnAction;
             vm.AllowSettingControllerName = false;
             vm.id = input.ReturnId;
         }
