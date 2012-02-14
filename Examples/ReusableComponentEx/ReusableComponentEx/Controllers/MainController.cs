@@ -38,13 +38,13 @@ namespace ReusableComponentEx.Controllers
             //This tells the state machine to use the state machine in the reusable component.
             flow.AddState(new StartComponentState("getStartDate", "saveStartDate", getDate, 
                 new GetDateDtmfInput()
-                {ReturnAction = this.ActionFullPath, AskDatePrompt = new Prompt("Enter the start date as a six digit number.")}));
+                {ReturnAction = this.ActionName, AskDatePrompt = new Prompt("Enter the start date as a six digit number.")}));
             //When we return from the reusable component we need to do something with the information returned (i.e. the date entered).
             flow.AddState(new SaveStartDate("saveStartDate", "getFinishDate"));
             //Call the reusable component again to get the finish date.
             flow.AddState(new StartComponentState("getFinishDate", "saveFinishDate", getDate, 
                 new GetDateDtmfInput() 
-                { ReturnAction = this.ActionFullPath, AskDatePrompt = new Prompt("Enter the finish date as a six digit number.") }));
+                { ReturnAction = this.ActionName, AskDatePrompt = new Prompt("Enter the finish date as a six digit number.") }));
             //Get the finish date and calculate the difference between the start and finish in days.
             flow.AddState(new SaveFinishDate("saveFinishDate", "differenceInDays"));
             flow.AddState(new State("differenceInDays", "goodbye"));

@@ -78,7 +78,11 @@ namespace VoiceModel
         {
             string fpath = string.Empty;
             if (Request != null)
+            {
                 fpath = Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath;
+                if (!fpath.EndsWith("/"))
+                    fpath += "/";
+            }
             return fpath;
 
         }
