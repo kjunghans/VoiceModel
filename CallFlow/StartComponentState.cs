@@ -16,8 +16,7 @@ namespace VoiceModel.CallFlow
 
         public StartComponentState(string id, string target, VoiceController componentController, ComponentInput input) :base(id, target)
         {
-            //JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //this.jsonArgs = HttpContext.Current.Server.UrlEncode(serializer.Serialize(input));
+            componentController.InitVoiceController();
             _componentState = componentController.GetStartState();
             _input = input;
             _input.ReturnId = id;
