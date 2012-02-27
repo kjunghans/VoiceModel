@@ -8,7 +8,7 @@
 <var name="vm_event" expr="'continue'" />
 
 <form id="@Model.id">
-   <transfer name="T_1" bridge="@Model.bridge.ToString()" 
+   <transfer name="T_1" bridge="@Model.bridge.ToString().ToLower()" 
                 dest="@Model.destination"> 
 
     @{Html.RenderPartial("Prompt", Model.prompts);}
