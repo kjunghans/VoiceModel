@@ -34,9 +34,10 @@ namespace VoiceModel.CallFlow
         public virtual void OnEntry() { }
         public virtual void OnExit() { }
 
-        public void AddTransition(string sEvent, string target, guardCond gCond)
+        public State AddTransition(string sEvent, string target, guardCond gCond)
         {
             Transitions.Add(new Transition(sEvent, target, gCond ));
+            return this;
         }
 
         public string getTarget(string sEvent, string result)

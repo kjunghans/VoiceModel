@@ -15,10 +15,6 @@ namespace VoiceModel
             this.id = id;
             componentController.InitVoiceController();
             string viewId = componentController.GetStartState().Id;
-            //input.ReturnId = id;
-            //componentController.SessionMgr.SetComponentInput(input);
-            //JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //string jsonInput = serializer.Serialize(input);
             componentView = componentController.GetVoiceModel(viewId, "");
             componentView.ControllerName = componentController.ActionFullPath;
             componentView.AllowSettingControllerName = false;

@@ -72,6 +72,7 @@
     <Compile Include="SayAs.cs" />
     <Compile Include="SessionData.cs" />
     <Compile Include="Silence.cs" />
+    <Compile Include="Transfer.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="TtsMessage.cs" />
     <Compile Include="TtsVariable.cs" />
@@ -95,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Record.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Transfer.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
