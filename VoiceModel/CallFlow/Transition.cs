@@ -9,23 +9,30 @@ namespace VoiceModel.CallFlow
 
     public class Transition
     {
-        public string Event { get; set; }
+        public Event Event { get; set; }
         public string Target { get; set; }
-        public guardCond GuardCond { get; set; }
+        public Condition Cond { get; set; }
         public Transition() { }
-        public Transition(string Event, string Target)
+        public Transition(Event Event, string Target)
         {
             this.Event = Event;
             this.Target = Target;
-            this.GuardCond = null;
+            this.Cond = new Condition();
         }
 
-        public Transition(string Event, string Target, guardCond gCond)
+        public Transition(Event Event, string Target, Condition gCond)
         {
             this.Event = Event;
             this.Target = Target;
-            this.GuardCond = gCond;
+            this.Cond = gCond;
         }
-        
+
+        public Transition(Event Event, string Target, string condScript)
+        {
+            this.Event = Event;
+            this.Target = Target;
+            this.Cond = new Condition(condScript);
+        }
+
     }
 }

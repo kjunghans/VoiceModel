@@ -7,11 +7,13 @@ namespace VoiceModel.CallFlow
 {
     public interface ICallFlow
     {
-        SessionData SessionMgr { get; set; }
 
-        void AddState(State state);
-        void AddStartState(State state);
-        bool GetStartState(out State state);
-        void FireEvent(string stateId, string sEvent, string data, out string nextStateId, out string nextStateArgs);
+        void AddState(State state, bool initialState);
+        
+        void FireEvent(string sEvent, string data);
+
+        VoiceModel GetCurrentVoiceModel();
+
+        State CurrState { get; }
     }
 }
