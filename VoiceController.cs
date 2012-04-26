@@ -12,44 +12,38 @@ namespace VoiceModel
 {
     public abstract class VoiceController : Controller
     {
-        IVoiceModels voiceModels {get; set;}
-        ICallFlow callFlow {get; set;}
+        //ICallFlow callFlow {get; set;}
         string recordingPath { get; set; }
-        string vmCacheId;
-        string CfCacheId;
+        SessionData sessionMgr = new SessionData("VoiceController");
 
-        public SessionData SessionMgr
+
+        //private  ICallFlow GetCallFlow()
+        //{
+        //    CallFlow.CallFlow flow = (CallFlow.CallFlow)HttpRuntime.Cache.Get(CfCacheId);
+        //    if (flow == null)
+        //    {
+        //        flow = BuildCallFlow();
+        //        System.Web.HttpContext.Current.Cache.Insert(CfCacheId, flow);
+        //    }
+        //    return flow;
+
+        //}
+
+        private ICallFlow GetCallFlow()
         {
-            get { return callFlow.SessionMgr; }
-        }
-
-        private IVoiceModels GetVoiceModel()
-        {
-            VoiceModels views = (VoiceModels)HttpRuntime.Cache.Get(vmCacheId);
-            if (views == null)
-            {
-                views = BuildVoiceModels();
-                System.Web.HttpContext.Current.Cache.Insert(vmCacheId, views);
-            }
-            return views;
-
-        }
-
-        public abstract VoiceModels BuildVoiceModels();
-
-
-        private  ICallFlow GetCallFlow()
-        {
-            CallFlow.CallFlow flow = (CallFlow.CallFlow)HttpRuntime.Cache.Get(CfCacheId);
+            CallFlow.CallFlow flow = sessionMgr.GetCallFlow();
             if (flow == null)
             {
                 flow = BuildCallFlow();
-                System.Web.HttpContext.Current.Cache.Insert(CfCacheId, flow);
+                sessionMgr.SetCallFlow(flow);
             }
             return flow;
-
         }
 
+        private void SetCallFlow(ICallFlow cf)
+        {
+            sessionMgr.SetCallFlow((CallFlow.CallFlow)cf);
+        }
 
         public abstract CallFlow.CallFlow BuildCallFlow();
 
@@ -63,12 +57,7 @@ namespace VoiceModel
             get { string controllerFullName = this.GetType().Name; return controllerFullName.Replace("Controller", ""); }
         }
 
-        //public string GetControllerName(VoiceController vc)
-        //{
-        //    string controllerFullName = vc.GetType().Name;
-        //    return controllerFullName.Replace("Controller", "");
-        //}
-
+ 
         public string ActionName
         {
             get { return ControllerName + "/StateMachine"; }
@@ -95,12 +84,8 @@ namespace VoiceModel
         public void InitVoiceController()
         {
             recordingPath = RecordingPath;
-            vmCacheId = ControllerName + ".vmid";
-            CfCacheId = ControllerName + ".cfid";
-            voiceModels = GetVoiceModel();
-            callFlow = GetCallFlow();
-            callFlow.SessionMgr = new SessionData(ControllerName);
-
+            //callFlow = GetCallFlow();
+            sessionMgr = new SessionData(ControllerName + ".cf");
         }
 
         protected override void Initialize(RequestContext rc)
@@ -109,42 +94,45 @@ namespace VoiceModel
             InitVoiceController();
         }
 
-        public State GetStartState()
-        {
-            State state = null;
-            callFlow.GetStartState(out state);
-            return state;
-        }
+ 
+        // protected ActionResult VoiceView(string id, string vEvent, string json)
+        //{
 
-        public VoiceModel GetVoiceModel(string id, string args)
-        {
-            return voiceModels.Get(id, args);
-        }
+        //    callFlow.FireEvent(vEvent, json);
+
+        //    VoiceModel doc = callFlow.CurrState.DataModel;
+        //    doc.json = callFlow.CurrState.jsonArgs;
+        //    doc.ControllerName = ActionName;
+        //    //if (doc.AllowSettingControllerName)
+        //    //{
+        //    //    doc.ControllerName = ActionFullPath;
+        //    //}
+        //    //else
+        //    //{
+        //    //    if (!doc.ControllerNameHasFullPath)
+        //    //        doc.ControllerName = GetApplicationUri() + doc.ControllerName;
+
+        //    //}
+        //    return View(doc.ViewName, doc);
+        //}
+
 
         protected ActionResult VoiceView(string id, string vEvent, string json)
         {
+            CallFlow.ICallFlow callFlow = GetCallFlow();
+            callFlow.FireEvent(vEvent, json);
 
-            string viewId;
-            string nextStateArgs;
-            callFlow.FireEvent(id, vEvent, json, out viewId, out nextStateArgs);
+            VoiceModel doc = callFlow.CurrState.DataModel;
+            doc.json = callFlow.CurrState.jsonArgs;
+            doc.ControllerName = ActionName;
+            SetCallFlow(callFlow);
 
-            VoiceModel doc = GetVoiceModel(viewId, nextStateArgs);
-            if (doc.AllowSettingControllerName)
-            {
-                doc.ControllerName = ActionFullPath;
-            }
-            else
-            {
-                if (!doc.ControllerNameHasFullPath)
-                    doc.ControllerName = GetApplicationUri() + doc.ControllerName;
-
-            }
             return View(doc.ViewName, doc);
+
         }
 
         public ActionResult StateMachine(string vm_id, string vm_event, string vm_result)
         {
-
             return VoiceView(vm_id, vm_event, vm_result);
         }
 

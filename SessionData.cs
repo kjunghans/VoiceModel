@@ -8,8 +8,6 @@ namespace VoiceModel
 {
     public class SessionData
     {
-        private const string _componentInputPrefix = "vmc.input.";
-        private const string _componentOutputPrefix = "vmc.output.";
         private string _componentName;
 
         public SessionData(string componentName)
@@ -17,24 +15,15 @@ namespace VoiceModel
             _componentName = componentName;
         }
 
-        public void SetComponentInput(ComponentInput input)
+        public void SetCallFlow(CallFlow.CallFlow cf)
         {
-            HttpContext.Current.Session.Add(_componentInputPrefix + _componentName, input);
+            HttpContext.Current.Session.Add( _componentName, cf);
         }
 
-        public ComponentInput GetComponentInput()
+        public CallFlow.CallFlow GetCallFlow()
         {
-            return (ComponentInput)HttpContext.Current.Session[_componentInputPrefix + _componentName];
+            return (CallFlow.CallFlow)HttpContext.Current.Session[_componentName];
         }
 
-        public void SetComponentOutput(ComponentOutput output)
-        {
-            HttpContext.Current.Session.Add(_componentOutputPrefix + _componentName, output);
-        }
-
-        public ComponentOutput GetComponentOutput()
-        {
-            return (ComponentOutput)HttpContext.Current.Session[_componentOutputPrefix + _componentName];
-        }
-    }
+     }
 }
