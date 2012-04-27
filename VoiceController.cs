@@ -12,22 +12,9 @@ namespace VoiceModel
 {
     public abstract class VoiceController : Controller
     {
-        //ICallFlow callFlow {get; set;}
         string recordingPath { get; set; }
         SessionData sessionMgr = new SessionData("VoiceController");
 
-
-        //private  ICallFlow GetCallFlow()
-        //{
-        //    CallFlow.CallFlow flow = (CallFlow.CallFlow)HttpRuntime.Cache.Get(CfCacheId);
-        //    if (flow == null)
-        //    {
-        //        flow = BuildCallFlow();
-        //        System.Web.HttpContext.Current.Cache.Insert(CfCacheId, flow);
-        //    }
-        //    return flow;
-
-        //}
 
         private ICallFlow GetCallFlow()
         {
@@ -84,7 +71,6 @@ namespace VoiceModel
         public void InitVoiceController()
         {
             recordingPath = RecordingPath;
-            //callFlow = GetCallFlow();
             sessionMgr = new SessionData(ControllerName + ".cf");
         }
 
@@ -95,28 +81,6 @@ namespace VoiceModel
         }
 
  
-        // protected ActionResult VoiceView(string id, string vEvent, string json)
-        //{
-
-        //    callFlow.FireEvent(vEvent, json);
-
-        //    VoiceModel doc = callFlow.CurrState.DataModel;
-        //    doc.json = callFlow.CurrState.jsonArgs;
-        //    doc.ControllerName = ActionName;
-        //    //if (doc.AllowSettingControllerName)
-        //    //{
-        //    //    doc.ControllerName = ActionFullPath;
-        //    //}
-        //    //else
-        //    //{
-        //    //    if (!doc.ControllerNameHasFullPath)
-        //    //        doc.ControllerName = GetApplicationUri() + doc.ControllerName;
-
-        //    //}
-        //    return View(doc.ViewName, doc);
-        //}
-
-
         protected ActionResult VoiceView(string id, string vEvent, string json)
         {
             CallFlow.ICallFlow callFlow = GetCallFlow();
