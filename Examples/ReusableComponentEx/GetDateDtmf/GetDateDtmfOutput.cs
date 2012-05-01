@@ -6,7 +6,7 @@ using VoiceModel;
 
 namespace GetDateDtmf
 {
-    public class GetDateDtmfOutput : ComponentOutput
+    public class GetDateDtmfOutput 
     {
         public DateTime Date { get; set; }
         public bool IsValidDate { get; set; }

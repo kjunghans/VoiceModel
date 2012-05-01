@@ -4,50 +4,50 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GetDateDtmf;
-using ReusableComponentEx.States;
 using VoiceModel;
 using VoiceModel.CallFlow;
+using IronJS;
+using IronJS.Hosting;
+using System.Web.Script.Serialization;
 
 namespace ReusableComponentEx.Controllers
 {
     public class MainController : VoiceController
     {
 
-        public override VoiceModels BuildVoiceModels()
+        public override CallFlow BuildCallFlow()
         {
-            VoiceModels views = new VoiceModels();
-            views.Add(new Say("greeting","Welcome to the Reusable Dialog Component Example."));
-            //This tells ViewModel to get the views from the reusable component.
-            views.Add(new GetDateDtmfView("getStartDate"));
-            views.Add(new GetDateDtmfView("getFinishDate"));
+            CallFlow flow = new CallFlow();
+            flow.AddState(ViewStateBuilder.Build("greeting", "getStartDate", new Say("greeting", "Welcome to the Reusable Dialog Component Example.")), true);
+            //This tells the state machine to use the state machine in the reusable component.
+            flow.AddState(new State("getStartDate", "getFinishDate")
+                .AddNestedCallFlow(new GetDateDtmfRDC(new Prompt("Enter the start date as a six digit number.")))
+                .AddOnExitAction(delegate(CallFlow cf, State state, Event e)
+                {cf.Ctx.SetGlobal<GetDateDtmfOutput>("StartDate",((GetDateDtmfRDC)state.NestedCF).GetResults());}));
+               
+            flow.AddState(new State("getFinishDate", "calcDifference")
+                .AddNestedCallFlow(new GetDateDtmfRDC(new Prompt("Enter the finish date as a six digit number.")))
+                .AddOnExitAction(delegate(CallFlow cf, State state, Event e)
+                {cf.Ctx.SetGlobal<GetDateDtmfOutput>("FinishDate",((GetDateDtmfRDC)state.NestedCF).GetResults());}));
+
+            flow.AddState(new State("calcDifference","differenceInDays")
+                .AddOnEntryAction(delegate(CallFlow cf, State state, Event e)
+                {
+                    var startDate = cf.Ctx.GetGlobalAs<GetDateDtmfOutput>("StartDate");
+                    var finishDate = cf.Ctx.GetGlobalAs<GetDateDtmfOutput>("FinishDate");
+                    string daysDiff = finishDate.Date.Subtract(startDate.Date).Days.ToString();
+                    var d = new { daysDiff = daysDiff };
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    string json = serializer.Serialize(d);
+                    cf.FireEvent("continue", json);
+                }));
+
             Prompt sayDiff = new Prompt();
             sayDiff.audios.Add(new TtsMessage("The difference between the start and finish dates is "));
             sayDiff.audios.Add(new TtsVariable("d.daysDiff"));
             sayDiff.audios.Add(new TtsMessage(" days."));
-            views.Add(new Say("differenceInDays",sayDiff));
-            views.Add(new Exit("goodbye", "Goodbye."));
-            return views;
-
-        }
-
-        public override CallFlow BuildCallFlow()
-        {
-            CallFlow flow = new CallFlow();
-            flow.AddStartState(new State("greeting", "getStartDate"));
-            //This tells the state machine to use the state machine in the reusable component.
-            flow.AddState(new GetDateDtmfState("getStartDate", "saveStartDate", 
-                new GetDateDtmfInput()
-                {ReturnAction = this.ActionName, AskDatePrompt = new Prompt("Enter the start date as a six digit number.")}));
-            //When we return from the reusable component we need to do something with the information returned (i.e. the date entered).
-            flow.AddState(new SaveStartDate("saveStartDate", "getFinishDate"));
-            //Call the reusable component again to get the finish date.
-            flow.AddState(new GetDateDtmfState("getFinishDate", "saveFinishDate",  
-                new GetDateDtmfInput() 
-                { ReturnAction = this.ActionName, AskDatePrompt = new Prompt("Enter the finish date as a six digit number.") }));
-            //Get the finish date and calculate the difference between the start and finish in days.
-            flow.AddState(new SaveFinishDate("saveFinishDate", "differenceInDays"));
-            flow.AddState(new State("differenceInDays", "goodbye"));
-            flow.AddState(new State("goodbye"));
+            flow.AddState(ViewStateBuilder.Build("differenceInDays", "goodbye", new Say("differenceInDays", sayDiff)));
+            flow.AddState(ViewStateBuilder.Build("goodbye", new Exit("goodbye", "Goodbye.")));
             return flow;
 
         }

@@ -14,8 +14,18 @@ namespace VoiceModel.CallFlow
         private Dictionary<string,State> _states = new Dictionary<string,State>();
         private State _currState = null;
         private State _startState = null;
-        private CSharp.Context ctx = new CSharp.Context();
+        protected CSharp.Context ctx = new CSharp.Context();
+        private bool _completedFinalState = false;
 
+        public CSharp.Context Ctx { get { return ctx; } }
+
+        public bool CompletedFinalState { get { return _completedFinalState; } }
+
+        public void Restart()
+        {
+            _currState = null;
+            _completedFinalState = false;
+        }
 
         public void AddState(State state, bool initialState = false)
         {
@@ -35,7 +45,11 @@ namespace VoiceModel.CallFlow
                 if (_startState != null)
                 {
                     _currState = _startState;
-                    _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                    if (!_currState.DoingNestedStates(sEvent, data))
+                    {
+                        _currState.jsonArgs = data;
+                        _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                    }
                  }
 
             }
@@ -43,13 +57,23 @@ namespace VoiceModel.CallFlow
             {
                 
                 _currState.OnExit.Execute(this, _currState, new Event(sEvent));
-                State nextState;
-                string targetId = _currState.getTarget(sEvent, data);
-                if (_states.TryGetValue(targetId, out nextState))
+                if (_currState.isFinal)
                 {
-                    _currState = nextState;
-                    _currState.jsonArgs = data;
-                    _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                    _completedFinalState = true;
+                }
+                else
+                {
+                    State nextState;
+                    string targetId = _currState.getTarget(sEvent, data);
+                    if (_states.TryGetValue(targetId, out nextState))
+                    {
+                        _currState = nextState;
+                        if (!_currState.DoingNestedStates(sEvent, data))
+                        {
+                            _currState.jsonArgs = data;
+                            _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                        }
+                    }
                 }
                 
             }

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using VoiceModel.CallFlow;
 using System.Web.Script.Serialization;
+using IronJS;
+using IronJS.Hosting;
 
 namespace GetDateDtmf 
 {
-    class ValidateDate : State
+    class ValidateDate 
     {
+
         class VoiceDate
         {
             public string Month { get; set; }
@@ -63,6 +66,15 @@ namespace GetDateDtmf
             }
         }
 
+        private CallFlow _cf;
+        private State _state;
+
+        public ValidateDate(CallFlow cf, State state)
+        {
+            _cf = cf;
+            _state = state;
+        }
+
         private  bool isValidDate(string date, out DateTime dateTime)
         {
             bool isValid = true;
@@ -87,34 +99,28 @@ namespace GetDateDtmf
             return isValid;
         }
 
-        public override void OnEntry()
+        public void Validate()
         {
             DateTime date;
-           if (isValidDate(this.jsonArgs, out  date))
+           if (isValidDate(_state.jsonArgs, out  date))
            {
                GetDateDtmfOutput output = new GetDateDtmfOutput();
                output.Date = date;
                output.IsValidDate = true;
-               Flows.SessionMgr.SetComponentOutput(output);
-               string json = VoiceDate.ConvertToJson(this.jsonArgs);
-               this.Flows.FireEvent(this.Id, "continue", json);
+               _state.Ctx.SetGlobal<GetDateDtmfOutput>("GetDateDtmfOutput", output);
+               string json = VoiceDate.ConvertToJson(_state.jsonArgs);
+               _cf.FireEvent( "continue", json);
             }
             else
             {
                 GetDateDtmfOutput output = new GetDateDtmfOutput();
                 output.Date = date;
                 output.IsValidDate = false;
-                Flows.SessionMgr.SetComponentOutput(output);
-                this.Flows.FireEvent(this.Id, "error", null);
+                _state.Ctx.SetGlobal<GetDateDtmfOutput>("GetDateDtmfOutput", output);
+                _cf.FireEvent("error", null);
            
             }
         }
 
-        public ValidateDate(string id, string successTarget, string invalidTarget)
-            : base(id)
-        {
-            this.AddTransition("continue", successTarget, null);
-            this.AddTransition("error", invalidTarget, null);
-        }
     }
 }
