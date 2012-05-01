@@ -14,10 +14,17 @@ namespace VoiceModel.CallFlow
         public CallFlow NestedCF { get; set; }
         private List<Transition> Transitions = new List<Transition>();
         public CSharp.Context Ctx {get; set;}
-        public bool isFinal { get; set; }
         public Actions OnEntry { get; set; }
         public Actions OnExit { get; set; }
         public dynamic DataModel { get; set; }
+        private bool _childIsActive = false;
+
+        public bool ChildIsActive { get { return _childIsActive; } }
+
+        public bool isFinal
+        {
+            get { return Transitions.Count == 0; }
+        }
 
         public virtual string CurrentId
         {
@@ -28,9 +35,9 @@ namespace VoiceModel.CallFlow
         {
             this.Id = Id;
             this.Ctx = null;
-            this.isFinal = false;
             this.OnEntry = new Actions();
             this.OnExit = new Actions();
+            this.NestedCF = null;
         }
 
         public State(string Id, string target)
@@ -38,9 +45,9 @@ namespace VoiceModel.CallFlow
             this.Id = Id;
             AddTransition("continue", target, null);
             this.Ctx = null;
-            this.isFinal = false;
             this.OnEntry = new Actions();
             this.OnExit = new Actions();
+            this.NestedCF = null;
         }
 
         public State(string Id, string sEvent, string target)
@@ -48,15 +55,50 @@ namespace VoiceModel.CallFlow
             this.Id = Id;
             AddTransition(sEvent, target, null);
             this.Ctx = null;
-            this.isFinal = false;
             this.OnEntry = new Actions();
             this.OnExit = new Actions();
+            this.NestedCF = null;
         }
 
+        public bool DoingNestedStates(string evnt, string data)
+        {
+
+            if (NestedCF == null)
+                return false;
+            if (NestedCF.CompletedFinalState)
+            {
+                NestedCF.Restart();
+                return false;
+            }
+
+            NestedCF.FireEvent(evnt, data);
+            jsonArgs = NestedCF.CurrState.jsonArgs;
+            DataModel = NestedCF.CurrState.DataModel;
+
+            return true;
+        }
 
         public State AddTransition(string sEvent, string target, Condition gCond)
         {
             Transitions.Add(new Transition(new Event(sEvent), target, gCond ));
+            return this;
+        }
+
+        public State AddOnEntryAction(Action<CallFlow, State, Event> action)
+        {
+            OnEntry.Add(action);
+            return this;
+        }
+
+        public State AddOnExitAction(Action<CallFlow, State, Event> action)
+        {
+            OnExit.Add(action);
+            return this;
+        }
+
+        public State AddNestedCallFlow(CallFlow nestedCF)
+        {
+            this.NestedCF = nestedCF;
             return this;
         }
 
