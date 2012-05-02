@@ -60,24 +60,15 @@ namespace VoiceModel.CallFlow
             this.NestedCF = null;
         }
 
-        public bool DoingNestedStates(string evnt, string data)
+        public void FireEventInNestedCF(string evnt, string data)
         {
-
-            if (NestedCF == null)
-                return false;
-            if (NestedCF.CompletedFinalState)
-            {
-                NestedCF.Restart();
-                return false;
-            }
-
             NestedCF.FireEvent(evnt, data);
             jsonArgs = NestedCF.CurrState.jsonArgs;
             DataModel = NestedCF.CurrState.DataModel;
 
-            return true;
         }
 
+ 
         public State AddTransition(string sEvent, string target, Condition gCond)
         {
             Transitions.Add(new Transition(new Event(sEvent), target, gCond ));
