@@ -11,6 +11,8 @@ namespace VoiceModel.CallFlow
 
     public class CallFlow : ICallFlow
     {
+        public enum CFStatus { Empty, NotStarted, Active, Completed }
+
         private Dictionary<string,State> _states = new Dictionary<string,State>();
         private State _currState = null;
         private State _startState = null;
@@ -20,6 +22,23 @@ namespace VoiceModel.CallFlow
         public CSharp.Context Ctx { get { return ctx; } }
 
         public bool CompletedFinalState { get { return _completedFinalState; } }
+
+        public CFStatus Status
+        {
+            get
+            {
+                if (_states.Count <= 0)
+                    return CFStatus.Empty;
+                if (_currState == null)
+                    return CFStatus.NotStarted;
+                else
+                    if (CompletedFinalState)
+                        return CFStatus.Completed;
+                    else
+                        return CFStatus.Active;
+                
+            }
+        }
 
         public void Restart()
         {
@@ -35,6 +54,25 @@ namespace VoiceModel.CallFlow
                 _startState = state;
         }
 
+        public CFStatus NestedCFStatus
+        {
+            get
+            {
+                if (_currState == null || _currState.NestedCF == null)
+                    return CFStatus.Empty;
+                else
+                    return _currState.NestedCF.Status;
+            }
+        }
+
+        private void FireEventInNestedCF(string sEvent, string data)
+        {
+            _currState.NestedCF.FireEvent(sEvent, data);
+            //Move the data model and json args from the nested SM to this one for access.
+            _currState.DataModel = _currState.NestedCF.CurrState.DataModel;
+            _currState.jsonArgs = _currState.NestedCF.CurrState.jsonArgs;
+        }
+
         public void FireEvent(string sEvent, string data)
         {
  
@@ -45,10 +83,14 @@ namespace VoiceModel.CallFlow
                 if (_startState != null)
                 {
                     _currState = _startState;
-                    if (!_currState.DoingNestedStates(sEvent, data))
+                    if (NestedCFStatus == CFStatus.Empty)
                     {
                         _currState.jsonArgs = data;
                         _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                    }
+                    else
+                    {
+                        FireEventInNestedCF(sEvent, data);
                     }
                  }
 
@@ -56,22 +98,43 @@ namespace VoiceModel.CallFlow
             else
             {
                 
-                _currState.OnExit.Execute(this, _currState, new Event(sEvent));
                 if (_currState.isFinal)
                 {
+                    _currState.OnExit.Execute(this, _currState, new Event(sEvent));
                     _completedFinalState = true;
                 }
                 else
                 {
-                    State nextState;
-                    string targetId = _currState.getTarget(sEvent, data);
-                    if (_states.TryGetValue(targetId, out nextState))
+                    CFStatus status = NestedCFStatus;
+                    if (status == CFStatus.Active )
                     {
-                        _currState = nextState;
-                        if (!_currState.DoingNestedStates(sEvent, data))
+                        FireEventInNestedCF(sEvent, data);
+             
+                    }
+
+                    status = NestedCFStatus;
+                    if (status == CFStatus.Completed || status == CFStatus.Empty)
+                    {
+                        if (status == CFStatus.Completed)
+                            _currState.NestedCF.Restart();
+
+                        _currState.OnExit.Execute(this, _currState, new Event(sEvent));
+                        State nextState;
+                        string targetId = _currState.getTarget(sEvent, data);
+                        if (_states.TryGetValue(targetId, out nextState))
                         {
-                            _currState.jsonArgs = data;
-                            _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                            _currState = nextState;
+                            //Get the status of our current state's composite states
+                            status = NestedCFStatus;
+                            if (status == CFStatus.Empty)
+                            {
+                                _currState.jsonArgs = data;
+                                _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                            }
+                            else
+                            {
+                                FireEventInNestedCF(sEvent, data);
+                            }
                         }
                     }
                 }

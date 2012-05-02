@@ -71,7 +71,6 @@
     <Compile Include="CallFlow\CallFlow.cs" />
     <Compile Include="CallFlow\Condition.cs" />
     <Compile Include="CallFlow\Event.cs" />
-    <Compile Include="CallFlow\StateAction.cs" />
     <Compile Include="CallFlow\ICallFlowBuilder.cs" />
     <Compile Include="CallFlow\State.cs" />
     <Compile Include="CallFlow\Transition.cs" />
