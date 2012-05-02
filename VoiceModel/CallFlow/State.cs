@@ -96,8 +96,7 @@ namespace VoiceModel.CallFlow
         private bool EvaluateCond(Condition cond)
         {
 
-            string strResult = Ctx.Execute<string>(cond.Script);
-            return strResult.Equals("true");
+            return Ctx.Execute<Boolean>(cond.Script);
             
         }
 
