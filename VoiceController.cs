@@ -47,7 +47,7 @@ namespace VoiceModel
  
         public string ActionName
         {
-            get { return ControllerName + "/StateMachine"; }
+            get { return  GetApplicationUri() + ControllerName + "/StateMachine"; }
         }
 
         public string GetApplicationUri()
