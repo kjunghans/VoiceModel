@@ -10,7 +10,7 @@
 <form id="@Model.id">
   <field name="F_1" @if(@Model.grammar.isBuiltin)
                     { 
-                        @:type="@Model.grammar.type" 
+                        @:type="@Model.grammar.builtin" 
                     }>
     @{Html.RenderPartial("Prompt", Model.initialPrompt);}
   
