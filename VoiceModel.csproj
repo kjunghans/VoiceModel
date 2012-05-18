@@ -79,8 +79,12 @@
     <Compile Include="IAudio.cs" />
     <Compile Include="CallFlow\ICallFlow.cs" />
     <Compile Include="Ask.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="IVoiceModels.cs" />
+    <Compile Include="OneOf.cs" />
     <Compile Include="Return.cs" />
+    <Compile Include="Rule.cs" />
+    <Compile Include="RuleRef.cs" />
     <Compile Include="Say.cs" />
     <Compile Include="Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="SayAs.cs" />
     <Compile Include="SessionData.cs" />
     <Compile Include="Silence.cs" />
+    <Compile Include="Tag.cs" />
     <Compile Include="Transfer.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="TtsMessage.cs" />
