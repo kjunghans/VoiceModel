@@ -1,4 +1,6 @@
-﻿@model VoiceModel.Ask
+﻿@using VoiceModel;
+
+@model Ask
            
 @{
     Layout = "~/tmp/Views/_Layout.cshtml";
@@ -16,7 +18,14 @@
   
      @if(!@Model.grammar.isBuiltin)
      {
-    <grammar src="@Model.grammar.source" type="@Model.grammar.type" />
+         if (@Model.grammar.isExternalRef)
+         { 
+            <grammar src="@Model.grammar.source" type="@Model.grammar.type" />
+         }
+         else
+         {
+             @Html.Grammar(@Model.grammar);
+         }
      }
   </field>
   <filled>

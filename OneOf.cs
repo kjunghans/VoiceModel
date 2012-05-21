@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace VoiceModel
 {
     public class OneOf
     {
+        //[XmlElement("item")]
         public List<Item> Items { get; set; }
 
         public OneOf()
@@ -16,6 +18,7 @@ namespace VoiceModel
 
         public OneOf(List<string> uterances)
         {
+            Items = new List<Item>();
             foreach (string uterance in uterances)
                 Items.Add(new Item(uterance));
         }

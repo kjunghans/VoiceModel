@@ -6,10 +6,10 @@ using System.Xml.Serialization;
 
 namespace VoiceModel
 {
-    [XmlElement("rule")]
+   
     public class Rule
     {
-        enum Scope { isPrivate, isPublic };
+        public enum Scope { isPrivate, isPublic };
 
         [XmlAttribute("id")]
         public string id { get; set; }
@@ -29,12 +29,23 @@ namespace VoiceModel
                     return "public";
             } 
         }
-        public List<OneOf> OneOfList { get; set; }
+
+        //[XmlElement("one-of")]
+        //public List<OneOf> OneOfList { get; set; }
+
+        [XmlArray("one-of")]
+        [XmlArrayItem("item")]
+        public List<Item> OneOfList { get; set; }
+
+        public Rule()
+        {
+            OneOfList = new List<Item>();
+        }
 
         public Rule(string Id)
         {
             this.id = Id;
-            OneOfList = new List<OneOf>();
+            OneOfList = new List<Item>();
         }
     }
 }
