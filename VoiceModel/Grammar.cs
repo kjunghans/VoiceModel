@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace VoiceModel
 {
-    [XmlElement("grammar")]
+    [XmlRoot("grammar")]
     public class Grammar
     {
         
@@ -29,6 +29,8 @@ namespace VoiceModel
 
         [XmlIgnore]
         public bool isBuiltin { get { return (!string.IsNullOrEmpty(_builtin)); } }
+        [XmlIgnore]
+        public bool isExternalRef { get { return (!string.IsNullOrEmpty(source)); } }
         [XmlAttribute("xml:lang")]
         public string language { get; set; }
         [XmlAttribute("mode")]
@@ -42,7 +44,7 @@ namespace VoiceModel
         [XmlIgnore]
         public string builtin { get { return _builtin; } }
 
-        
+        [XmlElement("rule")]
         public Rule rule { get; set; }
 
         private void setDefaults()
@@ -50,6 +52,11 @@ namespace VoiceModel
             this.gType = GrammarType.xml;
             this.mode = Mode.voice;
             this.language = "en-US";
+        }
+
+        public Grammar()
+        {
+            setDefaults();
         }
 
         public Grammar(string builtinGrammar)
@@ -68,7 +75,8 @@ namespace VoiceModel
             setDefaults();
             root = Id;
             rule = new Rule(Id);
-            rule.OneOfList.Add(new OneOf(utternances));
+            foreach(string utterance in utternances)
+                rule.OneOfList.Add(new Item(utterance));
         }
 
 

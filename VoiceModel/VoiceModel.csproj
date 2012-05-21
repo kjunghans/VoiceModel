@@ -76,6 +76,7 @@
     <Compile Include="CallFlow\Transition.cs" />
     <Compile Include="Exit.cs" />
     <Compile Include="Grammar.cs" />
+    <Compile Include="GrammarHelper.cs" />
     <Compile Include="IAudio.cs" />
     <Compile Include="CallFlow\ICallFlow.cs" />
     <Compile Include="Ask.cs" />
