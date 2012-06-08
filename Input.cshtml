@@ -32,4 +32,7 @@
     <assign name="vm_result" expr="F_1" />
     <submit next="@Model.ControllerName" namelist="vm_id vm_event vm_result" />
   </filled>
+  @Html.NoInput(@Model.noinputPrompts, @Model.ControllerName)
+  @Html.NoMatch(@Model.nomatchPrompts, @Model.ControllerName)
+
 </form>
