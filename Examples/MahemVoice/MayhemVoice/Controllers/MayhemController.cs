@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using VoiceModel;
 using VoiceModel.CallFlow;
 using System.Configuration;
-using CommandMgr.ServiceMgr;
+using CommandMgr.Sdk;
 
 namespace MayhemVoice.Controllers
 {
@@ -16,9 +16,13 @@ namespace MayhemVoice.Controllers
         {
             CallFlow flow = new CallFlow();
             flow.AddState(ViewStateBuilder.Build("greeting", "assist", new Say("greeting", "This is Mahem.")), true);
-            CommandService commService = new CommandService();
-            List<string> commands = commService.ListCommandNames();
-            flow.AddState(ViewStateBuilder.Build("assist", "goodbye", new Ask("assist", "How may I assist you?", new Grammar("commands", commands))));
+            string apiUrl = ConfigurationManager.AppSettings["commandMgrUrl"];
+            CommandMgr.Sdk.CommandMgr commService = new CommandMgr.Sdk.CommandMgr(apiUrl);
+            List<Command> commands = commService.ListCommands();
+            List<string> commandNames = new List<string>();
+            foreach (Command c in commands)
+                commandNames.Add(c.Name);
+            flow.AddState(ViewStateBuilder.Build("assist", "goodbye", new Ask("assist", "How may I assist you?", new Grammar("commands", commandNames))));
             flow.AddState(ViewStateBuilder.Build("goodbye", new Exit("goodbye", "Thank you for using Mayhem. Goodbye")));
             return flow;
 

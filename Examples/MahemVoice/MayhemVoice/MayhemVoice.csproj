@@ -38,9 +38,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandMgr.Sdk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.103.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -75,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Lib\CommandMgr.Sdk.dll" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -95,10 +100,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\CommandMgr\CommandMgr.ServiceMgr\CommandMgr.ServiceMgr.csproj">
-      <Project>{CCACE04E-902D-47A3-81DC-12DE3BE874E7}</Project>
-      <Name>CommandMgr.ServiceMgr</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\VoiceModel\VoiceModel.csproj">
       <Project>{C1918322-CF2F-4A20-92B2-47A938DFD8B0}</Project>
       <Name>VoiceModel</Name>
