@@ -83,6 +83,7 @@
     <Compile Include="Item.cs" />
     <Compile Include="IVoiceModels.cs" />
     <Compile Include="OneOf.cs" />
+    <Compile Include="PromptHelper.cs" />
     <Compile Include="Return.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="RuleRef.cs" />

@@ -1,6 +1,8 @@
-﻿@model List<VoiceModel.Prompt>
+﻿@using VoiceModel;
+
+@model List<Prompt>
 
   @foreach (var prompt in @Model)
   {
-      @Html.Raw(prompt.Render());
+      @Html.VoicePrompt(prompt);
   }

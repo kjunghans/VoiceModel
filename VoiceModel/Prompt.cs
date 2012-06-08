@@ -45,47 +45,5 @@ namespace VoiceModel
             this.audios.Add(audio);
         }
 
-        public string Render()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<prompt");
-            if (!bargein)
-                sb.Append(" bargein=\"false\"");
-            if (bargeintype != BargeinTypes.none)
-            {
-                sb.Append(" barginetypes=\"");
-                sb.Append(bargeintype.ToString());
-                sb.Append("\"");
-            }
-            if (!language.Equals(string.Empty))
-            {
-                sb.Append(" xml:lang=\"");
-                sb.Append(language);
-                sb.Append("\"");
-            }
-            if (timeout > 0)
-            {
-                sb.Append(" timeout=\"");
-                sb.Append(timeout.ToString());
-                sb.Append("s\"");
-            }
-            if (count > 0)
-            {
-                sb.Append(" count=\"");
-                sb.Append(count.ToString());
-                sb.Append("\"");
-            }
-            sb.Append(">");
-            sb.Append(Environment.NewLine);
-            foreach (IAudio ia in audios)
-            {
-                sb.Append(ia.Render());
-                sb.Append(Environment.NewLine);
-            }
-            sb.Append("</prompt>");
-            sb.Append(Environment.NewLine);
-            return sb.ToString();
-        }
-
     }
 }
