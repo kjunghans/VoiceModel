@@ -64,7 +64,7 @@ namespace VoiceModel
             int count = 1;
             foreach (Prompt prompt in prompts)
             {
-                sb.Append("<" + handlerType + "count=\"");
+                sb.Append("<" + handlerType + " count=\"");
                 sb.Append(count.ToString());
                 sb.Append("\">");
                 sb.Append(Environment.NewLine);
@@ -73,9 +73,13 @@ namespace VoiceModel
                 sb.Append(Environment.NewLine);
                 count += 1;
             }
-            sb.Append("<" + handlerType + "count=\"");
+            sb.Append("<" + handlerType + " count=\"");
             sb.Append(count.ToString());
             sb.Append("\">");
+            sb.Append(Environment.NewLine);
+            sb.Append("<assign name=\"vm_event\" expr=\"'");
+            sb.Append(handlerType);
+            sb.Append("'\"/>");
             sb.Append(Environment.NewLine);
             sb.Append("<submit next=\"");
             sb.Append(submitNext);
