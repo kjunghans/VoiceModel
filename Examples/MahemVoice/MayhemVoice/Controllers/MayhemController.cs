@@ -15,14 +15,71 @@ namespace MayhemVoice.Controllers
         public override CallFlow BuildCallFlow()
         {
             CallFlow flow = new CallFlow();
-            flow.AddState(ViewStateBuilder.Build("greeting", "assist", new Say("greeting", "This is Mahem.")), true);
+            flow.AddState(ViewStateBuilder.Build("greeting", "assist",
+                new Say("greeting", new Prompt("Hello. This is Mayhem.") {bargein = false })), true);
             string apiUrl = ConfigurationManager.AppSettings["commandMgrUrl"];
             CommandMgr.Sdk.CommandMgr commService = new CommandMgr.Sdk.CommandMgr(apiUrl);
             List<Command> commands = commService.ListCommands();
             List<string> commandNames = new List<string>();
             foreach (Command c in commands)
                 commandNames.Add(c.Name);
-            flow.AddState(ViewStateBuilder.Build("assist", "goodbye", new Ask("assist", "How may I assist you?", new Grammar("commands", commandNames))));
+            Prompt assistNoinput = new Prompt("I could not hear you. Please let me know what you want me to do.") {bargein = false };
+            List<Prompt> assistNoinputs = new List<Prompt>();
+            assistNoinputs.Add(assistNoinput);
+            assistNoinputs.Add(assistNoinput);
+            Prompt assistNomatch = new Prompt("I could not understand you. Please let me know what you want me to do.") { bargein = false };
+            List<Prompt> assistNomatches = new List<Prompt>();
+            assistNomatches.Add(assistNomatch);
+            assistNomatches.Add(assistNomatch);
+            flow.AddState(ViewStateBuilder.Build("assist", "queueCommand",
+                new Ask("assist", new Prompt("How may I assist you?") {bargein = false }, new Grammar("commands", commandNames))
+                {
+                    noinputPrompts = assistNoinputs,
+                    nomatchPrompts = assistNomatches
+                })
+                .AddTransition("nomatch", "didNotUnderstand", null)
+                .AddTransition("noinput", "didNotUnderstand", null));
+
+            flow.AddState(ViewStateBuilder.Build("didNotUnderstand", "goodbye", new Say("didNotUnderstand", "I did not understand your request.")));
+
+            flow.AddState(new State("queueCommand", "commandSent")
+                .AddTransition("error","errSendingCommand",null)
+                .AddOnEntryAction(delegate(CallFlow cf, State state, Event e)
+                {
+                    try
+                    {
+                        string url = ConfigurationManager.AppSettings["commandMgrUrl"];
+                        CommandMgr.Sdk.CommandMgr service = new CommandMgr.Sdk.CommandMgr(url);
+                        service.Queue(state.jsonArgs);
+                        cf.FireEvent("continue", "");
+                    }
+                    catch
+                    {
+                        cf.FireEvent("error", "");
+                    }
+
+                }));
+            flow.AddState(ViewStateBuilder.Build("commandSent", "doMore", new Say("commandSent", "Your request has been sent.")));
+            flow.AddState(ViewStateBuilder.Build("errSendingCommand", "doMore", new Say("errSendingCommand", "There was an error sending your request.")));
+
+            Prompt doMoreNoinput = new Prompt("I could not hear you. Let me know if I can assist with anything else by saying yes or no.") { bargein = false };
+            List<Prompt> doMoreNoinputs = new List<Prompt>();
+            doMoreNoinputs.Add(assistNoinput);
+            doMoreNoinputs.Add(assistNoinput);
+            Prompt doMoreNomatch = new Prompt("I could not understand you. Let me know if I can assist with anything else by saying yes or no.") { bargein = false };
+            List<Prompt> doMoreNomatches = new List<Prompt>();
+            assistNomatches.Add(doMoreNomatch);
+            assistNomatches.Add(doMoreNomatch);
+            flow.AddState(ViewStateBuilder.Build("doMore", "assist",
+                new Ask("doMore", new Prompt("May I assist you with anything else?") { bargein = false }, new Grammar("boolean"))
+                {
+                    noinputPrompts = doMoreNoinputs,
+                    nomatchPrompts = doMoreNomatches
+                })
+                .AddTransition("nomatch", "goodbye", null)
+                .AddTransition("noinput", "goodbye", null));
+
+
             flow.AddState(ViewStateBuilder.Build("goodbye", new Exit("goodbye", "Thank you for using Mayhem. Goodbye")));
             return flow;
 
