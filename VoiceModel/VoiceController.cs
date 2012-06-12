@@ -80,6 +80,16 @@ namespace VoiceModel
             InitVoiceController();
         }
 
+        private bool isJson(string json)
+        {
+            bool isIt = false;
+            if (!string.IsNullOrEmpty(json))
+            {
+                if (json[0] == '{' || json[0] == '[')
+                    isIt = true;
+            }
+            return isIt;
+        }
  
         protected ActionResult VoiceView(string id, string vEvent, string json)
         {
@@ -87,7 +97,8 @@ namespace VoiceModel
             callFlow.FireEvent(vEvent, json);
 
             VoiceModel doc = callFlow.CurrState.DataModel;
-            doc.json = callFlow.CurrState.jsonArgs;
+            if (isJson(callFlow.CurrState.jsonArgs))
+                doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow);
 
