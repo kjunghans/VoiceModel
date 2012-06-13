@@ -5,9 +5,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceModel", "..\..\VoiceMo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MayhemVoice", "MayhemVoice\MayhemVoice.csproj", "{02894190-0055-4FDE-BA96-EE3D60F87943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MayhemVoice.Test", "MayhemVoice.Test\MayhemVoice.Test.csproj", "{472ED8C3-82A9-4446-8EA5-88D002C3AA3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A97C0AB4-F74B-4BA9-9FC9-B027396DCACA}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		MayhemVoice.vsmdi = MayhemVoice.vsmdi
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
 		SccLocalPath0 = .
@@ -17,6 +26,12 @@ Global
 		SccProjectUniqueName2 = MayhemVoice\\MayhemVoice.csproj
 		SccProjectName2 = MayhemVoice
 		SccLocalPath2 = MayhemVoice
+		SccProjectUniqueName3 = MayhemVoice.Test\\MayhemVoice.Test.csproj
+		SccProjectName3 = MayhemVoice.Test
+		SccLocalPath3 = MayhemVoice.Test
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = MayhemVoice.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +46,10 @@ Global
 		{02894190-0055-4FDE-BA96-EE3D60F87943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02894190-0055-4FDE-BA96-EE3D60F87943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02894190-0055-4FDE-BA96-EE3D60F87943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{472ED8C3-82A9-4446-8EA5-88D002C3AA3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{472ED8C3-82A9-4446-8EA5-88D002C3AA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{472ED8C3-82A9-4446-8EA5-88D002C3AA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{472ED8C3-82A9-4446-8EA5-88D002C3AA3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
