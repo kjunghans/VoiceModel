@@ -15,8 +15,11 @@ namespace MayhemVoice.Controllers
         public override CallFlow BuildCallFlow()
         {
             CallFlow flow = new CallFlow();
+            VxmlProperty fetchtimeout = new VxmlProperty("fetchtimeout", "40s");
+            List<VxmlProperty> aproperties = new List<VxmlProperty>();
+            aproperties.Add(fetchtimeout);
             flow.AddState(ViewStateBuilder.Build("greeting", "assist",
-                new Say("greeting", "Hello. This is Mayhem.")), true);
+                new Say("greeting", "Hello. This is Mayhem.") { properties = aproperties }), true);
             string apiUrl = ConfigurationManager.AppSettings["commandMgrUrl"];
             CommandMgr.Sdk.CommandMgr commService = new CommandMgr.Sdk.CommandMgr(apiUrl);
             List<Command> commands = commService.ListCommands();
