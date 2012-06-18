@@ -32,7 +32,7 @@ namespace MayhemVoice.Controllers
             assistNomatches.Add(assistNomatch);
             assistNomatches.Add(assistNomatch);
             flow.AddState(ViewStateBuilder.Build("assist", "queueCommand",
-                new Ask("assist", new Prompt("How may I assist you.") { bargein = false }, new Grammar("commands", commandNames))
+                new Ask("assist", new Prompt("How may I assist you?") { bargein = false }, new Grammar("commands", commandNames))
                 {
                     noinputPrompts = assistNoinputs,
                     nomatchPrompts = assistNomatches
@@ -75,7 +75,7 @@ namespace MayhemVoice.Controllers
             doMoreOptions.Add("yes");
             doMoreOptions.Add("no");
             flow.AddState(ViewStateBuilder.Build("doMore",
-                new Ask("doMore", new Prompt("May I assist you with anything else.") { bargein = false }, new Grammar("assistOptions", doMoreOptions))
+                new Ask("doMore", new Prompt("May I assist you with anything else?") { bargein = false }, new Grammar("assistOptions", doMoreOptions))
                 {
                     noinputPrompts = doMoreNoinputs,
                     nomatchPrompts = doMoreNomatches

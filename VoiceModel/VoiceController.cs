@@ -106,6 +106,7 @@ namespace VoiceModel
 
         }
 
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "*")]
         public ActionResult StateMachine(string vm_id, string vm_event, string vm_result)
         {
             return VoiceView(vm_id, vm_event, vm_result);
