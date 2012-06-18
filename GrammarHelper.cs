@@ -18,7 +18,7 @@ namespace VoiceModel
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.OmitXmlDeclaration = true;
-            Encoding encoding = Encoding.UTF8;
+            Encoding encoding = Encoding.ASCII;
             settings.Encoding = encoding; 
             XmlWriter writer = XmlWriter.Create(ms, settings);
 

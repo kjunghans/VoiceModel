@@ -14,8 +14,7 @@
                     { 
                         @:type="@Model.grammar.builtin" 
                     }>
-    @{Html.RenderPartial("Prompt", Model.initialPrompt);}
-  
+     @{Html.RenderPartial("Prompt", Model.initialPrompt);}
      @if(!@Model.grammar.isBuiltin)
      {
          if (@Model.grammar.isExternalRef)
@@ -24,7 +23,7 @@
          }
          else
          {
-             @Html.Grammar(@Model.grammar);
+            @Html.Grammar(@Model.grammar);
          }
      }
   </field>
