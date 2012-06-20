@@ -18,18 +18,25 @@ namespace ReusableComponentEx.Controllers
         public override CallFlow BuildCallFlow()
         {
             CallFlow flow = new CallFlow();
-            flow.AddState(ViewStateBuilder.Build("greeting", "getStartDate", new Say("greeting", "Welcome to the Reusable Dialog Component Example.")), true);
+            List<VxmlProperty> appProperties = new List<VxmlProperty>();
+            appProperties.Add( new VxmlProperty("inputmode", "dtmf"));
+            flow.AddState(ViewStateBuilder.Build("greeting", "getStartDate",
+                new Say("greeting", new Prompt("Welcome to the Reusable Dialog Component Example.") {bargein = false }) 
+                { properties = appProperties }), true);
+
             //This tells the state machine to use the state machine in the reusable component.
             flow.AddState(new State("getStartDate", "getFinishDate")
                 .AddNestedCallFlow(new GetDateDtmfRDC(new Prompt("Enter the start date as a six digit number.")))
                 .AddOnExitAction(delegate(CallFlow cf, State state, Event e)
                 {cf.Ctx.SetGlobal<GetDateDtmfOutput>("StartDate",((GetDateDtmfRDC)state.NestedCF).GetResults());}));
-               
+            
+            //We will reuse the component again for the finish date.
             flow.AddState(new State("getFinishDate", "calcDifference")
                 .AddNestedCallFlow(new GetDateDtmfRDC(new Prompt("Enter the finish date as a six digit number.")))
                 .AddOnExitAction(delegate(CallFlow cf, State state, Event e)
                 {cf.Ctx.SetGlobal<GetDateDtmfOutput>("FinishDate",((GetDateDtmfRDC)state.NestedCF).GetResults());}));
 
+            //Calculate the difference in days
             flow.AddState(new State("calcDifference","differenceInDays")
                 .AddOnEntryAction(delegate(CallFlow cf, State state, Event e)
                 {
@@ -46,6 +53,7 @@ namespace ReusableComponentEx.Controllers
             sayDiff.audios.Add(new TtsMessage("The difference between the start and finish dates is "));
             sayDiff.audios.Add(new TtsVariable("d.daysDiff"));
             sayDiff.audios.Add(new TtsMessage(" days."));
+            sayDiff.bargein = false;
             flow.AddState(ViewStateBuilder.Build("differenceInDays", "goodbye", new Say("differenceInDays", sayDiff)));
             flow.AddState(ViewStateBuilder.Build("goodbye", new Exit("goodbye", "Goodbye.")));
             return flow;

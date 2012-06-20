@@ -17,8 +17,11 @@ namespace GetDateDtmf
 
         private void BuildCallFlow(Prompt AskDatePrompt)
         {
-            AddState(ViewStateBuilder.Build("getDate", "validateDate", 
-                new Ask("getDate", AskDatePrompt, new Grammar("digits?minlength=6"))), true);
+            List<VxmlProperty> appProperties = new List<VxmlProperty>();
+            appProperties.Add(new VxmlProperty("inputmode", "dtmf"));
+            AskDatePrompt.bargein = false;
+            AddState(ViewStateBuilder.Build("getDate", "validateDate",
+                new Ask("getDate", AskDatePrompt, new Grammar("digits?minlength=6")) { properties = appProperties }), true);
             AddState(new State("validateDate", "confirmDate")
                 .AddTransition("error","invalidDate",null)
                 .AddOnEntryAction(delegate(CallFlow cf, State state, Event e)
@@ -31,9 +34,10 @@ namespace GetDateDtmf
             confirmPrompt.audios.Add(new TtsVariable("d.Month"));
             confirmPrompt.audios.Add(new TtsVariable("d.Day"));
             confirmPrompt.audios.Add(new TtsVariable("d.Year"));
+            confirmPrompt.bargein = false;
 
-            AddState(ViewStateBuilder.Build("confirmDate", new Say("confirmDate", confirmPrompt)));
-            AddState(ViewStateBuilder.Build("invalidDate", new Say("invalidDate", "You entered and invalid date.")));
+            AddState(ViewStateBuilder.Build("confirmDate", new Say("confirmDate", confirmPrompt) { properties = appProperties }));
+            AddState(ViewStateBuilder.Build("invalidDate", new Say("invalidDate", new Prompt("You entered and invalid date.") {bargein = false }) { properties = appProperties }));
         }
 
         public GetDateDtmfOutput GetResults()
