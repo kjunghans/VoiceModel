@@ -114,7 +114,9 @@
     <EmbeddedResource Include="_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Web.config" />
+    <EmbeddedResource Include="Web.config">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Exit.cshtml" />
