@@ -98,6 +98,11 @@
     <Compile Include="Tag.cs" />
     <Compile Include="Transfer.cs" />
     <Compile Include="Transition.cs" />
+    <Compile Include="TropoModel\Convert.cs" />
+    <Compile Include="TropoModel\hangup.cs" />
+    <Compile Include="TropoModel\say.cs" />
+    <Compile Include="TropoModel\TropoModel.cs" />
+    <Compile Include="TropoModel\TropoObject.cs" />
     <Compile Include="TtsMessage.cs" />
     <Compile Include="TtsVariable.cs" />
     <Compile Include="ViewStateBuilder.cs" />
