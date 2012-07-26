@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using VoiceModel.CallFlow;
 using System.IO;
+using VoiceModel.TropoModel;
 
 namespace VoiceModel
 {
@@ -128,6 +129,24 @@ namespace VoiceModel
             string vm_event = Request.QueryString["vm_event"];
             string vm_result = "";
             return VoiceView(vm_id, vm_event, vm_result);
+        }
+
+        [HttpPost]
+        public ActionResult Tropo(string result)
+        {
+            string vEvent;
+            string vData;
+            TropoModel.Convert.TropResultOrSessionToEventAndData(result, out vEvent, out vData);
+            CallFlow.ICallFlow callFlow = GetCallFlow();
+            callFlow.FireEvent(vEvent, vData);
+
+            VoiceModel doc = callFlow.CurrState.DataModel;
+            if (isJson(callFlow.CurrState.jsonArgs))
+                doc.json = callFlow.CurrState.jsonArgs;
+            doc.ControllerName = ActionName;
+            SetCallFlow(callFlow);
+            TropoModel.TropoModel tropo = TropoModel.Convert.VoiceToTropo(doc);
+            return Json(tropo);
         }
 
      }
