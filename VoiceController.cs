@@ -132,11 +132,12 @@ namespace VoiceModel
         }
 
         [HttpPost]
-        public ActionResult Tropo(string result)
+        public string Tropo(string result)
         {
             string vEvent;
             string vData;
-            TropoModel.Convert.TropResultOrSessionToEventAndData(result, out vEvent, out vData);
+            string vErrMsg;
+            TropoUtilities.TropoResultOrSessionToEventAndData(result, out vEvent, out vData, out vErrMsg);
             CallFlow.ICallFlow callFlow = GetCallFlow();
             callFlow.FireEvent(vEvent, vData);
 
@@ -145,8 +146,8 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow);
-            TropoModel.TropoModel tropo = TropoModel.Convert.VoiceToTropo(doc);
-            return Json(tropo);
+            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc);
+            return json;
         }
 
      }

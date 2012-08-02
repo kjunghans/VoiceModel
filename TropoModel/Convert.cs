@@ -2,37 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VoiceModel;
 
 namespace VoiceModel.TropoModel
 {
     public class Convert
     {
 
-        private static say AudioToSay(IAudio audio)
+        private static Say AudioToSay(IAudio audio)
         {
-            say s = new say("Error converting prompt VoiceModel");
+            Say s = new Say("Error converting prompt VoiceModel");
             switch(audio.GetType().ToString())
             {
                 case "VoiceModel.TtsMessage":
-                  s = new say(((TtsMessage)audio).message);
+                  s = new Say(((TtsMessage)audio).message);
                   break;
             }
             return s;
         }
 
-        private static TropoModel Exit(Exit model)
+        private static TropoModel ConvertExit(Exit model)
         {
             TropoModel tmodel = new TropoModel();
+            ConvertPromptList(model.ExitPrompt, ref tmodel);
 
-            foreach (Prompt prompt in model.ExitPrompt)
-            {
-                foreach (IAudio audio in prompt.audios)
-                {
-
-                    say s = AudioToSay(audio);
-                    tmodel.tropo.Add("say", s);
-                }
-            }
             hangup h = null;
             tmodel.tropo.Add("hangup", h);
 
@@ -45,7 +38,40 @@ namespace VoiceModel.TropoModel
              TropoModel tmodel = new TropoModel();
 
             return tmodel;
-       
+        }
+
+        private static void ConvertPrompt(global::VoiceModel.Prompt prompt, ref TropoModel tmodel, string sayOnEvent = null)
+        {
+            foreach (IAudio audio in prompt.audios)
+            {
+
+                Say s = AudioToSay(audio);
+                tmodel.tropo.Add("say", s);
+            }
+
+        }
+
+        private static void ConvertPromptList(List<global::VoiceModel.Prompt> prompts, ref TropoModel tmodel, string sayOnEvent = null)
+        {
+            foreach (Prompt prompt in prompts)
+            {
+                ConvertPrompt(prompt, ref tmodel);
+            }
+        }
+
+       private static TropoModel ConvertAsk(global::VoiceModel.Ask model)
+       {
+           TropoModel tmodel = new TropoModel();
+           ConvertPromptList(model.initialPrompt, ref tmodel);
+
+           return tmodel;
+       }
+
+        private static TropoModel ConvertSay(global::VoiceModel.Say model)
+        {
+            TropoModel tmodel = new TropoModel();
+            ConvertPromptList(model.prompts, ref tmodel);
+            return tmodel;
         }
 
         public static TropoModel VoiceToTropo(VoiceModel vmodel)
@@ -55,7 +81,13 @@ namespace VoiceModel.TropoModel
             switch(vmodel.GetType().ToString())
             {
                 case "VoiceModel.Exit":
-                    tmodel = Exit((Exit)vmodel);
+                    tmodel = ConvertExit((Exit)vmodel);
+                    break;
+                case "VoiceModel.Ask":
+                    tmodel = ConvertAsk((global::VoiceModel.Ask)vmodel);
+                    break;
+                case "VoiceModel.Say":
+                    tmodel = ConvertSay((global::VoiceModel.Say)vmodel);
                     break;
                 default:
                     tmodel = Error();
