@@ -8,6 +8,7 @@ using System.Web.Routing;
 using VoiceModel.CallFlow;
 using System.IO;
 using VoiceModel.TropoModel;
+using VoiceModel.Logger;
 
 namespace VoiceModel
 {
@@ -15,6 +16,7 @@ namespace VoiceModel
     {
         string recordingPath { get; set; }
         SessionData sessionMgr = new SessionData("VoiceController");
+        ILoggerService _log = LoggerFactory.GetInstance();
 
 
         private ICallFlow GetCallFlow()
@@ -110,6 +112,7 @@ namespace VoiceModel
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "*")]
         public ActionResult StateMachine(string vm_id, string vm_event, string vm_result)
         {
+            _log.Debug("Recieved VoiceXML request:[" + Request.RawUrl + "]");
             return VoiceView(vm_id, vm_event, vm_result);
         }
 
@@ -122,6 +125,7 @@ namespace VoiceModel
                 var fileName = Path.GetFileName(CallersMessage.FileName);
                 // store the file inside ~/App_Data/uploads folder
                 var path = Path.Combine(Server.MapPath(recordingPath), fileName);
+                _log.Debug("Received recording and will save as " + path);
                 CallersMessage.SaveAs(path);
             }
             
@@ -134,6 +138,7 @@ namespace VoiceModel
         [HttpPost]
         public string Tropo(string result)
         {
+            _log.Debug("Recieved Tropo request:[" + result + "]");
             string vEvent;
             string vData;
             string vErrMsg;
@@ -147,6 +152,7 @@ namespace VoiceModel
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow);
             string json = TropoUtilities.ConvertVoiceModelToWebApi(doc);
+            _log.Debug("Sending Tropo response:[" + json + "]");
             return json;
         }
 

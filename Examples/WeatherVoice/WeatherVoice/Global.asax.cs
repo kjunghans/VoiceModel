@@ -39,8 +39,8 @@ namespace WeatherVoice
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             VoiceViewEngine.Register(ViewEngines.Engines);
-           
-
+            VoiceModel.Logger.LoggerFactory.GetStartUpTask().Configure();
+ 
         }
     }
 }

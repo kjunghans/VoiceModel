@@ -39,6 +39,9 @@
     <Reference Include="IronJS">
       <HintPath>packages\IronJS.Core.0.2.0.1\lib\net40\IronJS.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Examples\WeatherVoice\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\IronJS.Core.0.2.0.1\lib\net40\Microsoft.Dynamic.dll</HintPath>
@@ -89,6 +92,11 @@
     <Compile Include="Ask.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="IVoiceModels.cs" />
+    <Compile Include="Logger\ILoggerService.cs" />
+    <Compile Include="Logger\IStartUpTask.cs" />
+    <Compile Include="Logger\Log4NetLoggerService.cs" />
+    <Compile Include="Logger\Log4NetStartupTask.cs" />
+    <Compile Include="Logger\LoggerFactory.cs" />
     <Compile Include="OneOf.cs" />
     <Compile Include="PromptHelper.cs" />
     <Compile Include="Return.cs" />
@@ -146,6 +154,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
