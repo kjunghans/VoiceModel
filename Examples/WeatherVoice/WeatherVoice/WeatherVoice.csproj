@@ -70,6 +70,7 @@
     <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="DAL\GoogleWeatherService.cs" />
     <Compile Include="DAL\IWeatherService.cs" />
+    <Compile Include="DAL\MsnWeatherService.cs" />
     <Compile Include="DAL\WeatherServiceMockup.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -80,6 +81,7 @@
   <ItemGroup>
     <Content Include="ApiResponseSample.js" />
     <Content Include="Global.asax" />
+    <Content Include="MsnWeatherExample.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

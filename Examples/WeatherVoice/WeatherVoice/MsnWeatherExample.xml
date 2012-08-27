@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<weatherdata>
+  <weather weatherlocationcode="wc:USFL0047" weatherlocationname="Bradenton, FL" zipcode="34205" weatherfullname="Bradenton, Florida" searchlocation="" searchdistance="0" searchscore="1" url="http://local.msn.com/weather.aspx?eid=4690&q=Bradenton-FL&zip=34205" imagerelativeurl="http://blst.msn.com/as/wea3/i/en-us/" degreetype="F" provider="iMap" isregion="" region="" alert="Weather Warnings" searchresult="Bradenton, Florida" lat="27.4893665" lon="-82.5769577" entityid="4690">
+    <current temperature="84" skycode="26" skytext="Cloudy"/>
+  </weather>
+</weatherdata>

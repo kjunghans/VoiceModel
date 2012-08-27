@@ -33,7 +33,7 @@ namespace WeatherVoice.Controllers
             //This implementation uses the Google Weather API to get the current weather conditions
             GetWeatherState.OnEntry.Add(delegate(CallFlow cf, State state, Event e)
             {
-                DAL.IWeatherService service = new DAL.GoogleWeatherService();
+                DAL.IWeatherService service = new DAL.MsnWeatherService();
                 Weather currWeather = service.getWeather(state.jsonArgs);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 string jsonWeather = serializer.Serialize(currWeather);
