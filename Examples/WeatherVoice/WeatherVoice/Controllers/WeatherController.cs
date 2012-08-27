@@ -21,18 +21,16 @@ namespace WeatherVoice.Controllers
             flow.AddState(ViewStateBuilder.Build("getZip", "getWeather", new Ask("getZip", "Enter the five digit zip code for the area where you would like the weather report on.",
                 new Grammar("digits?minlength=5"))));
             State GetWeatherState = new State("getWeather", "voiceWeather");
-            //Uncomment adding this OnEntry action and comment the following if you want to use the mockup instead of the Google service
-            //GetWeatherState.OnEntry.Add(delegate(CallFlow cf, State state, Event e)
-            //{
-            //    DAL.IWeatherService service = new DAL.WeatherServiceMockup();
-            //    Weather currWeather = service.getWeather(state.jsonArgs);
-            //    JavaScriptSerializer serializer = new JavaScriptSerializer();
-            //    string jsonWeather = serializer.Serialize(currWeather);
-            //    cf.FireEvent("continue", jsonWeather);
-            //});
-            //This implementation uses the Google Weather API to get the current weather conditions
             GetWeatherState.OnEntry.Add(delegate(CallFlow cf, State state, Event e)
             {
+                //This is a mockup weather service that can be used for testing
+                // DAL.IWeatherService service = new DAL.WeatherServiceMockup();
+
+                //This is an implementation of the Google weather service
+                //This was an unofficial API and service has been stopped by Google
+                //DAL.IWeatherService service = new DAL.GoogleWeatherService();
+
+                //This implementation uses the MSN weather service
                 DAL.IWeatherService service = new DAL.MsnWeatherService();
                 Weather currWeather = service.getWeather(state.jsonArgs);
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
