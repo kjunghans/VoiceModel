@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using log4net;
+using VoiceModel.TropoModel;
+using System.Web.Script.Serialization;
 
 namespace VoiceModel.Logger
 {
@@ -28,6 +30,24 @@ namespace VoiceModel.Logger
         {
             _logger.Debug(message);
         }
+        
+        public void Debug(string message, Result result)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(result);
+            _logger.Debug(message + json);
+
+        }
+
+        public void Debug(string message, Session session)
+        {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = serializer.Serialize(session);
+            _logger.Debug(message + json);
+
+        }
+
+
         public void Error(string message)
         {
             _logger.Error(message);

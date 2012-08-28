@@ -30,9 +30,25 @@ namespace VoiceModel
             return flow;
         }
 
+        private ICallFlow GetCallFlow(string sessionId)
+        {
+            CallFlow.CallFlow flow = sessionMgr.GetCallFlow(sessionId);
+            if (flow == null)
+            {
+                flow = BuildCallFlow();
+                sessionMgr.SetCallFlow(flow, sessionId);
+            }
+            return flow;
+        }
+
         private void SetCallFlow(ICallFlow cf)
         {
             sessionMgr.SetCallFlow((CallFlow.CallFlow)cf);
+        }
+
+        private void SetCallFlow(ICallFlow cf, string sessionId)
+        {
+            sessionMgr.SetCallFlow((CallFlow.CallFlow)cf, sessionId);
         }
 
         public abstract CallFlow.CallFlow BuildCallFlow();
@@ -136,21 +152,40 @@ namespace VoiceModel
         }
 
         [HttpPost]
-        public string Tropo(string result)
+        public string Tropo(Result result)
         {
-            _log.Debug("Recieved Tropo request:[" + result + "]");
+            _log.Debug("Recieved Tropo request: ", result);
             string vEvent;
             string vData;
             string vErrMsg;
-            TropoUtilities.TropoResultOrSessionToEventAndData(result, out vEvent, out vData, out vErrMsg);
-            CallFlow.ICallFlow callFlow = GetCallFlow();
+            TropoUtilities.TropoResultToEventAndData(result, out vEvent, out vData, out vErrMsg);
+            CallFlow.ICallFlow callFlow = GetCallFlow(result.sessionId);
             callFlow.FireEvent(vEvent, vData);
 
             VoiceModel doc = callFlow.CurrState.DataModel;
             if (isJson(callFlow.CurrState.jsonArgs))
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
-            SetCallFlow(callFlow);
+            SetCallFlow(callFlow, result.sessionId);
+            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc);
+            _log.Debug("Sending Tropo response:[" + json + "]");
+            return json;
+        }
+
+        [HttpPost]
+        public string StartTropo(Session session)
+        {
+            _log.Debug("Recieved Tropo start request: ", session );
+            string vEvent = "";
+            string vData = "";
+            CallFlow.ICallFlow callFlow = BuildCallFlow();
+            callFlow.FireEvent(vEvent, vData);
+
+            VoiceModel doc = callFlow.CurrState.DataModel;
+            if (isJson(callFlow.CurrState.jsonArgs))
+                doc.json = callFlow.CurrState.jsonArgs;
+            doc.ControllerName = ActionName;
+            SetCallFlow(callFlow, session.id);
             string json = TropoUtilities.ConvertVoiceModelToWebApi(doc);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;

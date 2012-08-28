@@ -116,9 +116,13 @@
     <Compile Include="TropoModel\Ask.cs" />
     <Compile Include="TropoModel\Choices.cs" />
     <Compile Include="TropoModel\Convert.cs" />
+    <Compile Include="TropoModel\ToFrom.cs" />
     <Compile Include="TropoModel\hangup.cs" />
+    <Compile Include="TropoModel\Result.cs" />
     <Compile Include="TropoModel\Say.cs" />
     <Compile Include="TropoModel\SayOnEvent.cs" />
+    <Compile Include="TropoModel\Session.cs" />
+    <Compile Include="TropoModel\TAction.cs" />
     <Compile Include="TropoModel\TropoModel.cs" />
     <Compile Include="TropoModel\TropoObject.cs" />
     <Compile Include="TropoModel\TropoUtilities.cs" />
