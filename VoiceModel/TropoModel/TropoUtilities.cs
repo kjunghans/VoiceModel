@@ -134,46 +134,17 @@ namespace VoiceModel.TropoModel
             return tropoJson;
         }
 
-        public static void TropoResultOrSessionToEventAndData(string json, out string vEvent, out string vData, out string vErrorMsg)
+        public static void TropoResultToEventAndData(Result tResult, out string vEvent, out string vData, out string vErrorMsg)
         {
             vEvent = "continue";
             vData = string.Empty;
             vErrorMsg = string.Empty;
             //TODO: translate result to object and get the associated events and data
             //TODO: add log4net to library for logging of data that comes back from Tropo
-            if (string.IsNullOrEmpty(json))
-            {
-                if (json.Contains("result"))
-                {
-                    try
-                    {
-                        Result tResult = new Result(json);
-                        vEvent = tResult.State;
-                        JContainer Actions =  TropoCSharp.Tropo.TropoUtilities.parseActions(tResult.Actions);
-                        vData = TropoCSharp.Tropo.TropoUtilities.removeQuotes(Actions["value"].ToString());
-                    }
-                    catch (Exception ex)
-                    {
-                        vErrorMsg = ex.Message;
-                        vEvent = "error";
-
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        Session tSession = new Session(json);
-                        vEvent = "";
-                    }
-                    catch (Exception ex)
-                    {
-                        vErrorMsg = ex.Message;
-                        vEvent = "error";
-
-                    }
-                }
-            }
+            vEvent = tResult.state;
+            if (tResult.actions != null && tResult.actions.Count > 0)
+                vData = tResult.actions[0].value;
+            vErrorMsg = tResult.error;
         }
 
     }
