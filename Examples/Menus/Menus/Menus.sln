@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menus", "Menus\Menus.csproj", "{3F452732-D154-4EAE-B325-1260D5CE4509}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceModel", "..\..\..\VoiceModel\VoiceModel.csproj", "{C1918322-CF2F-4A20-92B2-47A938DFD8B0}"
@@ -10,10 +10,10 @@ Global
 		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
-		SccProjectUniqueName0 = ..\\..\\..\\VoiceModel\\VoiceModel.csproj
-		SccProjectName0 = ../../../VoiceModel
-		SccLocalPath0 = ..\\..\\..\\VoiceModel
-		SccLocalPath1 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\..\\..\\VoiceModel\\VoiceModel.csproj
+		SccProjectName1 = ../../../VoiceModel
+		SccLocalPath1 = ..\\..\\..\\VoiceModel
 		SccProjectUniqueName2 = Menus\\Menus.csproj
 		SccProjectName2 = Menus
 		SccLocalPath2 = Menus
