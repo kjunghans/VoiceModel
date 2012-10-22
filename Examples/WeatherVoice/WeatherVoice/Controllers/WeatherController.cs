@@ -19,7 +19,7 @@ namespace WeatherVoice.Controllers
             CallFlow flow = new CallFlow();
             flow.AddState(ViewStateBuilder.Build("greeting", "getZip", new Say("greeting", "Welcome to Weather Voice.")), true);
             flow.AddState(ViewStateBuilder.Build("getZip", "getWeather", new Ask("getZip", "Enter the five digit zip code for the area where you would like the weather report on.",
-                new Grammar("digits?minlength=5"))));
+                new Grammar(new BuiltinGrammar(BuiltinGrammar.GrammarType.digits,5)))));
             State GetWeatherState = new State("getWeather", "voiceWeather");
             GetWeatherState.OnEntry.Add(delegate(CallFlow cf, State state, Event e)
             {

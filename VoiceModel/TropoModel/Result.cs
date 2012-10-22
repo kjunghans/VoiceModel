@@ -7,7 +7,7 @@ namespace VoiceModel.TropoModel
 {
     public class Result
     {
-       public List<TAction>  actions {get; set;}
+       public TAction  actions {get; set;}
        public string callId {get; set;}
        public bool complete {get; set;}
        public string error {get; set;}
