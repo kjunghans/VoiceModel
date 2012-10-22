@@ -14,7 +14,7 @@ namespace VoiceModel
         public enum GrammarType { xml, gsl };
 
         [XmlAttribute("src")]
-        public string source { get; set; }
+        public string source { get { return _location.url + _source; } set { _source = value; } }
         [XmlAttribute("type")]
         public string type 
         { 
@@ -28,7 +28,7 @@ namespace VoiceModel
         }
 
         [XmlIgnore]
-        public bool isBuiltin { get { return (!string.IsNullOrEmpty(_builtin)); } }
+        public bool isBuiltin { get { return (builtin != null); } }
         [XmlIgnore]
         public bool isExternalRef { get { return (!string.IsNullOrEmpty(source)); } }
         [XmlAttribute("xml:lang")]
@@ -40,12 +40,12 @@ namespace VoiceModel
         [XmlAttribute("root")]
         public string root { get; set; }
         [XmlIgnore]
-        string _builtin;
-        [XmlIgnore]
-        public string builtin { get { return _builtin; } }
-
+        public BuiltinGrammar builtin { get; set; }
         [XmlElement("rule")]
         public Rule rule { get; set; }
+
+        private ResourceLocation _location;
+        private string _source;
 
         private void setDefaults()
         {
@@ -59,14 +59,16 @@ namespace VoiceModel
             setDefaults();
         }
 
-        public Grammar(string builtinGrammar)
+        public Grammar(BuiltinGrammar builtinGrammar)
         {
-            _builtin = builtinGrammar;
+            builtin = builtinGrammar;
         }
 
-        public Grammar(ResourceLocation loc, string source)
+        public Grammar(ResourceLocation loc, string src)
         {
             setDefaults();
+            _location = loc;
+            _source = src;
             this.source = loc.url + source;
         }
 

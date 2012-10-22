@@ -11,7 +11,8 @@ namespace VoiceModel
 {
     public static class GrammarHelper
     {
-        public static MvcHtmlString Grammar(this HtmlHelper helper, Grammar grammar)
+
+        public static string GrammarRulesToString(Grammar grammar)
         {
             string grm = string.Empty;
             MemoryStream ms = new MemoryStream();
@@ -19,7 +20,7 @@ namespace VoiceModel
             settings.Indent = true;
             settings.OmitXmlDeclaration = true;
             Encoding encoding = Encoding.ASCII;
-            settings.Encoding = encoding; 
+            settings.Encoding = encoding;
             XmlWriter writer = XmlWriter.Create(ms, settings);
 
             XmlSerializer s = new XmlSerializer(typeof(Grammar));
@@ -27,8 +28,31 @@ namespace VoiceModel
             ns.Add("", "");
 
             s.Serialize(writer, grammar, ns);
-            grm = encoding.GetString(ms.ToArray()); 
-            return new MvcHtmlString(grm);
+            grm = encoding.GetString(ms.ToArray());
+            return grm;
         }
+
+        public static MvcHtmlString Grammar(this HtmlHelper helper, Grammar grammar)
+        {
+             return new MvcHtmlString(GrammarRulesToString(grammar));
+        }
+
+        public static MvcHtmlString BuiltinToVxml(this HtmlHelper helper, BuiltinGrammar grammar)
+        {
+            string sgrammar = grammar.Type.ToString();
+            if (grammar.Type == BuiltinGrammar.GrammarType.digits)
+            {
+                if (grammar.MinLength > 0)
+                    if (grammar.MaxLength > 0)
+                        sgrammar += "?minlength=" + grammar.MinLength.ToString() + ";maxlength=" + grammar.MaxLength.ToString();
+                    else
+                        sgrammar += "?minlength=" + grammar.MinLength.ToString();
+                else
+                    if (grammar.MaxLength > 0)
+                        sgrammar += "?maxlength=" + grammar.MaxLength.ToString();
+            }
+            return new MvcHtmlString(sgrammar);
+        }
+
     }
 }

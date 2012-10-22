@@ -14,6 +14,7 @@ namespace VoiceModel
             set { _message = value; }
         }
         private string _varName;
+        public string varName { get { return _varName; } }
 
         public TtsVariable(string varName)
         {

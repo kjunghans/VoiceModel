@@ -9,6 +9,7 @@ namespace VoiceModel
     {
         public ResourceLocation location { get; set; }
         public string fileName { get; set; }
+        public string src { get { return location + fileName; } }
         private string _message;
         public Audio() { }
         public Audio(ResourceLocation location, string fileName, string message)
