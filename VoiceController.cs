@@ -82,6 +82,11 @@ namespace VoiceModel
 
         }
 
+        public string TropoUri
+        {
+            get { return GetApplicationUri() + ControllerName + "/Tropo"; }
+        }
+
         public string ActionFullPath
         {
             get { return GetApplicationUri() + ActionName; }
@@ -167,7 +172,7 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow, result.sessionId);
-            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc);
+            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;
         }
@@ -186,7 +191,7 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow, session.id);
-            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc);
+            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;
         }
