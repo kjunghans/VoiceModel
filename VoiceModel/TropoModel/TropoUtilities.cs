@@ -52,11 +52,12 @@ namespace VoiceModel.TropoModel
         }
 
 
-        private static string ConvertExit(Exit model)
+        private static string ConvertExit(Exit model, string next)
         {
             Tropo tmodel = new Tropo();
             ConvertPromptList(model.ExitPrompt, model.json, ref tmodel);
             tmodel.Hangup();
+            tmodel.On("continue", next, null);
 
             return tmodel.RenderJSON();
         }
@@ -144,35 +145,37 @@ namespace VoiceModel.TropoModel
             return choices;
         }
 
-        private static string ConvertAsk(global::VoiceModel.Ask model)
+        private static string ConvertAsk(global::VoiceModel.Ask model, string next)
         {
             Tropo tmodel = new Tropo();
             tmodel.Ask(3, true, ConvertGrammar(model.grammar), null, "result", null, ConvertPromptList(model.initialPrompt, model.json), null);
+            tmodel.On("continue", next, null);
 
             return tmodel.RenderJSON();
         }
 
-        private static string ConvertSay(global::VoiceModel.Say model)
+        private static string ConvertSay(global::VoiceModel.Say model, string next)
         {
             Tropo tmodel = new Tropo();
             ConvertPromptList(model.prompts, model.json, ref tmodel);
+            tmodel.On("continue", next, null);
             return tmodel.RenderJSON();
         }
 
-        public static string ConvertVoiceModelToWebApi(VoiceModel vmodel)
+        public static string ConvertVoiceModelToWebApi(VoiceModel vmodel, string next)
         {
             string tropoJson = string.Empty;
 
             switch (vmodel.GetType().ToString())
             {
                 case "VoiceModel.Exit":
-                    tropoJson = ConvertExit((Exit)vmodel);
+                    tropoJson = ConvertExit((Exit)vmodel, next);
                     break;
                 case "VoiceModel.Ask":
-                    tropoJson = ConvertAsk((global::VoiceModel.Ask)vmodel);
+                    tropoJson = ConvertAsk((global::VoiceModel.Ask)vmodel, next);
                     break;
                 case "VoiceModel.Say":
-                    tropoJson = ConvertSay((global::VoiceModel.Say)vmodel);
+                    tropoJson = ConvertSay((global::VoiceModel.Say)vmodel, next);
                     break;
                 default:
                     tropoJson = ConversionError();
