@@ -162,6 +162,51 @@ namespace VoiceModel.TropoModel
             return tmodel.RenderJSON();
         }
 
+        private static void ConvertTransfer(global::VoiceModel.Transfer model, ref Tropo tmodel)
+        {
+            List<string> toList = new List<string>();
+            toList.Add(model.destination);
+
+            TropoCSharp.Tropo.Transfer xfer = new TropoCSharp.Tropo.Transfer()
+            {
+                To = toList
+            };
+            tmodel.Transfer(xfer);
+        }
+
+        private static string ConvertTransfer(global::VoiceModel.Transfer model, string next)
+        {
+            Tropo tmodel = new Tropo();
+            ConvertPromptList(model.prompts, model.json, ref tmodel);
+            ConvertTransfer(model, ref tmodel);
+            tmodel.On("continue", next, null);
+            return tmodel.RenderJSON();
+        }
+
+        private static void ConvertRecord(global::VoiceModel.Record model, ref Tropo tmodel)
+        {
+            TropoCSharp.Tropo.Choices choices = new TropoCSharp.Tropo.Choices()
+            {
+                Terminator = "#"
+            };
+
+            TropoCSharp.Tropo.Record record = new TropoCSharp.Tropo.Record()
+            {
+                Url = model.recordingUrl,
+                Say = ConvertPromptList(model.prompts, ""),
+                Choices = choices
+            };
+            tmodel.Record(record);
+        }
+
+       private static string ConvertRecord(global::VoiceModel.Record model, string next)
+        {
+            Tropo tmodel = new Tropo();
+            ConvertRecord(model, ref tmodel);
+            tmodel.On("continue", next, null);
+            return tmodel.RenderJSON();
+        }
+
         public static string ConvertVoiceModelToWebApi(VoiceModel vmodel, string next)
         {
             string tropoJson = string.Empty;
@@ -176,6 +221,12 @@ namespace VoiceModel.TropoModel
                     break;
                 case "VoiceModel.Say":
                     tropoJson = ConvertSay((global::VoiceModel.Say)vmodel, next);
+                    break;
+                case "VoiceModel.Transfer":
+                    tropoJson = ConvertTransfer((global::VoiceModel.Transfer)vmodel, next);
+                    break;
+                case "VoiceModel.Record":
+                    tropoJson = ConvertRecord((global::VoiceModel.Record)vmodel, next);
                     break;
                 default:
                     tropoJson = ConversionError();
