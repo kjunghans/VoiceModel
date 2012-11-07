@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using VoiceModel;
 using VoiceModel.CallFlow;
+using System.Configuration;
 
 namespace Transfer.Controllers
 {
@@ -14,8 +15,10 @@ namespace Transfer.Controllers
         public override CallFlow BuildCallFlow()
         {
             CallFlow flow = new CallFlow();
+            //Get the transfer number from the web.confg
+            string xferNum = ConfigurationManager.AppSettings["xferNum"];
             flow.AddState(ViewStateBuilder.Build("xfer", "xferComplete", 
-                new VoiceModel.Transfer("xfer", "sip:test@127.0.0.1", new Prompt("Please hold while you are transfered to the next available agent.")))
+                new VoiceModel.Transfer("xfer", xferNum, new Prompt("Please hold while you are transfered to the next available agent.")))
                 .AddTransition("busy","xferBusy",null)
                 .AddTransition("noanswer","xferNoAnswer",null),true);
             flow.AddState(ViewStateBuilder.Build("xferBusy",new Exit("xferBusy", "That line is busy.")));
