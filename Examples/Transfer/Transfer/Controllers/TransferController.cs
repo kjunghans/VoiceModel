@@ -20,9 +20,12 @@ namespace Transfer.Controllers
             flow.AddState(ViewStateBuilder.Build("xfer", "xferComplete", 
                 new VoiceModel.Transfer("xfer", xferNum, new Prompt("Please hold while you are transfered to the next available agent.")))
                 .AddTransition("busy","xferBusy",null)
-                .AddTransition("noanswer","xferNoAnswer",null),true);
+                .AddTransition("noanswer","xferNoAnswer",null)
+                .AddTransition("error","xferError",null),true);
             flow.AddState(ViewStateBuilder.Build("xferBusy",new Exit("xferBusy", "That line is busy.")));
             flow.AddState(ViewStateBuilder.Build("xferNoAnswer",new Exit("xferNoAnswer", "Sorry, no one answered the phone.")));
+            flow.AddState(ViewStateBuilder.Build("xferError", new Exit("xferError", "There was an error placing that call.")));
+            flow.AddState(ViewStateBuilder.Build("xferComplete", new Exit("xferComplete", "The transfer has been completed.")));
             return flow;
         }
 

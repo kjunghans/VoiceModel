@@ -241,10 +241,19 @@ namespace VoiceModel.TropoModel
             vEvent = "continue";
             vData = string.Empty;
             vErrorMsg = string.Empty;
-            if (tResult.state == "REJECTING" || tResult.state == "REJECTED" || tResult.state == "DISCONNECTED" || tResult.state == "FAILED")
-                vEvent = "error";
             if (tResult.actions != null)
+            {
+                string disposition = tResult.actions.disposition.ToLower();
+                if (disposition == "success")
+                    vEvent = "continue";
+                else if (disposition == "failed")
+                    vEvent = "error";
+                else if (disposition == "timeout")
+                    vEvent = "noinput";
+                else if (disposition == "nomatch")
+                    vEvent = "nomatch";
                 vData = tResult.actions.value;
+            }
             vErrorMsg = tResult.error;
         }
 
