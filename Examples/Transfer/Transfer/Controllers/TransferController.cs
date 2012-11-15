@@ -17,8 +17,10 @@ namespace Transfer.Controllers
             CallFlow flow = new CallFlow();
             //Get the transfer number from the web.confg
             string xferNum = ConfigurationManager.AppSettings["xferNum"];
+            string xferFrom = ConfigurationManager.AppSettings["xferFrom"];
             flow.AddState(ViewStateBuilder.Build("xfer", "xferComplete", 
-                new VoiceModel.Transfer("xfer", xferNum, new Prompt("Please hold while you are transfered to the next available agent.")))
+                new VoiceModel.Transfer("xfer", xferNum, xferFrom,
+                    new Prompt("Please hold while you are transfered to the next available agent.")))
                 .AddTransition("busy","xferBusy",null)
                 .AddTransition("noanswer","xferNoAnswer",null)
                 .AddTransition("error","xferError",null),true);
