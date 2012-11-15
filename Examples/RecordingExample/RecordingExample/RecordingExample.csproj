@@ -132,6 +132,7 @@
   <ItemGroup>
     <Folder Include="App_Data\recordings\" />
     <Folder Include="App_Data\uploads\" />
+    <Folder Include="Logs\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
@@ -143,6 +144,10 @@
       <Project>{C1918322-CF2F-4A20-92B2-47A938DFD8B0}</Project>
       <Name>VoiceModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="log4net.config" />
+    <None Include="Properties\PublishProfiles\local file.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
