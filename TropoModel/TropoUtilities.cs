@@ -169,7 +169,8 @@ namespace VoiceModel.TropoModel
 
             TropoCSharp.Tropo.Transfer xfer = new TropoCSharp.Tropo.Transfer()
             {
-                To = toList
+                To = toList,
+                From = model.from
             };
             tmodel.Transfer(xfer);
         }
