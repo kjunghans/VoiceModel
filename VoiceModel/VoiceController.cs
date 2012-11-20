@@ -87,9 +87,9 @@ namespace VoiceModel
             get { return GetApplicationUri() + ControllerName + "/Tropo"; }
         }
 
-        public string RecordingUri
+        public string TropoRecordingUri
         {
-            get { return GetApplicationUri() + ControllerName + "/SaveRecording"; }
+            get { return GetApplicationUri() + ControllerName + "/SaveRecordingTropo"; }
         }
 
         public string ActionFullPath
@@ -154,11 +154,46 @@ namespace VoiceModel
                 _log.Debug("Received recording and will save as " + path);
                 CallersMessage.SaveAs(path);
             }
+            else
+            {
+                if (CallersMessage == null)
+                    _log.Debug("Received request to save recording but it is null.");
+                else
+                    _log.Debug("Received request to save recording but it is empty.");
+
+            }
             
             string vm_id = Request.QueryString["vm_id"];
             string vm_event = Request.QueryString["vm_event"];
             string vm_result = "";
             return VoiceView(vm_id, vm_event, vm_result);
+        }
+
+        [HttpPost]
+        public string SaveRecordingTropo(HttpPostedFileBase filename)
+        {
+            string msg = "Successfully saved recording.";
+            if (filename != null && filename.ContentLength > 0)
+            {
+                // extract only the fielname
+                var fileName = Path.GetFileName(filename.FileName);
+                // store the file inside ~/App_Data/recordings folder
+                var path = Path.Combine(Server.MapPath(recordingPath), fileName);
+                _log.Debug("Received recording and will save as " + path);
+                // save the audio file
+                filename.SaveAs(path);
+            }
+            else
+            {
+                msg = "Recording was null or empty.";
+                if (filename == null)
+                    _log.Debug("Received request to save recording but it is null.");
+                else
+                    _log.Debug("Received request to save recording but it is empty.");
+
+            }
+
+            return msg;
         }
 
         [HttpPost]
@@ -177,7 +212,7 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow, result.sessionId);
-            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, RecordingUri);
+            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, TropoRecordingUri);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;
         }
@@ -196,7 +231,7 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow, session.id);
-            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, RecordingUri);
+            string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, TropoRecordingUri);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;
         }

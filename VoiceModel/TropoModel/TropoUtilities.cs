@@ -195,7 +195,8 @@ namespace VoiceModel.TropoModel
             {
                 Url = model.recordingUrl,
                 Say = ConvertPromptList(model.prompts, ""),
-                Choices = choices
+                Choices = choices,
+                Name = "CallersMessage"
             };
             tmodel.Record(record);
         }
