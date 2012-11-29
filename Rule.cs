@@ -21,9 +21,7 @@ namespace VoiceModel
         { 
             get 
             {
-                if (scope == null)
-                    return "private";
-                else if (scope == Scope.isPrivate)
+                if (scope == Scope.isPrivate)
                     return "private";
                 else
                     return "public";
