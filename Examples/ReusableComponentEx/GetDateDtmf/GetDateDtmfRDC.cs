@@ -21,7 +21,7 @@ namespace GetDateDtmf
             appProperties.Add(new VxmlProperty("inputmode", "dtmf"));
             AskDatePrompt.bargein = false;
             AddState(ViewStateBuilder.Build("getDate", "validateDate",
-                new Ask("getDate", AskDatePrompt, new Grammar("digits?minlength=6")) { properties = appProperties }), true);
+                new Ask("getDate", AskDatePrompt, new Grammar(new BuiltinGrammar(BuiltinGrammar.GrammarType.digits, 6))) { properties = appProperties }), true);
             AddState(new State("validateDate", "confirmDate")
                 .AddTransition("error","invalidDate",null)
                 .AddOnEntryAction(delegate(CallFlow cf, State state, Event e)

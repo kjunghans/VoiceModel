@@ -142,14 +142,16 @@ namespace VoiceModel.CallFlow
             }
         }
 
-        public VoiceModel GetCurrentVoiceModel()
+        public VoiceModel CurrentVoiceModel
         {
-            return ctx.GetGlobalAs<VoiceModel>("VoiceModel");
+            get { return ctx.GetGlobalAs<VoiceModel>("VoiceModel"); }
+            set { ctx.SetGlobal<VoiceModel>("VoiceModel", value); }
         }
 
-        public void SetCurrentVoiceModel(VoiceModel vm)
+        public string RecordedAudioUri
         {
-            ctx.SetGlobal<VoiceModel>("VoiceModel", vm);
+            get { return ctx.GetGlobalAs<string>("RecordedAudioUri"); }
+            set { ctx.SetGlobal<string>("RecordedAudioUri", value); }
         }
 
         public State CurrState

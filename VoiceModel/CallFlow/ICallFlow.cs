@@ -12,7 +12,7 @@ namespace VoiceModel.CallFlow
         
         void FireEvent(string sEvent, string data);
 
-        VoiceModel GetCurrentVoiceModel();
+        VoiceModel CurrentVoiceModel { get; }
 
         State CurrState { get; }
     }
