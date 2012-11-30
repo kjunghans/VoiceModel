@@ -21,6 +21,8 @@ namespace VoiceModel.CallFlow
 
         public CSharp.Context Ctx { get { return ctx; } }
 
+        public string SessionId { get; set; }
+
         public bool CompletedFinalState { get { return _completedFinalState; } }
 
         public CFStatus Status
@@ -152,6 +154,12 @@ namespace VoiceModel.CallFlow
         {
             get { return ctx.GetGlobalAs<string>("RecordedAudioUri"); }
             set { ctx.SetGlobal<string>("RecordedAudioUri", value); }
+        }
+
+        public string this[string index]
+        {
+            get { return ctx.GetGlobalAs<string>(index); }
+            set { ctx.SetGlobal<string>(index, value); }
         }
 
         public State CurrState
