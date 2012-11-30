@@ -129,6 +129,7 @@
     <Compile Include="TropoModel\TropoUtilities.cs" />
     <Compile Include="TtsMessage.cs" />
     <Compile Include="TtsVariable.cs" />
+    <Compile Include="Var.cs" />
     <Compile Include="ViewStateBuilder.cs" />
     <Compile Include="VoiceController.cs" />
     <Compile Include="VoiceViewEngine.cs" />

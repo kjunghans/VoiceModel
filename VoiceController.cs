@@ -48,6 +48,8 @@ namespace VoiceModel
 
         private void SetCallFlow(ICallFlow cf, string sessionId)
         {
+            cf.SessionId = sessionId;
+            cf.RecordedAudioUri = AudioPathUri;
             sessionMgr.SetCallFlow((CallFlow.CallFlow)cf, sessionId);
         }
 
@@ -180,8 +182,10 @@ namespace VoiceModel
             string msg = "Successfully saved recording.";
             if (filename != null && filename.ContentLength > 0)
             {
+                string sessionId = Request.QueryString["vm_session_id"] ?? "";
+                _log.Debug("vm_session_id=" + sessionId );
                 // extract only the fielname
-                var fileName = Path.GetFileName(filename.FileName);
+                var fileName = sessionId + ".wav";
                 // store the file inside ~/App_Data/recordings folder
                 var path = Path.Combine(Server.MapPath(recordingPath), fileName);
                 _log.Debug("Received recording and will save as " + path);
@@ -217,7 +221,7 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow, result.sessionId);
-            string recordingUri = TropoRecordingUri + "/" + result.sessionId + ".wav";
+            string recordingUri = TropoRecordingUri + "?vm_session_id=" + result.sessionId;
             string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, recordingUri);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;
@@ -237,7 +241,7 @@ namespace VoiceModel
                 doc.json = callFlow.CurrState.jsonArgs;
             doc.ControllerName = ActionName;
             SetCallFlow(callFlow, session.id);
-            string recordingUri = TropoRecordingUri + "/" + session.id + ".wav";
+            string recordingUri = TropoRecordingUri + "?vm_session_id=" + session.id;
             string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, recordingUri);
             _log.Debug("Sending Tropo response:[" + json + "]");
             return json;

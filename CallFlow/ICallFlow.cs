@@ -15,5 +15,7 @@ namespace VoiceModel.CallFlow
         VoiceModel CurrentVoiceModel { get; }
 
         State CurrState { get; }
+        string SessionId { get; set; }
+        string RecordedAudioUri { get; set; }
     }
 }

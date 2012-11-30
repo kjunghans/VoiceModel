@@ -7,11 +7,12 @@ namespace VoiceModel
 {
     public class ResourceLocation
     {
-        public string url { get; set; }
+        public Var UrlVar { get; set; }
+        public string url { get { return UrlVar.Value; } }
         public ResourceLocation() { }
-        public ResourceLocation(string url)
+        public ResourceLocation(Var url)
         {
-            this.url = url;
+            this.UrlVar = url;
         }
     }
 }
