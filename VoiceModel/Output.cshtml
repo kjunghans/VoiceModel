@@ -6,10 +6,11 @@
 
 <var name="vm_id" expr="'@Model.id'" />
 <var name="vm_event" expr="'continue'" />
+<var name="vm_sessionid" expr="session.id" />
 
 <form id="@Model.id">
   <block>
     @{Html.RenderPartial("Prompt", Model.prompts);}
-    <submit next="@Model.ControllerName" namelist="vm_id vm_event" />
+    <submit next="@Model.ControllerName" namelist="vm_id vm_event vm_sessionid" />
   </block>
 </form>

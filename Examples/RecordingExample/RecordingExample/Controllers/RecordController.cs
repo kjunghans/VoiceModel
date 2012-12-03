@@ -16,8 +16,7 @@ namespace RecordingExample.Controllers
         {
             CallFlow flow = new CallFlow();
             flow.AddState(ViewStateBuilder.Build("getRecording", "playback",
-                new Record("getRecording", "Please record your information after the beep.  Press the pound key when you are finished.")
-                  {confirm = true }),true);
+                new Record("getRecording", "Please record your information after the beep.  Press the pound key when you are finished.")),true);
             Prompt playbackPrompt = new Prompt("You recorded ");
             playbackPrompt.audios.Add(new Audio(new ResourceLocation(new Var(flow, "recordingUri")),
                 new Var(flow, "recordingName"), "Error finding recording"));

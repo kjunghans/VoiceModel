@@ -43,6 +43,7 @@ namespace VoiceModel
 
         private void SetCallFlow(ICallFlow cf)
         {
+            cf.RecordedAudioUri = AudioPathUri;
             sessionMgr.SetCallFlow((CallFlow.CallFlow)cf);
         }
 
@@ -86,7 +87,7 @@ namespace VoiceModel
 
         public string AudioPathUri
         {
-            get { return GetApplicationUri() + "App_Data/recordings/"; }
+            get { return GetApplicationUri() + ControllerName + "/Recording/"; }
         }
 
         public string TropoUri
@@ -127,9 +128,10 @@ namespace VoiceModel
             return isIt;
         }
  
-        protected ActionResult VoiceView(string id, string vEvent, string json)
+        protected ActionResult VoiceView(string id, string vEvent, string json, string sessionId)
         {
             CallFlow.ICallFlow callFlow = GetCallFlow();
+            callFlow.SessionId = sessionId;
             callFlow.FireEvent(vEvent, json);
 
             VoiceModel doc = callFlow.CurrState.DataModel;
@@ -143,19 +145,30 @@ namespace VoiceModel
         }
 
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "*")]
-        public ActionResult StateMachine(string vm_id, string vm_event, string vm_result)
+        public ActionResult StateMachine(string vm_id, string vm_event, string vm_result, string vm_sessionid)
         {
             _log.Debug("Recieved VoiceXML request:[" + Request.RawUrl + "]");
-            return VoiceView(vm_id, vm_event, vm_result);
+            return VoiceView(vm_id, vm_event, vm_result, vm_sessionid);
+        }
+
+        public ActionResult Recording(string id)
+        {
+            //TODO: Need to return a 404 error if the file does not exist.
+            _log.Debug("Requested recording " + id);
+            string filename = id;
+            string path = Path.Combine(Server.MapPath(recordingPath), filename);
+            return File(path, "audio/wav", Server.UrlEncode(filename));
         }
 
         [HttpPost]
         public ActionResult SaveRecording(HttpPostedFileBase CallersMessage)
         {
+            string sessionId = Request.QueryString["vm_sessionid"] ?? "";
+            _log.Debug("vm_session_id=" + sessionId);
             if (CallersMessage != null && CallersMessage.ContentLength > 0)
             {
                 // extract only the fielname
-                var fileName = Path.GetFileName(CallersMessage.FileName);
+                var fileName = sessionId + ".wav";
                 // store the file inside ~/App_Data/uploads folder
                 var path = Path.Combine(Server.MapPath(recordingPath), fileName);
                 _log.Debug("Received recording and will save as " + path);
@@ -173,7 +186,7 @@ namespace VoiceModel
             string vm_id = Request.QueryString["vm_id"];
             string vm_event = Request.QueryString["vm_event"];
             string vm_result = "";
-            return VoiceView(vm_id, vm_event, vm_result);
+            return VoiceView(vm_id, vm_event, vm_result, sessionId);
         }
 
         [HttpPost]
