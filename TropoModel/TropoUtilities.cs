@@ -42,7 +42,8 @@ namespace VoiceModel.TropoModel
             }
             else if (audioType == typeof(Audio))
             {
-                s = ((Audio)audio).message + " " + ((Audio)audio).src;
+                s = "<?xml version='1.0'?><speak><audio src='" + ((Audio)audio).src + "'>" +
+                    ((Audio)audio).message + "</audio></speak>";
             }
             else if (audioType == typeof(Silence))
             {

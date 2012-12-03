@@ -27,7 +27,7 @@ namespace VoiceModel
 
         public string Render()
         {
-            string vxml = "<audio src=\"" + location.url + fileName + "\">\n";
+            string vxml = "<audio src=\"" + src + "\">\n";
             vxml += message + "\n</audio>";
 
             return vxml;
