@@ -14,7 +14,8 @@ namespace Menus.Controllers
         {
             CallFlow flow = new CallFlow();
 
-            flow.AddState(ViewStateBuilder.Build("mainMenu", new Ask("mainMenu", "Press one for option one. Press two for option two.", new Grammar("digits?maxlength=1")))
+            flow.AddState(ViewStateBuilder.Build("mainMenu", new Ask("mainMenu", "Press one for option one. Press two for option two.",
+                new Grammar(new BuiltinGrammar(BuiltinGrammar.GrammarType.digits, 1, 1))))
                 .AddTransition("continue", "optionOne", new Condition("result == '1'"))
                 .AddTransition("continue", "optionTwo", new Condition("result == '2'"))
                 .AddTransition("continue", "invalidSelect", new Condition("result != '1' && result != '2'")),true);

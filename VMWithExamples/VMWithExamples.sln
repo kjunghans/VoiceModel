@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceModel", "..\VoiceModel\VoiceModel.csproj", "{C1918322-CF2F-4A20-92B2-47A938DFD8B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherVoice", "..\Examples\WeatherVoice\WeatherVoice\WeatherVoice.csproj", "{1935E394-052A-477A-8A8C-379FEF0AF339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transfer", "..\Examples\Transfer\Transfer\Transfer.csproj", "{B16B2566-F4D3-4A20-9E25-0A12826DA1CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReusableComponentEx", "..\Examples\ReusableComponentEx\ReusableComponentEx\ReusableComponentEx.csproj", "{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordingExample", "..\Examples\RecordingExample\RecordingExample\RecordingExample.csproj", "{BA079EF4-669A-4CA8-BEA2-A53A9BDC11EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "..\Examples\HelloWorld\HelloWorld\HelloWorld.csproj", "{028B6EC0-C6F8-4362-9B85-C5BC20DD72E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menus", "..\Examples\Menus\Menus\Menus\Menus.csproj", "{3F452732-D154-4EAE-B325-1260D5CE4509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDateDtmf", "..\Examples\ReusableComponentEx\GetDateDtmf\GetDateDtmf.csproj", "{241FA375-E93F-4EAA-B326-F66A8AAC0B85}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 9
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\VoiceModel\\VoiceModel.csproj
+		SccProjectName1 = ../VoiceModel
+		SccLocalPath1 = ..\\VoiceModel
+		SccProjectUniqueName2 = ..\\Examples\\WeatherVoice\\WeatherVoice\\WeatherVoice.csproj
+		SccProjectName2 = ../Examples/WeatherVoice/WeatherVoice
+		SccLocalPath2 = ..\\Examples\\WeatherVoice\\WeatherVoice
+		SccProjectUniqueName3 = ..\\Examples\\Transfer\\Transfer\\Transfer.csproj
+		SccProjectName3 = ../Examples/Transfer/Transfer
+		SccLocalPath3 = ..\\Examples\\Transfer\\Transfer
+		SccProjectUniqueName4 = ..\\Examples\\ReusableComponentEx\\ReusableComponentEx\\ReusableComponentEx.csproj
+		SccProjectName4 = ../Examples/ReusableComponentEx/ReusableComponentEx
+		SccLocalPath4 = ..\\Examples\\ReusableComponentEx\\ReusableComponentEx
+		SccProjectUniqueName5 = ..\\Examples\\RecordingExample\\RecordingExample\\RecordingExample.csproj
+		SccProjectName5 = ../Examples/RecordingExample/RecordingExample
+		SccLocalPath5 = ..\\Examples\\RecordingExample\\RecordingExample
+		SccProjectUniqueName6 = ..\\Examples\\HelloWorld\\HelloWorld\\HelloWorld.csproj
+		SccProjectName6 = ../Examples/HelloWorld/HelloWorld
+		SccLocalPath6 = ..\\Examples\\HelloWorld\\HelloWorld
+		SccProjectUniqueName7 = ..\\Examples\\Menus\\Menus\\Menus\\Menus.csproj
+		SccProjectName7 = ../Examples/Menus/Menus/Menus
+		SccLocalPath7 = ..\\Examples\\Menus\\Menus\\Menus
+		SccProjectUniqueName8 = ..\\Examples\\ReusableComponentEx\\GetDateDtmf\\GetDateDtmf.csproj
+		SccProjectName8 = ../Examples/ReusableComponentEx/GetDateDtmf
+		SccLocalPath8 = ..\\Examples\\ReusableComponentEx\\GetDateDtmf
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1935E394-052A-477A-8A8C-379FEF0AF339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1935E394-052A-477A-8A8C-379FEF0AF339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1935E394-052A-477A-8A8C-379FEF0AF339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1935E394-052A-477A-8A8C-379FEF0AF339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16B2566-F4D3-4A20-9E25-0A12826DA1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16B2566-F4D3-4A20-9E25-0A12826DA1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16B2566-F4D3-4A20-9E25-0A12826DA1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16B2566-F4D3-4A20-9E25-0A12826DA1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA079EF4-669A-4CA8-BEA2-A53A9BDC11EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA079EF4-669A-4CA8-BEA2-A53A9BDC11EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA079EF4-669A-4CA8-BEA2-A53A9BDC11EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA079EF4-669A-4CA8-BEA2-A53A9BDC11EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{028B6EC0-C6F8-4362-9B85-C5BC20DD72E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{028B6EC0-C6F8-4362-9B85-C5BC20DD72E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{028B6EC0-C6F8-4362-9B85-C5BC20DD72E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{028B6EC0-C6F8-4362-9B85-C5BC20DD72E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F452732-D154-4EAE-B325-1260D5CE4509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F452732-D154-4EAE-B325-1260D5CE4509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F452732-D154-4EAE-B325-1260D5CE4509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F452732-D154-4EAE-B325-1260D5CE4509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
