@@ -15,8 +15,13 @@ namespace Survey.Service
         {
             Mapper.CreateMap<Entities.Survey, DTO.Survey>();
             Mapper.CreateMap<Entities.User, DTO.User>();
-
+            Mapper.CreateMap<Entities.Question, DTO.Question>();
+            Mapper.CreateMap<Entities.PossibleAnswer, DTO.PossibleAnswer>();
+            Mapper.CreateMap<Entities.Survey, DTO.Survey>();
             Mapper.CreateMap<DTO.Survey, Entities.Survey>();
+            Mapper.CreateMap<DTO.Question, Entities.Question>();
+            Mapper.CreateMap<DTO.PossibleAnswer, Entities.PossibleAnswer>();
+
         }
 
         public DTO.Survey GetSurvey(string surveyName)

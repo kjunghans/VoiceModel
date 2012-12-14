@@ -13,5 +13,10 @@ namespace Survey.Service.DTO
 
         public List<Question> Questions { get; set; }
 
+        public Survey()
+        {
+            Questions = new List<Question>();
+        }
+
     }
 }
