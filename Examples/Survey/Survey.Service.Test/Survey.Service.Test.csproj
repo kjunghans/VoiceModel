@@ -16,6 +16,10 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Survey.Common\Survey.Common.csproj">
+      <Project>{4ed266cc-2a39-4efa-be48-6a1679fb3699}</Project>
+      <Name>Survey.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Survey.Service\Survey.Service.csproj">
       <Project>{48d1be43-8695-474d-b9e4-fd752a2ff1cd}</Project>
       <Name>Survey.Service</Name>

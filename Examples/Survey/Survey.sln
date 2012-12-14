@@ -17,14 +17,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Service.Test", "Surv
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 1
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
 		SccProjectUniqueName0 = ..\\..\\VoiceModel\\VoiceModel.csproj
 		SccProjectName0 = ../../VoiceModel
-		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs33
 		SccLocalPath0 = ..\\..\\VoiceModel
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = Survey\\Survey.Voice.csproj
+		SccProjectName2 = Survey
+		SccLocalPath2 = Survey
+		SccProjectUniqueName3 = Survey.Entities\\Survey.Entities.csproj
+		SccProjectName3 = Survey.Entities
+		SccLocalPath3 = Survey.Entities
+		SccProjectUniqueName4 = Survey.Repository\\Survey.Repository.csproj
+		SccProjectName4 = Survey.Repository
+		SccLocalPath4 = Survey.Repository
+		SccProjectUniqueName5 = Survey.Service\\Survey.Service.csproj
+		SccProjectName5 = Survey.Service
+		SccLocalPath5 = Survey.Service
+		SccProjectUniqueName6 = Survey.Common\\Survey.Common.csproj
+		SccProjectName6 = Survey.Common
+		SccLocalPath6 = Survey.Common
+		SccProjectUniqueName7 = Survey.Service.Test\\Survey.Service.Test.csproj
+		SccProjectName7 = Survey.Service.Test
+		SccLocalPath7 = Survey.Service.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
