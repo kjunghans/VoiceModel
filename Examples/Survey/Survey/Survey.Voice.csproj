@@ -43,10 +43,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="IronJS, Version=0.2.0.1, Culture=neutral, PublicKeyToken=e40e35e206e6bc4f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\IronJS.Core.0.2.0.1\lib\net40\IronJS.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\IronJS.Core.0.2.0.1\lib\net40\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\IronJS.Core.0.2.0.1\lib\net40\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.ExtensionAttribute">
+      <HintPath>..\packages\IronJS.Core.0.2.0.1\lib\net40\Microsoft.Scripting.ExtensionAttribute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -109,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SurveyController.cs" />
+    <Compile Include="DBInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,6 +162,22 @@
     <ProjectReference Include="..\..\..\VoiceModel\VoiceModel.csproj">
       <Project>{c1918322-cf2f-4a20-92b2-47a938dfd8b0}</Project>
       <Name>VoiceModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Survey.Common\Survey.Common.csproj">
+      <Project>{4ed266cc-2a39-4efa-be48-6a1679fb3699}</Project>
+      <Name>Survey.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Survey.Entities\Survey.Entities.csproj">
+      <Project>{df560a5f-cdb6-4d70-9aa4-c0a9aab083ac}</Project>
+      <Name>Survey.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Survey.Repository\Survey.Repository.csproj">
+      <Project>{7ad64915-37e5-454a-beb8-a8588c2b205e}</Project>
+      <Name>Survey.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Survey.Service\Survey.Service.csproj">
+      <Project>{48d1be43-8695-474d-b9e4-fd752a2ff1cd}</Project>
+      <Name>Survey.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

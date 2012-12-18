@@ -14,7 +14,16 @@ namespace VoiceModel
         public enum GrammarType { xml, gsl };
 
         [XmlAttribute("src")]
-        public string source { get { return _location.url + _source; } set { _source = value; } }
+        public string source { 
+            get 
+            {
+                if (_location == null)
+                    return _source;
+                else
+                    return _location.url + _source; 
+            } 
+            set { _source = value; } 
+        }
         [XmlAttribute("type")]
         public string type 
         { 
@@ -52,6 +61,8 @@ namespace VoiceModel
             this.gType = GrammarType.xml;
             this.mode = Mode.voice;
             this.language = "en-US";
+            this._source = "";
+            this._location = null;
         }
 
         public Grammar()

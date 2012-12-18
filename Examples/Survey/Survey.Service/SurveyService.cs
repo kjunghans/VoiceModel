@@ -18,6 +18,7 @@ namespace Survey.Service
             Mapper.CreateMap<Entities.Question, DTO.Question>();
             Mapper.CreateMap<Entities.PossibleAnswer, DTO.PossibleAnswer>();
             Mapper.CreateMap<Entities.Survey, DTO.Survey>();
+            Mapper.CreateMap<Entities.SurveyResponse, DTO.SurveyResponse>();
             Mapper.CreateMap<DTO.Survey, Entities.Survey>();
             Mapper.CreateMap<DTO.Question, Entities.Question>();
             Mapper.CreateMap<DTO.PossibleAnswer, Entities.PossibleAnswer>();
@@ -40,11 +41,13 @@ namespace Survey.Service
 
         }
 
-        public void InsertUser(string name, string userId, string pin)
+        public int InsertUser(string name, string userId, string pin)
         {
             UnitOfWork uow = new UnitOfWork();
-            uow.UserRepository.Insert(new User() { Name = name, Pin = pin, UserId = userId });
+            User user = new User() { Name = name, Pin = pin, UserId = userId };
+            uow.UserRepository.Insert(user);
             uow.Save();
+            return user.Id;
         }
 
         public DTO.User GetUserByUserId(string userId)
@@ -52,6 +55,27 @@ namespace Survey.Service
             UnitOfWork uow = new UnitOfWork();
             Entities.User user = uow.UserRepository.Get(u => u.UserId == userId).SingleOrDefault();
             return Mapper.Map<DTO.User>(user);
+        }
+
+        public void InsertResponse(string response, int questionId, int userId)
+        {
+            UnitOfWork uow = new UnitOfWork();
+            SurveyResponse resp = new SurveyResponse()
+            {
+                Response = response,
+                QuestionId = questionId,
+                UserId = userId,
+                TimeStamp = DateTime.Now
+            };
+            uow.SurveyResponseRepository.Insert(resp);
+            uow.Save();
+        }
+
+        public List<DTO.SurveyResponse> GetResponsesForQuestion(int questionId)
+        {
+            UnitOfWork uow = new UnitOfWork();
+            List<Entities.SurveyResponse> responses = uow.SurveyResponseRepository.Get(r => r.QuestionId == questionId).ToList();
+            return Mapper.Map<List<DTO.SurveyResponse>>(responses);
         }
     }
 }

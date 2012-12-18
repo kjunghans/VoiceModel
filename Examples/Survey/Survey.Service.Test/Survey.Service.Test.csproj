@@ -39,7 +39,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Entity" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -54,6 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DBInitializer.cs" />
     <Compile Include="UTSurveyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,10 +69,22 @@
       <Project>{4ed266cc-2a39-4efa-be48-6a1679fb3699}</Project>
       <Name>Survey.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Survey.Entities\Survey.Entities.csproj">
+      <Project>{df560a5f-cdb6-4d70-9aa4-c0a9aab083ac}</Project>
+      <Name>Survey.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Survey.Repository\Survey.Repository.csproj">
+      <Project>{7ad64915-37e5-454a-beb8-a8588c2b205e}</Project>
+      <Name>Survey.Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Survey.Service\Survey.Service.csproj">
       <Project>{48d1be43-8695-474d-b9e4-fd752a2ff1cd}</Project>
       <Name>Survey.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

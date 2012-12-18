@@ -4,12 +4,35 @@ using Survey.Service;
 using Survey.Service.DTO;
 using Survey.Common;
 using System.Collections.Generic;
+using Survey.Repository;
+using System.Data.Entity;
 
 namespace Survey.Service.Test
 {
     [TestClass]
     public class UTSurveyService
     {
+        UnitOfWork uow;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            Database.SetInitializer<SurveyContext>(new DBInitializer());
+            SurveyContext context = new SurveyContext();
+            //context.Database.CreateIfNotExists();
+            //Need to invoke context to have the DbInitializer do its stuff
+            context.Surveys.Find(-1);
+            uow = new UnitOfWork();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            SurveyContext context = new SurveyContext();
+            context.Database.ExecuteSqlCommand("ALTER DATABASE VoiceSurvey SET SINGLE_USER WITH ROLLBACK IMMEDIATE");
+            context.Database.Delete();
+            uow.Dispose();
+        }
         [TestMethod]
         public void TestSurveyCRUD()
         {
@@ -49,6 +72,16 @@ namespace Survey.Service.Test
             DTO.Survey expectedSurvey = service.GetSurvey(surveyName);
             Assert.IsNotNull(expectedSurvey, "Could not find survey with a name of " + surveyName);
             Assert.AreEqual(expectedSurvey.Name, survey.Name, "Survey names do not match");
+
+            string userId = "1234";
+            int uid = service.InsertUser( "joe tester", userId, "0001");
+            User user = service.GetUserByUserId(userId);
+            Assert.IsNotNull(user, "Could not find user with ID of " + userId);
+
+            service.InsertResponse("No", expectedSurvey.Questions[0].Id, user.Id);
+            user = service.GetUserByUserId(userId);
+            Assert.IsNotNull(user, "Could not find user with ID of " + userId + " after adding response to question.");
+            Assert.AreEqual(1, user.SurveyResponses.Count, "Expected 1 survey response but there are " + user.SurveyResponses.Count.ToString());
 
 
         }
