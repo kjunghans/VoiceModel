@@ -99,6 +99,7 @@ namespace VoiceModel.CallFlow
             }
             else
             {
+                _currState.jsonArgs = data;
                 
                 if (_currState.isFinal)
                 {
