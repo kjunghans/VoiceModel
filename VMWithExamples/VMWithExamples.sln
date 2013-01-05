@@ -19,9 +19,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDateDtmf", "..\Examples\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicMenu", "..\Examples\DynamicMenu\DynamicMenu.csproj", "{D6B008BA-E43F-457E-9A5D-C71A7020721C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Voice", "..\Examples\Survey\Survey\Survey.Voice.csproj", "{C19607CE-2B69-42E1-8050-3602198DF9C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Service", "..\Examples\Survey\Survey.Service\Survey.Service.csproj", "{48D1BE43-8695-474D-B9E4-FD752A2FF1CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Repository", "..\Examples\Survey\Survey.Repository\Survey.Repository.csproj", "{7AD64915-37E5-454A-BEB8-A8588C2B205E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Common", "..\Examples\Survey\Survey.Common\Survey.Common.csproj", "{4ED266CC-2A39-4EFA-BE48-6A1679FB3699}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Entities", "..\Examples\Survey\Survey.Entities\Survey.Entities.csproj", "{DF560A5F-CDB6-4D70-9AA4-C0A9AAB083AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Service.Test", "..\Examples\Survey\Survey.Service.Test\Survey.Service.Test.csproj", "{0B3732F6-182F-45BB-87D5-7E564D29A9E6}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 16
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
 		SccLocalPath0 = .
@@ -52,6 +64,24 @@ Global
 		SccProjectUniqueName9 = ..\\Examples\\DynamicMenu\\DynamicMenu.csproj
 		SccProjectName9 = ../Examples/DynamicMenu
 		SccLocalPath9 = ..\\Examples\\DynamicMenu
+		SccProjectUniqueName10 = ..\\Examples\\Survey\\Survey\\Survey.Voice.csproj
+		SccProjectName10 = ../Examples/Survey/Survey
+		SccLocalPath10 = ..\\Examples\\Survey\\Survey
+		SccProjectUniqueName11 = ..\\Examples\\Survey\\Survey.Service\\Survey.Service.csproj
+		SccProjectName11 = ../Examples/Survey/Survey.Service
+		SccLocalPath11 = ..\\Examples\\Survey\\Survey.Service
+		SccProjectUniqueName12 = ..\\Examples\\Survey\\Survey.Repository\\Survey.Repository.csproj
+		SccProjectName12 = ../Examples/Survey/Survey.Repository
+		SccLocalPath12 = ..\\Examples\\Survey\\Survey.Repository
+		SccProjectUniqueName13 = ..\\Examples\\Survey\\Survey.Common\\Survey.Common.csproj
+		SccProjectName13 = ../Examples/Survey/Survey.Common
+		SccLocalPath13 = ..\\Examples\\Survey\\Survey.Common
+		SccProjectUniqueName14 = ..\\Examples\\Survey\\Survey.Entities\\Survey.Entities.csproj
+		SccProjectName14 = ../Examples/Survey/Survey.Entities
+		SccLocalPath14 = ..\\Examples\\Survey\\Survey.Entities
+		SccProjectUniqueName15 = ..\\Examples\\Survey\\Survey.Service.Test\\Survey.Service.Test.csproj
+		SccProjectName15 = ../Examples/Survey/Survey.Service.Test
+		SccLocalPath15 = ..\\Examples\\Survey\\Survey.Service.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +124,30 @@ Global
 		{D6B008BA-E43F-457E-9A5D-C71A7020721C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6B008BA-E43F-457E-9A5D-C71A7020721C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6B008BA-E43F-457E-9A5D-C71A7020721C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C19607CE-2B69-42E1-8050-3602198DF9C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19607CE-2B69-42E1-8050-3602198DF9C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19607CE-2B69-42E1-8050-3602198DF9C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19607CE-2B69-42E1-8050-3602198DF9C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D1BE43-8695-474D-B9E4-FD752A2FF1CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D1BE43-8695-474D-B9E4-FD752A2FF1CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D1BE43-8695-474D-B9E4-FD752A2FF1CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D1BE43-8695-474D-B9E4-FD752A2FF1CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD64915-37E5-454A-BEB8-A8588C2B205E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD64915-37E5-454A-BEB8-A8588C2B205E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD64915-37E5-454A-BEB8-A8588C2B205E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD64915-37E5-454A-BEB8-A8588C2B205E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ED266CC-2A39-4EFA-BE48-6A1679FB3699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ED266CC-2A39-4EFA-BE48-6A1679FB3699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ED266CC-2A39-4EFA-BE48-6A1679FB3699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ED266CC-2A39-4EFA-BE48-6A1679FB3699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF560A5F-CDB6-4D70-9AA4-C0A9AAB083AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF560A5F-CDB6-4D70-9AA4-C0A9AAB083AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF560A5F-CDB6-4D70-9AA4-C0A9AAB083AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF560A5F-CDB6-4D70-9AA4-C0A9AAB083AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
