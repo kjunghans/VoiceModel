@@ -29,12 +29,12 @@ namespace Survey
             List<PossibleAnswer> answers = new List<PossibleAnswer>();
             answers.Add(new PossibleAnswer()
             {
-                Answer = "1",
+                Answer = "oranges",
                 Sequence = 1
             });
             answers.Add(new PossibleAnswer()
             {
-                Answer = "2",
+                Answer = "apples",
                 Sequence = 2
             });
 
@@ -42,7 +42,7 @@ namespace Survey
             {
                 AnswerType = AnswerTypes.list,
                 Sequence = 2,
-                Text = "If you like oranges press one. If you like apples press two.",
+                Text = "Which do you prefer, oranges or apples?",
                 PossibleAnswers = answers
             });
 
