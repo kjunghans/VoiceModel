@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Survey.Entities.PossibleAnswer">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAgUAAAA=</HashCode>
+      <FileName>PossibleAnswer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Survey.Entities.Question">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACKAAAAAAAAAAAAAAAAAAAAAAAACAAAAACASAEAAAA=</HashCode>
+      <FileName>Question.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SurveyResponses" />
+      <Property Name="PossibleAnswers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Survey.Entities.Survey">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Survey.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Questions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Survey.Entities.SurveyResponse">
+    <Position X="2.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAACAAABAAAAAAAAAAAgAAAAAAAAEAAAAAAQAAAA=</HashCode>
+      <FileName>SurveyResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Survey.Entities.User">
+    <Position X="6" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAAAAAAAAAAAACAAwAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SurveyResponses" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
