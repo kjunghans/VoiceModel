@@ -202,7 +202,7 @@ namespace VoiceModel.TropoModel
             tmodel.Record(record);
         }
 
-       private static string ConvertRecord(global::VoiceModel.Record model, string next, string recordingUri)
+        private static string ConvertRecord(global::VoiceModel.Record model, string next, string recordingUri)
         {
             Tropo tmodel = new Tropo();
             model.recordingUrl = recordingUri;
@@ -211,7 +211,28 @@ namespace VoiceModel.TropoModel
             return tmodel.RenderJSON();
         }
 
-        public static string ConvertVoiceModelToWebApi(VoiceModel vmodel, string next, string recordingUri)
+        private static void ConvertCall(global::VoiceModel.Call model, ref Tropo tmodel)
+        {
+            List<string> toList = new List<string>();
+            toList.Add(model.to);
+
+            TropoCSharp.Tropo.Call call = new TropoCSharp.Tropo.Call()
+            {
+                To = toList,
+                From = model.from
+            };
+            tmodel.Call(call);
+        }
+
+       private static string ConvertCall(global::VoiceModel.Call model, string next)
+       {
+           Tropo tmodel = new Tropo();
+           ConvertCall(model, ref tmodel);
+           tmodel.On("continue", next, null);
+           return tmodel.RenderJSON();
+       }
+
+       public static string ConvertVoiceModelToWebApi(VoiceModel vmodel, string next, string recordingUri)
         {
             string tropoJson = string.Empty;
 
@@ -231,6 +252,9 @@ namespace VoiceModel.TropoModel
                     break;
                 case "VoiceModel.Record":
                     tropoJson = ConvertRecord((global::VoiceModel.Record)vmodel, next, recordingUri);
+                    break;
+                case "VoiceModel.Call":
+                    tropoJson = ConvertCall((global::VoiceModel.Call)vmodel, next);
                     break;
                 default:
                     tropoJson = ConversionError();

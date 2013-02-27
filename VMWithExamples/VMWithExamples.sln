@@ -31,9 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Entities", "..\Examp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Survey.Service.Test", "..\Examples\Survey\Survey.Service.Test\Survey.Service.Test.csproj", "{0B3732F6-182F-45BB-87D5-7E564D29A9E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutboundCall", "OutboundCall\OutboundCall.csproj", "{E55D3AFA-8031-4DC4-BA32-E1E1A1DDD8BB}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 16
+		SccNumberOfProjects = 17
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
 		SccLocalPath0 = .
@@ -82,6 +84,9 @@ Global
 		SccProjectUniqueName15 = ..\\Examples\\Survey\\Survey.Service.Test\\Survey.Service.Test.csproj
 		SccProjectName15 = ../Examples/Survey/Survey.Service.Test
 		SccLocalPath15 = ..\\Examples\\Survey\\Survey.Service.Test
+		SccProjectUniqueName16 = OutboundCall\\OutboundCall.csproj
+		SccProjectName16 = OutboundCall
+		SccLocalPath16 = OutboundCall
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +153,10 @@ Global
 		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B3732F6-182F-45BB-87D5-7E564D29A9E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E55D3AFA-8031-4DC4-BA32-E1E1A1DDD8BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E55D3AFA-8031-4DC4-BA32-E1E1A1DDD8BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E55D3AFA-8031-4DC4-BA32-E1E1A1DDD8BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E55D3AFA-8031-4DC4-BA32-E1E1A1DDD8BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
