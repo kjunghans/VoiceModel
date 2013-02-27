@@ -27,7 +27,6 @@ namespace Survey
             //Initialize database for test web application
             Database.SetInitializer<SurveyContext>(new DBInitializer());
             SurveyContext context = new SurveyContext();
-            //context.Database.CreateIfNotExists();
             //Need to invoke context to have the DbInitializer do its stuff
             context.Surveys.Find(-1);
 

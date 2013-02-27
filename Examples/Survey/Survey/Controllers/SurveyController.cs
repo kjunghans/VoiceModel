@@ -16,14 +16,23 @@ namespace Survey.Controllers
         public override CallFlow BuildCallFlow()
         {
             CallFlow flow = new CallFlow();
+            //Create Service/Domain Layer for accessing survey information
             SurveyService service = new SurveyService();
+            //Get a survey named MySurvey
             Service.DTO.Survey survey = service.GetSurvey("MySurvey");
+            //If we did not get a survey back there is an error. Tell the caller.
             if (survey == null)
             {
-                flow.AddState(ViewStateBuilder.Build("noSurvey", new Exit("noSurvey", "Error finding survey in database. Goodbye.")),true);
+                flow.AddState(new VoiceState("noSurvey", new Exit("noSurvey", "Error finding survey in database. Goodbye.")),true);
                 return flow;
             }
-            State greeting = ViewStateBuilder.Build("greeting", new Say("greeting", "Please take our short survey"))
+
+            //If we got here then we have a survey from the database.
+            //Create a greeting and on the exit action from this state
+            //get the user we seeded from the database.  In a real survey
+            //application we would prompt the user for their id and pin 
+            //to identify them.
+            State greeting = new VoiceState("greeting", new Say("greeting", "Please take our short survey"))
                 .AddOnExitAction(delegate(CallFlow cf, State state, Event e)
                 {
                     SurveyService sservice = new SurveyService();
@@ -37,6 +46,7 @@ namespace Survey.Controllers
             State prevState = greeting;
             int questionNum = 0;
             int questionCount = survey.Questions.Count;
+            //Iterate through the survey questions and add them to our callflow.
             foreach (Question question in survey.Questions)
             {
                 questionNum++;
@@ -62,8 +72,10 @@ namespace Survey.Controllers
                 flow.AddState(questionState);
                 prevState = questionState;
             }
+            //Take the last question in the survey and add a transition to the application exit.
             prevState.AddTransition("continue", "goodbye", null);
-            flow.AddState(ViewStateBuilder.Build("goodbye", new Exit("goodbye", "Thank you for taking our survey. Goodbye.")));
+            //Tell the caller goodbye and hangup
+            flow.AddState(new VoiceState("goodbye", new Exit("goodbye", "Thank you for taking our survey. Goodbye.")));
 
             return flow;
 
