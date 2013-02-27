@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Audio.cs" />
     <Compile Include="BuiltinGrammar.cs" />
+    <Compile Include="Call.cs" />
     <Compile Include="CallFlow\Actions.cs" />
     <Compile Include="CallFlow\CallFlow.cs" />
     <Compile Include="CallFlow\Condition.cs" />
