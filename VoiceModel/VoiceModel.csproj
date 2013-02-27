@@ -132,6 +132,7 @@
     <Compile Include="Var.cs" />
     <Compile Include="ViewStateBuilder.cs" />
     <Compile Include="VoiceController.cs" />
+    <Compile Include="VoiceState.cs" />
     <Compile Include="VoiceViewEngine.cs" />
     <Compile Include="VoiceModel.cs" />
     <Compile Include="VxmlProperty.cs" />
