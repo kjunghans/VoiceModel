@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,12 +14,10 @@ namespace OutboundCall.Controllers
 
         public override CallFlow BuildCallFlow()
         {
+            string phoneNumber = ConfigurationManager.AppSettings["phoneNumber"];
             CallFlow flow = new CallFlow();
-            //Use the Exit object instead of the Say object
-            //because this just plays a prompt and exits.  The 
-            //Say object expects a transition to another state
-            //or object.
-            flow.AddState(ViewStateBuilder.Build("greeting", new Exit("greeting", "Hello World")), true);
+            flow.AddState(ViewStateBuilder.Build("call", "greeting", new Call("callMe", phoneNumber)), true);
+            flow.AddState(ViewStateBuilder.Build("greeting", new Exit("greeting", "Hello World")));
             return flow;
 
         }

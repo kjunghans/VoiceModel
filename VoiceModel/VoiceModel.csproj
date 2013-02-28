@@ -160,6 +160,7 @@
     <EmbeddedResource Include="Transfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Call.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -16,7 +16,7 @@ namespace OutboundCall
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "CallMe", action = "StateMachine", id = UrlParameter.Optional }
             );
         }
     }
