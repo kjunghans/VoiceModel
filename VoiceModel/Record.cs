@@ -8,7 +8,6 @@ namespace VoiceModel
     public class Record : VoiceModel
     {
         public List<Prompt> prompts { get; set; }
-        public string recordingUrl { get; set; }
         public bool confirm { get; set; }
         public List<Prompt> confirmationPrompts { get; set; }
         public int maxtime { get; set; }
@@ -30,7 +29,6 @@ namespace VoiceModel
             this.confirmationPrompts.Add(cprompt);
             this.viewName = "Record";
             this.prompts = new List<Prompt>();
-            this.recordingUrl = "SaveRecording";
             this.maxtime = 60;
         }
 
@@ -48,7 +46,6 @@ namespace VoiceModel
             this.confirmationPrompts.Add(cprompt);
             this.viewName = "Record";
             this.prompts = new List<Prompt>();
-            this.recordingUrl = "SaveRecording";
             this.maxtime = 60;
         }
 
@@ -69,7 +66,6 @@ namespace VoiceModel
             Prompt p = new Prompt(altText);
             p.bargein = false;
             this.prompts.Add(p);
-            this.recordingUrl = "SaveRecording";
             this.maxtime = 60;
         }
 
@@ -89,7 +85,6 @@ namespace VoiceModel
             Prompt p = new Prompt(altText);
             p.bargein = false;
             this.prompts.Add(p);
-            this.recordingUrl = "SaveRecording";
             this.maxtime = 60;
         }
 

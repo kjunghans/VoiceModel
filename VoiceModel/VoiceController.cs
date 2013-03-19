@@ -100,6 +100,10 @@ namespace VoiceModel
             get { return GetApplicationUri() + ControllerName + "/SaveRecordingTropo"; }
         }
 
+        public string VxmlRecordingUri
+        {
+            get { return GetApplicationUri() + ControllerName + "/SaveRecording"; }
+        }
         public string ActionFullPath
         {
             get { return GetApplicationUri() + ActionName; }
@@ -137,7 +141,10 @@ namespace VoiceModel
             VoiceModel doc = callFlow.CurrState.DataModel;
             if (isJson(callFlow.CurrState.jsonArgs))
                 doc.json = callFlow.CurrState.jsonArgs;
-            doc.ControllerName = ActionName;
+            if (doc.ViewName == "Record")
+                doc.nextUri = VxmlRecordingUri;
+            else
+                doc.nextUri = ActionName;
             SetCallFlow(callFlow);
 
             return View(doc.ViewName, doc);
@@ -232,7 +239,7 @@ namespace VoiceModel
             VoiceModel doc = callFlow.CurrState.DataModel;
             if (isJson(callFlow.CurrState.jsonArgs))
                 doc.json = callFlow.CurrState.jsonArgs;
-            doc.ControllerName = ActionName;
+            doc.nextUri = ActionName;
             SetCallFlow(callFlow, result.sessionId);
             string recordingUri = TropoRecordingUri + "?vm_session_id=" + result.sessionId;
             string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, recordingUri);
@@ -252,7 +259,7 @@ namespace VoiceModel
             VoiceModel doc = callFlow.CurrState.DataModel;
             if (isJson(callFlow.CurrState.jsonArgs))
                 doc.json = callFlow.CurrState.jsonArgs;
-            doc.ControllerName = ActionName;
+            doc.nextUri = ActionName;
             SetCallFlow(callFlow, session.id);
             string recordingUri = TropoRecordingUri + "?vm_session_id=" + session.id;
             string json = TropoUtilities.ConvertVoiceModelToWebApi(doc, TropoUri, recordingUri);

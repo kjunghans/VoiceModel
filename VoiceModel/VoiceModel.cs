@@ -13,11 +13,11 @@ namespace VoiceModel
         protected string viewName { get; set; }
         public string json { get; set; }
         public bool AllowSettingControllerName { get; set; }
-        public string ControllerName { get; set; }
+        public string nextUri { get; set; }
 
-        public  bool ControllerNameHasFullPath
+        public  bool NextUriHasFullPath
         {
-            get { return ControllerName.Contains("http"); }
+            get { return nextUri.Contains("http"); }
         }
 
 
@@ -25,7 +25,7 @@ namespace VoiceModel
         {
             this.AppName = null;
             this.properties = new List<VxmlProperty>();
-            this.ControllerName = "StateMachine";
+            this.nextUri = "StateMachine";
             this.AllowSettingControllerName = true;
         }
 
@@ -36,7 +36,7 @@ namespace VoiceModel
             this.properties = doc.properties;
             this.viewName = doc.viewName;
             this.json = doc.json;
-            this.ControllerName = doc.ControllerName;
+            this.nextUri = doc.nextUri;
             this.AllowSettingControllerName = true;
         }
 
@@ -44,7 +44,7 @@ namespace VoiceModel
         {
             this.AppName = appName;
             this.properties = new List<VxmlProperty>();
-            this.ControllerName = "StateMachine";
+            this.nextUri = "StateMachine";
             this.AllowSettingControllerName = true;
         }
 
@@ -52,7 +52,7 @@ namespace VoiceModel
         {
             this.AppName = appName;
             this.properties = new List<VxmlProperty>();
-            this.ControllerName = "StateMachine";
+            this.nextUri = "StateMachine";
             this.AllowSettingControllerName = true;
         }
 

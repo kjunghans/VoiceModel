@@ -194,7 +194,7 @@ namespace VoiceModel.TropoModel
 
             TropoCSharp.Tropo.Record record = new TropoCSharp.Tropo.Record()
             {
-                Url = model.recordingUrl,
+                Url = model.nextUri,
                 Say = ConvertPromptList(model.prompts, ""),
                 Choices = choices,
                 Name = "CallersMessage"
@@ -205,7 +205,7 @@ namespace VoiceModel.TropoModel
         private static string ConvertRecord(global::VoiceModel.Record model, string next, string recordingUri)
         {
             Tropo tmodel = new Tropo();
-            model.recordingUrl = recordingUri;
+            model.nextUri = recordingUri;
             ConvertRecord(model, ref tmodel);
             tmodel.On("continue", next, null);
             return tmodel.RenderJSON();

@@ -30,9 +30,9 @@
   </field>
   <filled>
     <assign name="vm_result" expr="F_1" />
-    <submit next="@Model.ControllerName" namelist="vm_id vm_event vm_result vm_sessionid" />
+    <submit next="@Model.nextUri" namelist="vm_id vm_event vm_result vm_sessionid" />
   </filled>
-  @Html.NoInput(@Model.noinputPrompts, @Model.ControllerName)
-  @Html.NoMatch(@Model.nomatchPrompts, @Model.ControllerName)
+  @Html.NoInput(@Model.noinputPrompts, @Model.nextUri)
+  @Html.NoMatch(@Model.nomatchPrompts, @Model.nextUri)
 
 </form>

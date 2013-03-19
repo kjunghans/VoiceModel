@@ -80,7 +80,7 @@
     <if cond="DlgActive == 'no'">
       <assign name="DlgActive" expr="'yes'"/>
       <assign name="DlgExitStatus" expr="'unforced'"/>
-      <dialogstart src="'@Model.ControllerName'"
+      <dialogstart src="'@Model.nextUri'"
            namelist="vm_id vm_event vm_sessionid"
            connectionid="call_0"
            dialogid="Message_Dlg"/>
