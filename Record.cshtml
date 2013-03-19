@@ -13,7 +13,7 @@
         @{Html.RenderPartial("Prompt", Model.prompts);}
     </record>
      <filled>
-        <submit expr="'@Model.recordingUrl?vm_id=' + vm_id + '&amp;vm_event=' + vm_event + '&amp;vm_sessionid=' + vm_sessionid"  method="post" namelist="CallersMessage" enctype="multipart/form-data"/>
+        <submit expr="'@Model.nextUri?vm_id=' + vm_id + '&amp;vm_event=' + vm_event + '&amp;vm_sessionid=' + vm_sessionid"  method="post" namelist="CallersMessage" enctype="multipart/form-data"/>
       </filled>
         
 </form>
