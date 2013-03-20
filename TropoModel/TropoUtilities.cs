@@ -53,12 +53,12 @@ namespace VoiceModel.TropoModel
         }
 
 
-        private static string ConvertExit(Exit model, string next)
+        private static string ConvertExit(Exit model)
         {
             Tropo tmodel = new Tropo();
             ConvertPromptList(model.ExitPrompt, model.json, ref tmodel);
             tmodel.Hangup();
-            tmodel.On("continue", next, null);
+            //tmodel.On("continue", model.nextUri, null);
 
             return tmodel.RenderJSON();
         }
@@ -146,20 +146,20 @@ namespace VoiceModel.TropoModel
             return choices;
         }
 
-        private static string ConvertAsk(global::VoiceModel.Ask model, string next)
+        private static string ConvertAsk(global::VoiceModel.Ask model)
         {
             Tropo tmodel = new Tropo();
             tmodel.Ask(3, true, ConvertGrammar(model.grammar), null, "result", null, ConvertPromptList(model.initialPrompt, model.json), null);
-            tmodel.On("continue", next, null);
+            tmodel.On("continue", model.nextUri, null);
 
             return tmodel.RenderJSON();
         }
 
-        private static string ConvertSay(global::VoiceModel.Say model, string next)
+        private static string ConvertSay(global::VoiceModel.Say model)
         {
             Tropo tmodel = new Tropo();
             ConvertPromptList(model.prompts, model.json, ref tmodel);
-            tmodel.On("continue", next, null);
+            tmodel.On("continue", model.nextUri, null);
             return tmodel.RenderJSON();
         }
 
@@ -176,12 +176,12 @@ namespace VoiceModel.TropoModel
             tmodel.Transfer(xfer);
         }
 
-        private static string ConvertTransfer(global::VoiceModel.Transfer model, string next)
+        private static string ConvertTransfer(global::VoiceModel.Transfer model)
         {
             Tropo tmodel = new Tropo();
             ConvertPromptList(model.prompts, model.json, ref tmodel);
             ConvertTransfer(model, ref tmodel);
-            tmodel.On("continue", next, null);
+            tmodel.On("continue", model.nextUri, null);
             return tmodel.RenderJSON();
         }
 
@@ -202,9 +202,10 @@ namespace VoiceModel.TropoModel
             tmodel.Record(record);
         }
 
-        private static string ConvertRecord(global::VoiceModel.Record model, string next, string recordingUri)
+        private static string ConvertRecord(global::VoiceModel.Record model, string recordingUri)
         {
             Tropo tmodel = new Tropo();
+            string next = model.nextUri;
             model.nextUri = recordingUri;
             ConvertRecord(model, ref tmodel);
             tmodel.On("continue", next, null);
@@ -224,37 +225,37 @@ namespace VoiceModel.TropoModel
             tmodel.Call(call);
         }
 
-       private static string ConvertCall(global::VoiceModel.Call model, string next)
+       private static string ConvertCall(global::VoiceModel.Call model)
        {
            Tropo tmodel = new Tropo();
            ConvertCall(model, ref tmodel);
-           tmodel.On("continue", next, null);
+           tmodel.On("continue", model.nextUri, null);
            return tmodel.RenderJSON();
        }
 
-       public static string ConvertVoiceModelToWebApi(VoiceModel vmodel, string next, string recordingUri)
+       public static string ConvertVoiceModelToWebApi(VoiceModel vmodel, string recordingUri)
         {
             string tropoJson = string.Empty;
 
             switch (vmodel.GetType().ToString())
             {
                 case "VoiceModel.Exit":
-                    tropoJson = ConvertExit((Exit)vmodel, next);
+                    tropoJson = ConvertExit((Exit)vmodel);
                     break;
                 case "VoiceModel.Ask":
-                    tropoJson = ConvertAsk((global::VoiceModel.Ask)vmodel, next);
+                    tropoJson = ConvertAsk((global::VoiceModel.Ask)vmodel);
                     break;
                 case "VoiceModel.Say":
-                    tropoJson = ConvertSay((global::VoiceModel.Say)vmodel, next);
+                    tropoJson = ConvertSay((global::VoiceModel.Say)vmodel);
                     break;
                 case "VoiceModel.Transfer":
-                    tropoJson = ConvertTransfer((global::VoiceModel.Transfer)vmodel, next);
+                    tropoJson = ConvertTransfer((global::VoiceModel.Transfer)vmodel);
                     break;
                 case "VoiceModel.Record":
-                    tropoJson = ConvertRecord((global::VoiceModel.Record)vmodel, next, recordingUri);
+                    tropoJson = ConvertRecord((global::VoiceModel.Record)vmodel, recordingUri);
                     break;
                 case "VoiceModel.Call":
-                    tropoJson = ConvertCall((global::VoiceModel.Call)vmodel, next);
+                    tropoJson = ConvertCall((global::VoiceModel.Call)vmodel);
                     break;
                 default:
                     tropoJson = ConversionError();
