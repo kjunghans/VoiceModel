@@ -15,9 +15,10 @@ namespace OutboundCall.Controllers
         public override CallFlow BuildCallFlow()
         {
             string phoneNumber = ConfigurationManager.AppSettings["phoneNumber"];
+            string callerId = ConfigurationManager.AppSettings["callerId"];
+            string dialogUri = this.ApplicationUri + "Outbound";
             CallFlow flow = new CallFlow();
-            flow.AddState(ViewStateBuilder.Build("call", "greeting", new Call("callMe", phoneNumber)), true);
-            flow.AddState(ViewStateBuilder.Build("greeting", new Exit("greeting", "Hello World")));
+            flow.AddState(ViewStateBuilder.Build("call", "greeting", new Call("callMe", phoneNumber, callerId, dialogUri)), true);
             return flow;
 
         }
