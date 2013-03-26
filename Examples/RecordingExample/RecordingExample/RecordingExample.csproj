@@ -148,6 +148,7 @@
   <ItemGroup>
     <Content Include="log4net.config" />
     <None Include="Properties\PublishProfiles\local file.pubxml" />
+    <None Include="Properties\PublishProfiles\wwwroot.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
