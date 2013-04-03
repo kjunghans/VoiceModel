@@ -127,18 +127,14 @@ namespace VoiceModel.CallFlow
                         if (_states.TryGetValue(targetId, out nextState))
                         {
                             _currState = nextState;
-                            //Get the status of our current state's composite states
-                            status = NestedCFStatus;
-                            if (status == CFStatus.Empty)
-                            {
-                                _currState.jsonArgs = data;
-                                _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
-                            }
-                            else
+                            _currState.jsonArgs = data;
+                            _currState.OnEntry.Execute(this, _currState, new Event(sEvent));
+                            //if there are composite states run them
+                            if (NestedCFStatus != CFStatus.Empty)
                             {
                                 FireEventInNestedCF(sEvent, data);
                             }
-                        }
+                         }
                     }
                 }
                 
