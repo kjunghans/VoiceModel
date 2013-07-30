@@ -80,7 +80,6 @@ namespace VoiceModel
             setDefaults();
             _location = loc;
             _source = src;
-            this.source = loc.url + source;
         }
 
         public Grammar(string Id, List<string> utternances)
