@@ -164,6 +164,7 @@ namespace VoiceModel
             return VoiceView(vm_id, vm_event, vm_result, vm_sessionid);
         }
 
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "*")]
         public ActionResult Recording(string id)
         {
             //TODO: Need to return a 404 error if the file does not exist.
