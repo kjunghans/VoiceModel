@@ -1,0 +1,128 @@
+﻿@model VoiceModel.Call
+<?xml version="1.0" encoding="UTF-8"?>
+<ccxml version="1.0" xmlns="http://www.w3.org/2002/09/ccxml" xmlns:voxeo="http://community.voxeo.com/xmlns/ccxml">
+
+<meta name="author" content="Jeff Menkel"/>
+<meta name="copyright" content="2007 Voxeo Corporation"/>
+<meta name="maintainer" content="YOUR_EMAIL@HERE.COM"/>
+
+<var name="state0" expr="'init'"/>
+<var name="DlgActive" expr="'no'"/>
+<var name="lastCPAEventTime" expr="new Date().getTime()"/>
+<var name="DlgExitStatus" expr="'unforced'"/>
+<var name="call_0"/>
+<var name="playMsg"/>
+<var name="vm_id" expr="'@Model.id'" />
+<var name="vm_event" expr="'continue'" />
+<var name="vm_sessionid" expr="session.id" />
+
+<eventprocessor statevariable="state0">
+  <transition state="init" event="ccxml.loaded">
+    <createcall dest="'@Model.to'"
+                callerid="'@Model.from'"
+                timeout="'60000ms'"
+                voxeo-cpa-runtime="'60000'"
+                voxeo-cpa-maxtime="'4000'"
+                voxeo-cpa-maxsilence="'1000'"
+                voxeo-cpa-maskevent="'human,machine,beep'"
+                voxeo-cpa-maskstop="''"
+                connectionid="call_0"/>
+  </transition>
+
+  <transition event="connection.connected">
+    <log expr="'*** CALL CONNECTED -- WAITING FOR CPA ***'"/>
+  </transition>
+
+  <transition event="connection.failed">
+    <log expr="'*** CALL FAILED [' + event$.connectionid + '] ***'"/>
+    <log expr="'*** REASON [' + event$.reason + '] ***'"/>
+    <exit/>
+  </transition>
+
+  <transition event="voxeo.cpa.result">
+    <log expr="'*** CPA SAYS [' + event$.type + '] ***'"/>
+
+<!--  If it has been more than 1000ms since the last time we have    -->
+<!--  received the 'voxeo.cpa.result' event, we will process this    -->
+<!--  code.  This logic will simply prevent multiple CPA events,    -->
+<!--  such as a 'machine' and then an immediate 'beep' event, from    -->
+<!--  overlapping and causing a state mismatch when trying to        -->
+<!--  start and terminate the message dialog. -->
+
+    <if cond="new Date().getTime() - lastCPAEventTime >= 1000">
+
+<!--  Put a new time stamp on the last time we have received the    -->
+<!--  'voxeo.cpa.result' event.  -->
+
+      <assign name="lastCPAEventTime" expr="new Date().getTime()"/>
+
+      <if cond="event$.type == 'human'">
+        <log expr="'*** HUMAN ANSWERED -- PLAY MESSAGE ***'"/>
+        <send data="'playMsg'" target="session.id"/>
+        <assign name="state0" expr="playMsg"/>
+      <elseif cond="event$.type == 'machine'"/>
+        <log expr="'*** MACHINE ANSWERED -- PLAY MESSAGE ***'"/>
+        <send data="'playMsg'" target="session.id"/>
+        <assign name="state0" expr="playMsg"/>
+      <elseif cond="event$.type == 'beep'"/>
+        <log expr="'*** BEEP DETECTED -- PLAY MESSAGE ***'"/>
+        <send data="'playMsg'" target="session.id"/>
+        <assign name="state0" expr="playMsg"/>
+      </if>
+    </if>
+  </transition>
+
+  <transition event="playMsg">
+
+<!--  If the message dialog is not currently playing, -->
+<!--  start the message dialog.  -->
+
+    <if cond="DlgActive == 'no'">
+      <assign name="DlgActive" expr="'yes'"/>
+      <assign name="DlgExitStatus" expr="'unforced'"/>
+      <dialogstart src="'@Model.nextUri'"
+           namelist="vm_id vm_event vm_sessionid"
+           connectionid="call_0"
+           dialogid="Message_Dlg"/>
+    <else/>
+
+<!--  If the message dialog is currently playing, -->
+<!--  stop the current  dialog  -->
+
+      <assign name="DlgExitStatus" expr="'forced'"/>
+      <dialogterminate dialogid="Message_Dlg"/>
+    </if>
+  </transition>
+
+  <transition event="dialog.exit">
+
+<!--  If the dialog has exited 'unforced', then the message has      -->
+<!--  been completely delivered.  -->
+
+    <if cond="DlgExitStatus == 'unforced'">
+      <log expr="'*** MESSAGE PLAYED ***'"/>
+      <exit/>
+
+<!--  If the dialog has been 'forced' to exit, then we send the      -->
+<!--  'playMsg' event to start the message dialog over again.        -->
+
+    <else/>
+      <log expr="'*** MESSAGE DISRUPTED -- RESTARTING MESSAGE ***'"/>
+      <assign name="DlgActive" expr="'no'"/>
+      <send data="'playMsg'" target="session.id"/>
+    </if>
+  </transition>
+
+  <transition event="connection.disconnected">
+    <if cond="call_0 == event$.connectionid">
+      <log expr="'*** CALL DISCONNECTED -- EXIT ***'"/>
+      <exit/>
+    </if>
+  </transition>
+
+  <transition event="error.*">
+    <log expr="'*** AN ERROR HAS OCCURRED [' + event$.reason + '] ***'"/>
+    <exit/>
+  </transition>
+</eventprocessor>
+</ccxml>

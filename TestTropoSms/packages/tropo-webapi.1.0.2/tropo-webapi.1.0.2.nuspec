@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>tropo-webapi</id>
+    <version>1.0.2</version>
+    <title>Tropo Web API</title>
+    <authors>Tropo</authors>
+    <owners>Tropo</owners>
+    <projectUrl>https://github.com/khalidabuhakmeh/tropo-webapi-csharp</projectUrl>
+    <iconUrl>https://www.tropo.com/images/top/tropo-logo-new.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Allows you to develop against the Tropo Web API using C#.</description>
+    <summary>Allows you to develop against the Tropo Web API using C#.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>Telephony Tropo C# Web API</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="4.0.3" />
+    </dependencies>
+  </metadata>
+</package>
