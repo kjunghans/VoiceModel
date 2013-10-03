@@ -19,7 +19,7 @@ namespace VoiceModel
         ILoggerService _log = LoggerFactory.GetInstance();
 
 
-        private ICallFlow GetCallFlow()
+        private CallFlow.CallFlow GetCallFlow()
         {
             CallFlow.CallFlow flow = sessionMgr.GetCallFlow();
             if (flow == null)
@@ -30,7 +30,7 @@ namespace VoiceModel
             return flow;
         }
 
-        private ICallFlow GetCallFlow(string sessionId)
+        private CallFlow.CallFlow GetCallFlow(string sessionId)
         {
             CallFlow.CallFlow flow = sessionMgr.GetCallFlow(sessionId);
             if (flow == null)
@@ -137,7 +137,9 @@ namespace VoiceModel
  
         protected ActionResult VoiceView(string id, string vEvent, string json, string sessionId)
         {
-            CallFlow.ICallFlow callFlow = GetCallFlow();
+            CallFlow.CallFlow callFlow = GetCallFlow();
+            callFlow["Channel"] = "VOICE";
+
             callFlow.SessionId = sessionId;
             callFlow.FireEvent(vEvent, json);
 
@@ -258,12 +260,19 @@ namespace VoiceModel
         }
 
         [HttpPost]
-        public string StartTropo(Session session)
+        public string StartTropo(string id, Session session)
         {
             _log.Debug("Recieved Tropo start request: ", session );
             string vEvent = "";
             string vData = "";
-            CallFlow.ICallFlow callFlow = BuildCallFlow();
+            CallFlow.CallFlow callFlow = BuildCallFlow();
+            if (string.IsNullOrEmpty(id))
+                id = "unknown";
+            callFlow["AppId"] = id;
+            callFlow["ANI"] = session.from.id;
+            callFlow["Channel"] = session.from.channel;
+            callFlow["InitialText"] = session.initialText;
+
             callFlow.FireEvent(vEvent, vData);
 
             VoiceModel doc = callFlow.CurrState.DataModel;
