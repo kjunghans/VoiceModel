@@ -7,14 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceModel", "..\VoiceModel
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 1
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
 		SccProjectUniqueName0 = ..\\VoiceModel\\VoiceModel.csproj
 		SccProjectName0 = ../VoiceModel
-		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs33
 		SccLocalPath0 = ..\\VoiceModel
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = TestTropoSms\\TestTropoSms.csproj
+		SccProjectName2 = TestTropoSms
+		SccLocalPath2 = TestTropoSms
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
