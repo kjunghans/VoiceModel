@@ -7,18 +7,40 @@ namespace VoiceModel
 {
     public class TtsMessage: IAudio
     {
-        private string _message;
+        private string _staticMsg;
+        private Var _varMsg;
+
         public string message
         {
-            get { return _message; }
-            set { _message = value; }
+            get 
+            {
+                if (!string.IsNullOrEmpty(_staticMsg))
+                    return _staticMsg;
+                else if (_varMsg != null)
+                    return _varMsg.Value;
+                else
+                    return "";
+            }
+
+            set
+            {
+                _staticMsg = value;
+                _varMsg = null;
+            }
         }
 
-        public TtsMessage() { }
         public TtsMessage(string message)
         {
-            this.message = message;
+            _staticMsg = message;
+            _varMsg = null;
         }
+
+        public TtsMessage(Var varMsg)
+        {
+            _varMsg = varMsg;
+            _staticMsg = null;
+        }
+
         public string Render()
         {
              return message;

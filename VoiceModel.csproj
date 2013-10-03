@@ -42,8 +42,9 @@
     <Reference Include="IronJS">
       <HintPath>packages\IronJS.Core.0.2.0.1\lib\net40\IronJS.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TestTropoSms\packages\log4net.2.0.1\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -53,8 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\IronJS.Core.0.2.0.1\lib\net40\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\TestTropoSms\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -101,6 +103,7 @@
     <Compile Include="Logger\LoggerFactory.cs" />
     <Compile Include="OneOf.cs" />
     <Compile Include="PromptHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.log4net.cs" />
     <Compile Include="Return.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="RuleRef.cs" />
@@ -161,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Call.cshtml" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
