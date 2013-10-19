@@ -15,43 +15,27 @@ namespace VoiceModel
     public abstract class VoiceController : Controller
     {
         string recordingPath { get; set; }
-        SessionData sessionMgr = new SessionData("VoiceController");
         ILoggerService _log = LoggerFactory.GetInstance();
 
 
-        private CallFlow.CallFlow GetCallFlow()
-        {
-            CallFlow.CallFlow flow = sessionMgr.GetCallFlow();
-            if (flow == null)
-            {
-                flow = BuildCallFlow();
-                sessionMgr.SetCallFlow(flow);
-            }
-            return flow;
-        }
-
         private CallFlow.CallFlow GetCallFlow(string sessionId)
         {
-            CallFlow.CallFlow flow = sessionMgr.GetCallFlow(sessionId);
+            CallFlow.CallFlow flow = SessionData.GetCallFlow(sessionId);
             if (flow == null)
             {
                 flow = BuildCallFlow();
-                sessionMgr.SetCallFlow(flow, sessionId);
+                SessionData.SetCallFlow(flow, sessionId);
             }
             return flow;
         }
 
-        private void SetCallFlow(ICallFlow cf)
-        {
-            cf.RecordedAudioUri = AudioPathUri;
-            sessionMgr.SetCallFlow((CallFlow.CallFlow)cf);
-        }
-
+ 
+ 
         private void SetCallFlow(ICallFlow cf, string sessionId)
         {
             cf.SessionId = sessionId;
             cf.RecordedAudioUri = AudioPathUri;
-            sessionMgr.SetCallFlow((CallFlow.CallFlow)cf, sessionId);
+            SessionData.SetCallFlow((CallFlow.CallFlow)cf, sessionId);
         }
 
         public abstract CallFlow.CallFlow BuildCallFlow();
@@ -115,7 +99,6 @@ namespace VoiceModel
         public void InitVoiceController()
         {
             recordingPath = RecordingPath;
-            sessionMgr = new SessionData(ControllerName + ".cf");
         }
 
         protected override void Initialize(RequestContext rc)
@@ -137,7 +120,7 @@ namespace VoiceModel
  
         protected ActionResult VoiceView(string id, string vEvent, string json, string sessionId)
         {
-            CallFlow.CallFlow callFlow = GetCallFlow();
+            CallFlow.CallFlow callFlow = GetCallFlow(sessionId);
             callFlow["Channel"] = "VOICE";
 
             callFlow.SessionId = sessionId;
@@ -153,7 +136,7 @@ namespace VoiceModel
             else
                 doc.nextUri = VxmlUri;
             
-            SetCallFlow(callFlow);
+            SetCallFlow(callFlow, sessionId);
 
             return View(doc.ViewName, doc);
 
@@ -163,6 +146,16 @@ namespace VoiceModel
         public ActionResult StateMachine(string vm_id, string vm_event, string vm_result, string vm_sessionid)
         {
             _log.Debug("Recieved VoiceXML request:[" + Request.RawUrl + "]");
+            string qstring = "Parameters: ";
+            var items = Request.QueryString.AllKeys.SelectMany(Request.QueryString.GetValues, (k, v) => new {key = k, value = v});
+            foreach (var item in items)
+                qstring += item.key + "=" + item.value + ";";
+            _log.Debug(qstring);
+            //If the vm_sessionid is null then this is the first time called by the IVR.
+            //Get the session ID directly from the IVR query string.
+            //TODO: make this configurable for other IVR systems. This works on Voxeo Prophecy.
+            if (string.IsNullOrEmpty(vm_sessionid))
+                vm_sessionid = Request.QueryString["session.sessionid"];
             return VoiceView(vm_id, vm_event, vm_result, vm_sessionid);
         }
 

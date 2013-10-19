@@ -1,65 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
 using System.Web;
 using System.Web.Caching;
 
 namespace VoiceModel
 {
-    public class SessionData
+    public static class SessionData
     {
-        private string _componentName;
-        private string _cacheKey;
-
-        private Dictionary<string, CallFlow.CallFlow> GetCachedCallFlows()
+ 
+        public static void SetCallFlow(CallFlow.CallFlow cf, string sessionId)
         {
-            Dictionary<string, CallFlow.CallFlow> callFlows = (Dictionary<string, CallFlow.CallFlow>)HttpContext.Current.Cache[_cacheKey];
-            if (callFlows == null)
-                callFlows = new Dictionary<string, CallFlow.CallFlow>();
-            return callFlows;
+            ObjectCache cache = MemoryCache.Default;
+            CacheItemPolicy policy = new CacheItemPolicy();
+            //Expires after 5 minutes of none use. TODO: Make this configurable.
+            policy.SlidingExpiration = new TimeSpan(0, 5, 0);
+            cache.Set(sessionId, cf, policy);
 
         }
 
-        private void UpdateCachedCallFlows(Dictionary<string, CallFlow.CallFlow> callFlows)
+        public static CallFlow.CallFlow GetCallFlow(string sessionId)
         {
-            HttpContext.Current.Cache.Insert(_cacheKey, callFlows);
-        }
-
-        public SessionData(string componentName)
-        {
-            _componentName = componentName;
-            _cacheKey = "cache." + componentName;
-        }
-
-        public void SetCallFlow(CallFlow.CallFlow cf)
-        {
-            HttpContext.Current.Session.Add( _componentName, cf);
-        }
-
-        public CallFlow.CallFlow GetCallFlow()
-        {
-            return (CallFlow.CallFlow)HttpContext.Current.Session[_componentName];
-        }
-
-        public void SetCallFlow(CallFlow.CallFlow cf, string sessionId)
-        {
-            Dictionary<string, CallFlow.CallFlow> callFlows = GetCachedCallFlows();
-            CallFlow.CallFlow callFlow;
-            if (callFlows.TryGetValue(sessionId, out callFlow))
-                callFlow = cf;
-            else
-                callFlows.Add(sessionId, cf);
-            UpdateCachedCallFlows(callFlows);
-
-        }
-
-        public CallFlow.CallFlow GetCallFlow(string sessionId)
-        {
-            Dictionary<string, CallFlow.CallFlow> callFlows = GetCachedCallFlows();
-            CallFlow.CallFlow callFlow = null;
-            callFlows.TryGetValue(sessionId, out callFlow);
-            return callFlow;
+            ObjectCache cache = MemoryCache.Default;
+            return cache[sessionId] as CallFlow.CallFlow;
         }
 
     }
