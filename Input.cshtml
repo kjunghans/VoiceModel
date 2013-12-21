@@ -30,7 +30,7 @@
   </field>
   <filled>
     <assign name="vm_result" expr="F_1" />
-    <submit next="@Model.nextUri" namelist="vm_id vm_event vm_result vm_sessionid" />
+    <submit @Html.Raw(VoiceController.SubmitMethod == HttpMethod.Post ? "method=\"post\"" : "") next="@Model.nextUri" namelist="vm_id vm_event vm_result vm_sessionid" />
   </filled>
   @Html.NoInput(@Model.noinputPrompts, @Model.nextUri)
   @Html.NoMatch(@Model.nomatchPrompts, @Model.nextUri)
