@@ -23,6 +23,8 @@ namespace VoiceModel
 
         public static CallFlow.CallFlow GetCallFlow(string sessionId)
         {
+            if (string.IsNullOrEmpty(sessionId))
+                return null;
             ObjectCache cache = MemoryCache.Default;
             return cache[sessionId] as CallFlow.CallFlow;
         }

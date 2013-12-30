@@ -64,6 +64,7 @@ namespace VoiceModel
             int count = 1;
             foreach (Prompt prompt in prompts)
             {
+                // We really should not be concating strings using +...
                 sb.Append("<" + handlerType + " count=\"");
                 sb.Append(count.ToString());
                 sb.Append("\">");
@@ -81,9 +82,12 @@ namespace VoiceModel
             sb.Append(handlerType);
             sb.Append("'\"/>");
             sb.Append(Environment.NewLine);
-            sb.Append("<submit next=\"");
+            sb.Append("<submit ");
+            if (VoiceController.SubmitMethod == HttpMethod.Post)
+                sb.Append("method=\"post\" ");
+            sb.Append("next=\"");
             sb.Append(submitNext);
-            sb.Append("\" namelist=\"vm_id vm_event vm_result\" />");
+            sb.Append("\" namelist=\"vm_id vm_event vm_result vm_sessionid\" />");
             sb.Append(Environment.NewLine);
             sb.Append("</" + handlerType + ">");
             sb.Append(Environment.NewLine);
