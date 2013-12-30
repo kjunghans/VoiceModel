@@ -22,6 +22,6 @@
       </filled> 
   </transfer> 
   <block>
-    <submit next="@Model.nextUri" namelist="vm_id vm_event vm_sessionid" />
+    <submit @Html.Raw(VoiceController.SubmitMethod == HttpMethod.Post ? "method=\"post\"" : "") next="@Model.nextUri" namelist="vm_id vm_event vm_sessionid" />
   </block>
 </form>

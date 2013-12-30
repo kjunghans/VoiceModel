@@ -16,31 +16,47 @@ namespace VoiceModel
     {
         string recordingPath { get; set; }
         ILoggerService _log = LoggerFactory.GetInstance();
+        private static ISessionProvider _sessionProvider = new SessionDataProvider();
+
+        // This was added to provide a simple way to replace the way session data is stored
+        // The default provider object uses SessionData, but can be replaced by setting this property.
+        // If this property is set to null, the default provider will be used.
+        public static ISessionProvider SessionProvider { get { return _sessionProvider ?? (_sessionProvider = new SessionDataProvider()); } set { _sessionProvider = value; } }
 
 
-        private CallFlow.CallFlow GetCallFlow(string sessionId)
+        protected virtual CallFlow.CallFlow GetCallFlow(string sessionId)
         {
-            CallFlow.CallFlow flow = SessionData.GetCallFlow(sessionId);
+            CallFlow.CallFlow flow = SessionProvider.GetObject(sessionId) as CallFlow.CallFlow;
             if (flow == null)
             {
                 flow = BuildCallFlow();
-                SessionData.SetCallFlow(flow, sessionId);
+                SetCallFlow(flow, sessionId);
             }
             return flow;
         }
 
- 
- 
-        private void SetCallFlow(ICallFlow cf, string sessionId)
+        // For PCI Compliance, in IVR's that accept credit card information
+        // We cannot use GET as the HTTP Method, because the URL is quite
+        // likely to be logged. Rather than require implementors to override the views
+        // to achieve the behavior they are looking for, they can set the method to post
+        // here. The default value is the existing behavior. Most Actions will accept
+        // either GET or POST, and having implemented a rather large IVR App using this
+        // I have never seen post cause a problem. That being said, Treat this as an
+        // experimental feature.
+
+        static VoiceController() { SubmitMethod = HttpMethod.Get; }
+        public static HttpMethod SubmitMethod { get; set; }
+
+        protected virtual void SetCallFlow(ICallFlow cf, string sessionId)
         {
             cf.SessionId = sessionId;
             cf.RecordedAudioUri = AudioPathUri;
-            SessionData.SetCallFlow((CallFlow.CallFlow)cf, sessionId);
+            SessionProvider.StoreObject(sessionId, cf as CallFlow.CallFlow);
         }
 
         public abstract CallFlow.CallFlow BuildCallFlow();
 
-        public  virtual string RecordingPath
+        public virtual string RecordingPath
         {
             get { return "~/App_Data/recordings"; }
         }
@@ -50,17 +66,18 @@ namespace VoiceModel
             get { string controllerFullName = this.GetType().Name; return controllerFullName.Replace("Controller", ""); }
         }
 
- 
-        public string VxmlUri
+
+        public virtual string VxmlUri
         {
             get { return ControllerUri + "/StateMachine"; }
         }
 
-        public string ControllerUri
+        public virtual string ControllerUri
         {
             get { return ApplicationUri + ControllerName; }
         }
-        public string ApplicationUri
+
+        public virtual string ApplicationUri
         {
             get
             {
@@ -76,22 +93,22 @@ namespace VoiceModel
 
         }
 
-        public string AudioPathUri
+        public virtual string AudioPathUri
         {
             get { return ControllerUri + "/Recording/"; }
         }
 
-        public string TropoUri
+        public virtual string TropoUri
         {
             get { return ControllerUri + "/Tropo"; }
         }
 
-        public string TropoRecordingUri
+        public virtual string TropoRecordingUri
         {
             get { return ControllerUri + "/SaveRecordingTropo"; }
         }
 
-        public string VxmlRecordingUri
+        public virtual string VxmlRecordingUri
         {
             get { return ControllerUri + "/SaveRecording"; }
         }
@@ -107,7 +124,7 @@ namespace VoiceModel
             InitVoiceController();
         }
 
-        private bool isJson(string json)
+        protected virtual bool isJson(string json)
         {
             bool isIt = false;
             if (!string.IsNullOrEmpty(json))
@@ -117,9 +134,11 @@ namespace VoiceModel
             }
             return isIt;
         }
- 
-        protected ActionResult VoiceView(string id, string vEvent, string json, string sessionId)
+
+        protected virtual ActionResult VoiceView(string id, string vEvent, string json, string sessionId)
         {
+            if (string.IsNullOrEmpty(sessionId))
+                throw new Exception("Session ID cannot be empty or null."); // TODO: Return an error view indicating the issue.
             CallFlow.CallFlow callFlow = GetCallFlow(sessionId);
             callFlow["Channel"] = "VOICE";
 
@@ -135,7 +154,7 @@ namespace VoiceModel
                 doc.nextUri = VxmlRecordingUri;
             else
                 doc.nextUri = VxmlUri;
-            
+
             SetCallFlow(callFlow, sessionId);
 
             return View(doc.ViewName, doc);
@@ -143,34 +162,42 @@ namespace VoiceModel
         }
 
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "*")]
-        public ActionResult StateMachine(string vm_id, string vm_event, string vm_result, string vm_sessionid)
+        public virtual ActionResult StateMachine(string vm_id, string vm_event, string vm_result, string vm_sessionid)
         {
             _log.Debug("Recieved VoiceXML request:[" + Request.RawUrl + "]");
             string qstring = "Parameters: ";
-            var items = Request.QueryString.AllKeys.SelectMany(Request.QueryString.GetValues, (k, v) => new {key = k, value = v});
+            var items = Request.QueryString.AllKeys.SelectMany(Request.QueryString.GetValues, (k, v) => new { key = k, value = v });
             foreach (var item in items)
                 qstring += item.key + "=" + item.value + ";";
             _log.Debug(qstring);
             //If the vm_sessionid is null then this is the first time called by the IVR.
             //Get the session ID directly from the IVR query string.
             //TODO: make this configurable for other IVR systems. This works on Voxeo Prophecy.
+            // This can now be configured by overriding this method, 
+            // but there must be a better way to do it.
+            // Do other IVR systems actually use something different? 
+            // What do they use? - plaguethenet
             if (string.IsNullOrEmpty(vm_sessionid))
                 vm_sessionid = Request.QueryString["session.sessionid"];
             return VoiceView(vm_id, vm_event, vm_result, vm_sessionid);
         }
 
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "*")]
-        public ActionResult Recording(string id)
+        public virtual ActionResult Recording(string id)
         {
-            //TODO: Need to return a 404 error if the file does not exist.
             _log.Debug("Requested recording " + id);
             string filename = id;
             string path = Path.Combine(Server.MapPath(recordingPath), filename);
+            if (!System.IO.File.Exists(path))
+            {
+                _log.Debug(string.Format("{0} was not found, returning 404 to requestor.", path));
+                return new HttpNotFoundResult();
+            }
             return File(path, "audio/wav", Server.UrlEncode(filename));
         }
 
         [HttpPost]
-        public ActionResult SaveRecording(HttpPostedFileBase CallersMessage)
+        public virtual ActionResult SaveRecording(HttpPostedFileBase CallersMessage)
         {
             string sessionId = Request.QueryString["vm_sessionid"] ?? "";
             _log.Debug("vm_session_id=" + sessionId);
@@ -191,7 +218,7 @@ namespace VoiceModel
                     _log.Debug("Received request to save recording but it is empty.");
 
             }
-            
+
             string vm_id = Request.QueryString["vm_id"];
             string vm_event = Request.QueryString["vm_event"];
             string vm_result = "";
@@ -199,13 +226,13 @@ namespace VoiceModel
         }
 
         [HttpPost]
-        public string SaveRecordingTropo(HttpPostedFileBase filename)
+        public virtual string SaveRecordingTropo(HttpPostedFileBase filename)
         {
             string msg = "Successfully saved recording.";
             if (filename != null && filename.ContentLength > 0)
             {
                 string sessionId = Request.QueryString["vm_session_id"] ?? "";
-                _log.Debug("vm_session_id=" + sessionId );
+                _log.Debug("vm_session_id=" + sessionId);
                 // extract only the fielname
                 var fileName = sessionId + ".wav";
                 // store the file inside ~/App_Data/recordings folder
@@ -228,7 +255,7 @@ namespace VoiceModel
         }
 
         [HttpPost]
-        public string Tropo(Result result)
+        public virtual string Tropo(Result result)
         {
             _log.Debug("Recieved Tropo request: ", result);
             string vEvent;
@@ -253,9 +280,9 @@ namespace VoiceModel
         }
 
         [HttpPost]
-        public string StartTropo(string id, Session session)
+        public virtual string StartTropo(string id, Session session)
         {
-            _log.Debug("Recieved Tropo start request: ", session );
+            _log.Debug("Recieved Tropo start request: ", session);
             string vEvent = "";
             string vData = "";
             CallFlow.CallFlow callFlow = BuildCallFlow();
@@ -282,5 +309,5 @@ namespace VoiceModel
             return json;
         }
 
-     }
+    }
 }
