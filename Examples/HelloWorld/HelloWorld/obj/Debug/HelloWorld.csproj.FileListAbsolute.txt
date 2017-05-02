@@ -1,0 +1,1 @@
+D:\src\Skunk\VoiceModel\Examples\HelloWorld\HelloWorld\obj\Debug\HelloWorld.csprojResolveAssemblyReference.cache

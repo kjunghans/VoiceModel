@@ -1,0 +1,5 @@
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Common\bin\Debug\Survey.Common.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Common\bin\Debug\Survey.Common.pdb
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Common\obj\Debug\Survey.Common.csprojResolveAssemblyReference.cache
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Common\obj\Debug\Survey.Common.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Common\obj\Debug\Survey.Common.pdb

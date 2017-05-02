@@ -1,0 +1,1 @@
+D:\src\Skunk\VoiceModel\Examples\RecordingExample\RecordingExample\obj\Debug\RecordingExample.csprojResolveAssemblyReference.cache

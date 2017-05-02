@@ -1,0 +1,8 @@
+﻿@using VoiceModel;
+
+@model List<Prompt>
+
+  @foreach (var prompt in @Model)
+  {
+      @Html.VoicePrompt(prompt);
+  }

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="C:\inetpub\wwwroot\WeatherVoice" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="Web.config" publishTime="12/05/2011 20:33:16" />
+    <file relUrl="bin/WeatherVoice.pdb" publishTime="12/06/2011 11:04:12" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="11/07/2011 13:59:26" />
+    <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="01/05/2011 14:45:38" />
+    <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="01/05/2011 14:45:38" />
+    <file relUrl="bin/System.Web.Razor.dll" publishTime="01/05/2011 14:45:38" />
+    <file relUrl="packages.config" publishTime="11/07/2011 13:59:28" />
+    <file relUrl="bin/System.Web.Mvc.dll" publishTime="01/05/2011 16:42:16" />
+    <file relUrl="ApiResponseSample.js" publishTime="11/07/2011 14:05:36" />
+    <file relUrl="bin/System.Web.Helpers.dll" publishTime="01/05/2011 14:45:38" />
+    <file relUrl="bin/EntityFramework.xml" publishTime="11/07/2011 13:59:26" />
+    <file relUrl="bin/VoiceModel.pdb" publishTime="12/06/2011 09:31:21" />
+    <file relUrl="bin/WeatherVoice.dll" publishTime="12/06/2011 11:04:12" />
+    <file relUrl="Views/Web.config" publishTime="11/07/2011 13:59:18" />
+    <file relUrl="Views/Shared/Error.cshtml" publishTime="11/07/2011 13:59:18" />
+    <file relUrl="Views/_ViewStart.cshtml" publishTime="11/07/2011 13:59:18" />
+    <file relUrl="bin/VoiceModel.dll" publishTime="12/06/2011 09:31:21" />
+    <file relUrl="Global.asax" publishTime="11/07/2011 13:59:18" />
+    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="01/05/2011 14:45:38" />
+    <file relUrl="bin/System.Web.WebPages.dll" publishTime="01/05/2011 14:45:38" />
+  </publishProfile>
+</publishData>

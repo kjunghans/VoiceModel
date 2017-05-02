@@ -1,0 +1,7 @@
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\bin\Debug\Survey.Entities.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\bin\Debug\Survey.Entities.pdb
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\bin\Debug\Survey.Common.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\bin\Debug\Survey.Common.pdb
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\obj\Debug\Survey.Entities.csprojResolveAssemblyReference.cache
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\obj\Debug\Survey.Entities.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Entities\obj\Debug\Survey.Entities.pdb

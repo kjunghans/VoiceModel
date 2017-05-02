@@ -1,0 +1,1 @@
+﻿This is the directory where the log4net log files go. Make sure it has write privileges for IIS_USER.

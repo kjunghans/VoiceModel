@@ -1,0 +1,12 @@
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Repository.dll.config
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Repository.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Repository.pdb
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\EntityFramework.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Common.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Entities.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Common.pdb
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\Survey.Entities.pdb
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\bin\Debug\EntityFramework.xml
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\obj\Debug\Survey.Repository.csprojResolveAssemblyReference.cache
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\obj\Debug\Survey.Repository.dll
+D:\src\Skunk\VoiceModel\Examples\Survey\Survey.Repository\obj\Debug\Survey.Repository.pdb

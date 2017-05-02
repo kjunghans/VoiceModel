@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReusableComponentEx", "ReusableComponentEx\ReusableComponentEx.csproj", "{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDateDtmf", "GetDateDtmf\GetDateDtmf.csproj", "{241FA375-E93F-4EAA-B326-F66A8AAC0B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceModel", "..\..\VoiceModel\VoiceModel.csproj", "{C1918322-CF2F-4A20-92B2-47A938DFD8B0}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ReusableComponentEx\\ReusableComponentEx.csproj
+		SccProjectName1 = ReusableComponentEx
+		SccLocalPath1 = ReusableComponentEx
+		SccProjectUniqueName2 = GetDateDtmf\\GetDateDtmf.csproj
+		SccProjectName2 = GetDateDtmf
+		SccLocalPath2 = GetDateDtmf
+		SccProjectUniqueName3 = ..\\..\\VoiceModel\\VoiceModel.csproj
+		SccProjectName3 = ../../VoiceModel
+		SccLocalPath3 = ..\\..\\VoiceModel
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791CADD7-A698-4DDB-80DE-DF803C9C5D7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241FA375-E93F-4EAA-B326-F66A8AAC0B85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1918322-CF2F-4A20-92B2-47A938DFD8B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
