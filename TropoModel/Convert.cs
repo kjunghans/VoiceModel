@@ -44,9 +44,7 @@ namespace VoiceModel.TropoModel
         {
             foreach (IAudio audio in prompt.audios)
             {
-
-                Say s = AudioToSay(audio);
-                tmodel.tropo.Add("say", s);
+                tmodel.tropo.Add("say", new global::VoiceModel.TropoModel.say(audio.message));
             }
 
         }

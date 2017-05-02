@@ -15,6 +15,12 @@ namespace VoiceModel
             this.viewName = "Output";
             this.prompts = new List<Prompt>();
         }
+        public Say(string altText)
+        {
+            this.viewName = "Output";
+            this.prompts = new List<Prompt>();
+            this.prompts.Add(new Prompt(altText));
+        }
         public Say(VoiceModel doc)
            : base(doc)
         {

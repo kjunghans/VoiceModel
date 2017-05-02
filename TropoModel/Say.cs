@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Runtime.Serialization;
 
 namespace VoiceModel.TropoModel
 {
-    [DataContract]
-    public class Say : TropoObject
+    public class say : TropoObject
     {
-        [DataMember]
         public string value { get; set; }
 
-        public Say(string textPrompt)
+        public say()
+        {
+            value = "";
+        }
+
+        public say(string textPrompt)
         {
             value = textPrompt;
         }
